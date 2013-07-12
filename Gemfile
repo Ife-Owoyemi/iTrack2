@@ -10,6 +10,7 @@ gem 'jquery-rails', '2.0.2'
 gem 'nested_form'
 gem 'formtastic'
 gem 'cocoon'
+gem 'haml'
 gem 'haml-rails', '>= 0.3.4', :group => :development
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
