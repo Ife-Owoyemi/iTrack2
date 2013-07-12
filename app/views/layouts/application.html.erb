@@ -11,7 +11,7 @@
         $(".popover-link").popover('hide');
     </script>
     <%= render 'layouts/header' %>
-    <div class="span11 offset3" >
+    <div class="span11 offset1" >
       <div class="container">
         <% flash.each do |key, value| %>
           <%= content_tag(:div, value, class: "alert alert-#{key}") %>
