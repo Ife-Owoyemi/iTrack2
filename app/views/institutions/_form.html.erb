@@ -1,0 +1,212 @@
+<%= nested_form_for @institution do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field(:name) %><br />
+  <%= f.label :nickname %>
+  <%= f.text_field(:nickname) %><br />
+  <h3> Achievement Type </h3>
+  <p><%= f.link_to_add "Add a Achievement Type", :achievementtypes %></p>
+  <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <div class="accordion span12 pull-left" id="accordian">
+    <% k = 0 %>                                                 
+    <%= f.fields_for :achievementtypes do |type| %>
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian" href="#collapse<%= k %>">
+            <%= type.label "Achievement Type" %><%= type.text_field(:achievementtype) %>
+          </a>
+        </div>
+        <div id="collapse<%= k %>"  class="accordion-body collapse">
+          <div class="accordion-inner" >
+            <%= type.link_to_remove "Remove this Achievement Type" %>
+            <h3> Colleges </h3>
+            <p><%= type.link_to_add "Add a College", :colleges %></p>
+            <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+            <div class="accordion span11 pull-left" id="accordian<%= k %>">
+              <% l = 0 %>                                                 
+              <%= type.fields_for :colleges do |college| %>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %>" href="#collapse<%= l %><%= k %>">
+                      <%= college.label "College" %><%= college.text_field(:college) %>
+                    </a>
+                  </div>
+                  <div id="collapse<%= l %><%= k %>"  class="accordion-body collapse">
+                    <div class="accordion-inner" >
+                      <%= college.link_to_remove "Remove this College" %>
+                      <h3> Achievement Names </h3>
+                      <p><%= college.link_to_add "Add a Achievement Name", :achievementnames %></p>
+                      <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                      <div class="accordion span10 pull-left" id="accordian<%= k %><%= l %>">
+                        <% m = 0 %>                                                 
+                        <%= college.fields_for :achievementnames do |name| %>
+                          <div class="accordion-group">
+                            <div class="accordion-heading">
+                              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %>" href="#collapse<%= k %><%= l %><%= m %>">
+                                <%= name.label "Achievement Name" %><%= name.text_field(:achievementname) %>
+                              </a>
+                            </div>
+                            <div id="collapse<%= k %><%= l %><%= m %>"  class="accordion-body collapse">
+                              <div class="accordion-inner" >
+                                <%= name.link_to_remove "Remove this Achievement Name" %>
+                                <h3> Specialties </h3>
+                                <p><%= name.link_to_add "Add a Specialty", :specialties %></p>
+                                <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                <div class="accordion span9 pull-left" id="accordian<%= k %><%= l %><%= m %>">
+                                  <% n = 0 %>                                                 
+                                  <%= name.fields_for :specialties do |specialty| %>
+                                    <div class="accordion-group">
+                                      <div class="accordion-heading">
+                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %>" href="#collapse<%= k %><%= l %><%= m %><%= n %>">
+                                          <%= specialty.label "Specialty" %><%= specialty.text_field(:specialty) %>
+                                        </a>
+                                      </div>
+                                      <div id="collapse<%= k %><%= l %><%= m %><%= n %>"  class="accordion-body collapse">
+                                        <div class="accordion-inner" >
+                                          <%= specialty.link_to_remove "Remove this Specialty" %>
+                                          <h3> Core Requirements </h3>
+                                          <p><%= specialty.link_to_add "Add a Core Requirement", :corereqs %></p>
+                                          <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                          <div class="accordion span8 pull-left" id="accordian<%= k %><%= l %><%= m %><%= n %>">
+                                            <% o = 0 %>                                                 
+                                            <%= specialty.fields_for :corereqs do |core| %>
+                                              <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %><%= n %>" href="#collapse<%= k %><%= l %><%= m %><%= n %><%= o %>">
+                                                    <%= core.label "Core Requirement Name" %><%= core.text_field(:corereqname) %>
+                                                  </a>
+                                                </div>
+                                                <div id="collapse<%= k %><%= l %><%= m %><%= n %><%= o %>"  class="accordion-body collapse">
+                                                  <div class="accordion-inner" >
+                                                    <%= core.label "Course Number Goal" %><br />
+                                                    <%= core.text_field(:cgoal) %><br />
+                                                    <%= core.label "Hours Goal" %><br />
+                                                    <%= core.text_field(:hgoal) %><br />
+                                                    <%= core.link_to_remove "Remove this Core Requirement" %>
+                                                    <h3> Core Courses </h3>
+                                                    <p><%= core.link_to_add "Add a Core Course", :ccourses %></p>
+                                                    <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                                    <div class="accordion span7 pull-left" id="accordian<%= k %><%= l %><%= m %><%= n %>1<%= o %>1">
+                                                      <% p = 0 %>                                                 
+                                                      <%= core.fields_for :ccourses do |course| %>
+                                                        <div class="accordion-group">
+                                                          <div class="accordion-heading">
+                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %><%= n %>1<%= o %>1" href="#collapse<%= k %><%= l %><%= m %><%= n %>1<%= o %>1<%= p %>">
+                                                              <%= course.label "Department" %><%= course.text_field(:department) %><%= course.label "Course Number" %><%= course.text_field(:num) %>
+                                                            </a>
+                                                          </div>
+                                                          <div id="collapse<%= k %><%= l %><%= m %><%= n %>1<%= o %>1<%= p %>"  class="accordion-body collapse">
+                                                            <div class="accordion-inner" >
+                                                              <%= course.link_to_remove "Remove this Core Course" %>
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                        <% p +=1 %>
+                                                      <% end %>
+                                                    </div>
+                                                    <!-- -->
+                                                  </div>
+                                                </div>
+                                                </div>
+                                              <% o +=1 %>
+                                            <% end %>
+                                          </div>
+                                          <!-- -->
+                                          <h3> Multi Option Requirements </h3>
+                                          <p><%= specialty.link_to_add "Add a Multi Option Req", :opreqs %></p>
+                                          <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                          <div class="accordion span8 pull-left" id="accordian<%= k %><%= l %><%= m %><%= n %>">
+                                            <% r = 0 %>                                                 
+                                            <%= specialty.fields_for :opreqs do |opreq| %>
+                                              <div class="accordion-group">
+                                                <div class="accordion-heading">
+                                                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %><%= n %>" href="#collapse<%= k %><%= l %><%= m %><%= n %>2<%= r %>">
+                                                    <%= opreq.label "Multi Option Requirement" %><%= opreq.text_field(:opreqname) %>
+                                                  </a>
+                                                </div>
+                                                <div id="collapse<%= k %><%= l %><%= m %><%= n %>2<%= r %>"  class="accordion-body collapse">
+                                                  <div class="accordion-inner" >
+                                                    <%= opreq.link_to_remove "Remove this Multi Option Req" %>
+                                                    <h3> Options </h3>
+                                                    <p><%= opreq.link_to_add "Add an Option", :options %></p>
+                                                    <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                                    <div class="accordion span7 pull-left" id="accordian<%= k %><%= l %><%= m %><%= n %><%= r %>">
+                                                      <% s = 0 %>                                                 
+                                                      <%= opreq.fields_for :options do |option| %>
+                                                        <div class="accordion-group">
+                                                          <div class="accordion-heading">
+                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %><%= n %><%= r %>" href="#collapse<%= k %><%= l %><%= m %><%= n %><%= r %>1<%= s %>">
+                                                              <%= option.label "Option" %><%= option.text_field(:optionname) %>
+                                                            </a>
+                                                          </div>
+                                                          <div id="collapse<%= k %><%= l %><%= m %><%= n %><%= r %>1<%= s %>"  class="accordion-body collapse">
+                                                            <div class="accordion-inner" >
+                                                              <%= option.label "Course Number Goal" %><br />
+                                                              <%= option.text_field(:cgoal) %><br />
+                                                              <%= option.label "Hours Goal" %><br />
+                                                              <%= option.text_field(:hgoal) %><br />
+                                                              <%= option.link_to_remove "Remove this Option" %>
+                                                              <h3> Courses </h3>
+                                                              <p><%= option.link_to_add "Add an Course", :ocourses %></p>
+                                                              <!--  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+                                                              <div class="accordion span6 pull-left" id="accordian<%= k %><%= l %><%= m %><%= n %><%= r %><%= s %>">
+                                                                <% t = 0 %>                                                 
+                                                                <%= option.fields_for :ocourses do |course| %>
+                                                                  <div class="accordion-group">
+                                                                    <div class="accordion-heading">
+                                                                      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %><%= n %><%= r %><%= s %>" href="#collapse<%= k %><%= l %><%= m %><%= n %><%= r %><%= s %>3<%= t %>">
+                                                                        <%= course.label "Department" %><%= course.text_field(:department) %><%= course.label "Course Number" %><%= course.text_field(:num) %>
+                                                                      </a>
+                                                                    </div>
+                                                                    <div id="collapse<%= k %><%= l %><%= m %><%= n %><%= r %><%= s %>3<%= t %>"  class="accordion-body collapse">
+                                                                      <div class="accordion-inner" >
+                                                                        <%= course.link_to_remove "Remove this Core Course" %>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <% t +=1 %>
+                                                                <% end %>
+                                                              </div>
+                                                              <!-- -->
+                                                            </div>
+                                                          </div>
+                                                          </div>
+                                                        <% s +=1 %>
+                                                      <% end %>
+                                                    </div>
+                                                    <!-- -->
+                                                  </div>
+                                                </div>
+                                                </div>
+                                              <% r +=1 %>
+                                            <% end %>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      </div>
+                                    <% n +=1 %>
+                                  <% end %>
+                                </div>
+                                <!-- -->
+                              </div>
+                            </div>
+                            </div>
+                          <% m +=1 %>
+                        <% end %>
+                      </div>
+                      <!-- -->
+                    </div>
+                  </div>
+                  </div>
+                <% l +=1 %>
+              <% end %>
+            </div>
+            <!-- -->
+          </div>
+        </div>
+      </div>
+      <% k +=1 %>
+    <% end %>
+  </div>
+  <!-- -->
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,57 @@
+<h3>
+  <%= @institution.name %>
+</h3>
+<p>
+  <%= link_to "Edit", edit_institution_path %> |
+  <%= link_to "Destroy", :confirm => 'Are you sure?', :method => :delete %> 
+  <%= link_to "Back", institutions_path %>
+</p>
+<ol>
+<% for achievementtype in @institution.achievementtypes %>
+  <li><%= achievementtype.achievementtype %>
+    <ul>
+      <% for college in achievementtype.colleges %>
+        <li><%= college.college %></li>
+          <ul>
+            <% for name in college.achievementnames %>
+              <li><%= name.achievementname %></li>
+                <ul>
+                  <% for specialty in name.specialties %>
+                  
+                    <% specialty.corereqs %>
+                    
+                      <% for corereq in specialty.corereqs %>
+                        <li><%= corereq.corereqname %></li>
+                          <ul>
+                            <% for course in corereq.ccourses %>
+                              <li><%= course.department + course.num.to_s %></li>
+                            <% end %>
+                          </ul>
+                      <% end %>
+                    
+                    <% specialty.opreqs %>
+                    
+                      <% for opreq in specialty.opreqs %>
+                        <li><%= opreq.opreqname %></li>
+                          <ul>
+                          <% for option in opreq.options %>
+                            <li><%= option.optionname %></li>
+                              <ul>
+                                <% for course in option.ocourses %>
+                                  <li><%= course.department + course.num.to_s %></li>           
+                                <% end %>
+                              </ul>
+                          <% end %>
+                        </ul>
+                      <% end %>
+                     
+                  <% end %>
+                </ul>
+            <% end %>
+          </ul>
+      <% end %>
+    </ul>
+  </li>
+<% end %>
+</ol>
+

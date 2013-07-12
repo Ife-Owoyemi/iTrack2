@@ -1,0 +1,10 @@
+.nested-fields
+  = f.inputs :division do
+    %h4 Semester
+    = f.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => 'width: 100px', :class => "" }, :input_html => {:placeholder => "Fall",:class => "pull-left"}
+    = link_to_remove_association "remove semester", f, :class => "btn"
+    %h5 Courses
+    #course
+      = f.semantic_fields_for :usercourses do |course|
+        = render 'usercourse_fields', :f => course
+      = link_to_add_association "add course", f, :usercourses, :class => "btn"

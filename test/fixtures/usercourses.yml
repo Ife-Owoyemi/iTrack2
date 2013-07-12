@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  department: MyString
+  semester_id: 1
+  num: MyString
+  credits: 1
+  status: MyString
+  institution: MyString
+
+two:
+  department: MyString
+  semester_id: 1
+  num: MyString
+  credits: 1
+  status: MyString
+  institution: MyString

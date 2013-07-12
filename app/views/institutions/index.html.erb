@@ -1,0 +1,11 @@
+<h3> Institutions </h3>
+<p><%= link_to "New Institution", new_institution_path %></p>
+<div>
+  <% for inst in @institution %>
+    <div>
+      <h4><%= inst.name %></h4>
+      <p><%= link_to "Show", institution_path(inst)%> | <%= link_to "Edit", edit_institution_path(inst) %> | <%= link_to "Destroy", :confirm => 'Are you sure?', :method => :delete %></p>
+    </div>
+  <% end %>
+</div>
+

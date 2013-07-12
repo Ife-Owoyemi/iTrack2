@@ -1,0 +1,8 @@
+.nested-fields
+  = f.inputs :achievementtype, :college, :achievementname, :specialty do
+    %h3 Achievement Type
+    = f.input :achievementtype, :label => "Achievement Type", :wrapper_html => { :style => 'width: 500px', :class => "" }, :input_html => {:style => 'width: 100px',:class => "pull-left"}
+    = f.input :college,  :label => "College",  :wrapper_html => {  :style => 'width: 200px', :class => "" }, :input_html => {:style => 'width: 200px',:placeholder => "School of Engineering",:class => "pull-left"}
+    = f.input :achievementname, :label => "Achievement Name", :wrapper_html => {  :style => 'width: 550px', :class => "" }, :input_html => {:placeholder => "Chemical Engineering",:class => "pull-left"}
+    = f.input :specialty,  :label => "Specialty", :wrapper_html => {  :style => 'width: 300px', :class => "" }, :input_html => {:placeholder => "General", :class => "pull-left"}
+    = link_to_remove_association "remove achievement type", f, :class => "btn pull-left"

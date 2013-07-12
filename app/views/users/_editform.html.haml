@@ -1,0 +1,32 @@
+= semantic_form_for @user do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  
+  = f.inputs :name, :email, :dreamJob, :college, :gradyear, :password, :password_confirmation do
+    = f.input :name
+    = f.input :email
+    = f.input :dreamJob
+    = f.input :college, :as => :select, :collection => ["Baker", "Brown", "Duncan", "Jones", "Hanszen", "Martel", "McMurtry", "Lovett", "Sid Rich", "Wiess", "Will Rice"], :wrapper_html => { :style => 'width: 250px',:class => "pull-left" }, :input_html => {:style => 'width: 100px',:class => "pull-left"}
+    = f.input :status, :as => :select, :collection => ["Undergrad", "Alumni", "Prospective Student"], :wrapper_html => {:style => 'width: 250px', :class => "pull-left" }, :input_html => {:style => 'width: 150px',:class => "pull-left"}
+    = f.input :year, :as => :select, :collection => ["Freshman", "Sophomore", "Junior", "Senior", "Alumni"], :wrapper_html => {:style => 'width: 250px', :class => "pull-left" }, :input_html => {:style => 'width: 100px',:class => "pull-left"}
+    
+    #userachievementtype
+      = f.semantic_fields_for :userachievementtypes do |userachievementtypes|
+        = render 'userachievementtype_fields', :f => userachievementtypes
+    .links
+      = link_to_add_association 'add achievement type', f, :userachievementtypes, :class => "btn"
+    #year
+      = f.semantic_fields_for :years do |year|
+        = render 'year_fields', :f => year
+    .links
+      = link_to_add_association 'add year', f, :years, :class => "btn"
+    %br
+    = f.input :password
+    = f.input :password_confirmation
+    
+    = f.actions do
+      = f.action :submit, :as => :button

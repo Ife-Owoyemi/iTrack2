@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  college_id: 1
+  achievementname: MyString
+  hourreq: 1
+
+two:
+  college_id: 1
+  achievementname: MyString
+  hourreq: 1

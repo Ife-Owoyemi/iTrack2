@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  corereq_id: 1
+  department: MyString
+  num: 1
+
+two:
+  corereq_id: 1
+  department: MyString
+  num: 1

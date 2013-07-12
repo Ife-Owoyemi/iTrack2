@@ -1,0 +1,27 @@
+<% taken = Hash.new %>
+<% taking = Hash.new %>
+<% wtake = Hash.new %>
+<% user_courses = Hash.new %>
+<% coursearray = Array.new %>
+<% if signed_in? %>
+  <h1>Majors BA-S</h1>
+  <hr width="100%">
+ <%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
+  <ul class="nav nav-tabs">
+    <% i = 0 %>
+    <% b = @majorsbas.colleges.all %>
+    <% for college in b %> 
+      <li><a href="#<%= i %>" data-toggle="tab"><%= college.college %></a></li>
+      <% i += 1 %>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% i = 0 %>
+    <% for college in b %>
+      <%= render :partial => "shared/calculation", :locals => {:college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray} %>
+      <% i += 1 %>
+    <% end %>
+  </div>
+<% else %>
+  <%= render 'shared/signup' %>
+<% end %> 

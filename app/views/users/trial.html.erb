@@ -1,0 +1,65 @@
+<% @years.each do |year| %>
+  <li><b><%= year.year %></b></li>
+  <ul>
+  <% @semesters = year.semesters.all %>
+  <% @semesters.each do |semester| %>
+    <li><b><%= semester.semester %></b></li>
+    <table border="0" padding="1">
+    <% @courses = semester.usercourses.all %>
+    <% @courses.each do |course| %>
+      <tr>
+        <td><%= course.department %></td>
+        <td><%= course.num.to_s %></td>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+  </ul>
+<% end %>
+
+<div class="accordion" id="accordion">
+  <% i = 0 %>
+  <% @years.each do |year| %>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= i %>">
+          <b><%= year.year %></b>
+        </a>
+      </div>
+      <div id="collapse<%= i %>" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <% @semesters = year.semesters.all %>
+          <% h = 0 %>
+          <% @semesters.each do |semester| %>
+            <div class="accordion" id="accordion<%= i %>">
+              <div class="accordion-group">
+                <div class="accordion-heading">
+                  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion<= i %>" href="#collapse<%= i %><%= h %>">
+                    <b><%= semester.semester %></b>
+                  </a>
+                </div>
+                <div id="collapse<%= i %><%= h %>" class="accordion-body collapse in">
+                  <div class="accordion-inner">
+                    <table border="0" padding="1">
+                    <% @courses = semester.usercourses.all %>
+                    <% @courses.each do |course| %>
+                      <tr>
+                        <td><%= course.department %></td>
+                        <td><%= course.num.to_s %></td>
+                      </tr>
+                    <% end %>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% h += 1 %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% i += 1 %>
+  <% end %>
+</div>
+
+

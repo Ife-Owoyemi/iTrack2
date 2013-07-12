@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  department_id: 1
+  brief: MyString
+  credit: 1
+  di: false
+  dii: false
+  diii: false
+  number: 1
+
+two:
+  department_id: 1
+  brief: MyString
+  credit: 1
+  di: false
+  dii: false
+  diii: false
+  number: 1

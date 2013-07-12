@@ -1,15 +1,293 @@
+<% taken = Hash.new %>
+<% taking = Hash.new %>
+<% wtake = Hash.new %>
+<% user_courses = Hash.new %>
+<% coursearray = Array.new %>
+<% achievements = Array.new %>
+<%provide(:title, @user.name) %>
+<% achievementhash = Hash.new %>
+<% @achievement = Array.new %>
+<% @achievementtypes.each do |type| %>
+  <% type.achievementtype %>
+  <% achievements << type.achievementtype %>
+  <% achievementhash[type.achievementtype] = Hash.new %>
+  <% achievementhash[type.achievementtype][type.college] = Hash.new %>
+  <% achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new %>
+  <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
+<% end %>
+
+<% @institution.each do |type| %>
+  <% a = type.achievementtypes.all %>
+    <% a.each do |t| %>
+    <% if achievements.include?(t.achievementtype) %> 
+      <% @achievement << t %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
+<% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
+<% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
+
+
+<div class="row">
+	<aside class="span3">
+		<section>
+			<h1><%= provide(:title, @user) %>
+				<%= @user.name %>
+			</h1>
+		</section>
+    <section>
+      <p><b>Dream Job: </b><%= @user.dreamJob %></p>
+      <p><b>Status: </b><%= @user.status %></p>
+      <p><b>Year: </b><%= @user.year %></p>
+      <p><b>College: </b><%= @user.college %></p>
+      <p><b>Email: </b><%= @user.email %></p>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+	</aside>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @user.name %>
-</p>
+  <aside class="span8">
+    <section>
+      <h4>Tracks</h4>
+      <ul class="nav nav-tabs">
+        <% i = 0 %>
+        <% for achievementtype in @achievement %> 
+          <% achievementhash[achievementtype.achievementtype].each_key do |key| %>
+            <% b = achievementtype.colleges.where(:college => key ) %>
+            <% b.each do |h| %>
+              <% college = h %>
+              <li><a href="#<%= i %>" data-toggle="tab"><%= achievementtype.achievementtype %></a></li>
+              <% i += 1 %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <% i = 0 %>
+        <% for achievementtype in @achievement %> 
+          <% achievementhash[achievementtype.achievementtype].each_key do |key| %>
+            <% b = achievementtype.colleges.where(:college => key ) %>
+            <% b.each do |h| %>
+              <% college = h %>
 
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
+              <%= render :partial => "shared/calculation2", :locals => {:college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray, :collegehash => achievementhash[achievementtype.achievementtype][college.college]} %>
+
+              <% i += 1 %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+    <section>
+      <h4>Transcript</h4>
+      <div class="accordion" id="accordion">
+        <% ia = 0 %>
+        <% @ricehours = 0 %>
+        <% @aphours = 0 %>
+        <% fullSemesterAtInstitution = 0 %>
+        <% gpah = 0 %>
+        <% @lpap = 0 %>
+        <% transhours = 0 %>
+        <% @years.each do |year| %>
+          <% aphours = 0 %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseb<%= ia %>">
+                <b><%= year.year %></b>
+              </a>
+            </div>
+            <div id="collapseb<%= ia %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <% @semesters = year.semesters.all %>
+                <% ha = 0 %>
+                <% @semesters.each do |semester| %>
+                  <% sgpa = 0 %>
+                  <% sgpah = 0 %>
+                  <% hours = 0 %>
+                  <div class="accordion pull-left span3" id="accordion<%= ia %><%= ha %>">
+                    <div class="accordion-group">
+                      <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion<%= ia %><%= ha %>" href="#collapseb<%= ia %><%= ha %>">
+                          <b><%= semester.semester %></b>
+                        </a>
+                      </div>
+                      <div id="collapseb<%= ia %><%= ha %>" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                          <table border="0" padding="1">
+                          <% @courses = semester.usercourses.all %>
+                          <% @courses.each do |course| %>
+                            <% if course.institution == "Rice" %>
+                              <% color = "blue" %>
+                              <% if course.department == "LPAP" %>
+                                <% @lpap += 1 %>
+                              <% end %>
+                              <% @ricehours += course.credits.to_i %>
+                            <% elsif course.institution == "AP" %>
+                              <% color = "green" %>
+                              <% @aphours += course.credits.to_i %>
+                            <% else %>
+                              <% color = "gray" %>
+                              <% transhours += course.credits.to_i %>
+                            <% end %>
+                            <tr>
+                              <div style = "color: green;" >
+                                <td>
+                                  <% if current_user?(year.user) %>
+                                       <% @peep = "yes" %>
+                                       <% if course.nofinals == "1" %>
+                                          <% f = "Yes" %>
+                                        <% else %>
+                                          <% f = "No" %>
+                                        <% end %>
+                                    
+                                      <div 
+                                         class="btn btn-small popover-link"
+                                         data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
+                                         data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %> <%= course.grade %></font>
+                                      </div>​
+                                    
+                                  <% else %>
+                                    <div 
+                                         class="btn btn-small popover-link"
+                                         data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
+                                         data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %></font>
+                                      </div>​
+                                  <% end %>
+                                </td>
+                                <% if course.institution == "Rice" %>
+                                  <% hours += course.credits %>
+                                  <% @ricehours += course.credits %>
+                                  <% if gpascore.include?(course.grade) %>
+                                    <% sgpa += grades[course.grade].to_f * course.credits.to_f %>
+                                    <% sgpah += course.credits.to_f %>
+                                    <% gpah += course.credits.to_f %>
+                                    <%# gpa += grades[course.grade].to_f %>
+                                  <% end %>
+                                <% end %>
+                              </div>
+                            </tr>
+                          <% end %>
+                          </table>
+                          <% if aphours != 0 %>
+                            <p><b>AP Hours: </b><%= aphours %></p>
+                          <% end %>
+                          <p><b>Semester Hours: </b><%= hours %></p>
+                          <% if hours >= 12 %>
+                            <% fullSemesterAtInstitution += 1 %>
+                          <% end %>
+                          <% if current_user?(year.user) and sgpah != 0 %>
+                            <% finalsgpa = (sgpa.to_f / (sgpah)).to_s[0..4] %>
+                            <p><b>Semester GPA: </b><%= finalsgpa %></p>
+                          <% end %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% ha += 1 %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <% ia += 1 %>
+        <% end %>
+      </div>
+      <% if @peep == "yes" %>
+          <%= link_to 'Edit', edit_user_path(@user) %> |                  
+      <% end %>
+      <%= link_to 'Back', users_path %>
+    </section>
+    <section>
+      <h4>Graduation Requirements</h4>
+      <div class="accordion" id="accordion2">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+              Hour Requirements
+            </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <p>Semesters Completed: 
+                <% if fullSemesterAtInstitution >= 4 %>
+                  <font color = "green"><%= fullSemesterAtInstitution.to_s %>/4 Completed</p></font>
+                <% else %>
+                  <%= fullSemesterAtInstitution.to_s %>/4</p>
+                <% end %>
+              <p>Hours at Rice Completed: 
+                <% if @ricehours >= 60 %>
+                  <font color = "green"><%= @ricehours.to_s %>/60 Completed</p></font>
+                <% else %>
+                  <%= @ricehours.to_s %>/60</p>
+                <% end %>
+              <p>Total Hours Completed: 
+                <% if @ricehours + @aphours >= 120 %>
+                  <font color = "green"><%= (@aphours + @ricehours).to_s %>/120 Completed</p></font>
+                <% else %>
+                  <%= (@aphours + @ricehours).to_s %>/120</p>
+                <% end %>  
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+              Degree Work Requirements
+            </a>
+          </div>
+          <div id="collapseTwo" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <p>Complete the requirements of at least one major degree Program.</p>
+              <p>Complete at least 48 hours of all degree work in upper-level courses(300 level or higher)</p>
+              <p>Complete more than half of the upper-level courses in degree work at Rice</p>
+              <p>Complete more than half of the upper-level courses in their major work at Rice.</p>
+              <p>Complete all Rice courses that satisfy degree requirements with a cumulative grade point average of at least 1.67 or higher.</p>
+              <p>Complete all Rice courses that satisfy major and/or minor requirements (as designated by the department) with a cumulative grade point average of at least 2.00 or higher.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+              Distribution Requirement
+            </a>
+          </div>
+          <div id="collapseThree" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <p>Group I: </p>
+              <p>Group II: </p>
+              <p>Group III: </p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+              Other Requirements
+            </a>
+          </div>
+          <div id="collapseFour" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <p>LPAP Requirement: 
+              <% if @lpap > 0 %>
+                <font color = "green">Completed</font></p>
+              <% else %>
+                Incomplete</p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </aside>
+</div>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+
+
+<br>

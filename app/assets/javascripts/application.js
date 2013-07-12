@@ -12,4 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery_nested_form
+//= require bootstrap
+//= require bootstrap-tooltip.js
+//= require bootstrap-popover.js
+//= require cocoon
 //= require_tree .
+$(function () {
+  $('.popover-test').popover({ 
+    html : true
+  }).popover('hide');
+  $(".popover-link").popover({ html : true }).popover('hide');
+  $('.popover-test').on('click', function(e) {e.preventDefault(); return true;});
+}
+
+
+);
+
