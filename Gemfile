@@ -23,6 +23,7 @@ end
 
 group :production do
 	gem 'thin'
+  gem 'pg'
 end
 
 gem 'bcrypt-ruby', '3.0.1'
