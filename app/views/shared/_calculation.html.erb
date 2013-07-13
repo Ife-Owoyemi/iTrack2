@@ -27,6 +27,9 @@
               <% @core_c_1 = 0 %>
               <% @core_c_2 = 0 %>
               <% @core_c_3 = 0 %>
+              <% @op_c_1 = 0 %>
+              <% @op_c_2 = 0 %>
+              <% @op_c_3 = 0 %>
               <% @op_c = 0 %>
               <% core_h = 0 %>
               <% need = 0 %>
@@ -83,6 +86,9 @@
                   <% @op_c_m = 0 %>
                   <% @op_add = 0 %>
                   <% @op_c_big = 0 %>
+                  <% @op_c_big_1 = 0 %>
+                  <% @op_c_big_2 = 0 %>
+                  <% @op_c_big_3 = 0 %>
                   
                   <% h = option.ocourses.all %>
                   <%# ------------------------------------------------------%>
@@ -107,34 +113,28 @@
                         <% @op_c_m_3 += 1%>
                       <% end %>
                     <% end %>
-
+                    
                   <% end %>
+                  
                   <%# ------------------------------------------------------%>
                   <% if option.cgoal.to_i != 0 %>
                     <% if (@op_c_m * 100)/ option.cgoal.to_i >= @op_c_biggest %>
 
-                       <% if @op_c_1 == nil %>
-                          <% @op_c_1 = 0 %>
-                        <% end %>
-                        <% if @op_c_2 == nil %>
-                          <% @op_c_2 = 0 %>
-                        <% end %>
-                        <% if @op_c_3 == nil %>
-                          <% @op_c_3 = 0 %>
-                        <% end %>
+                      
+                      
                       <% if option.cgoal.to_i < @op_c_m %>
                         <% @op_c_big = option.cgoal.to_i %>
-                        <% if option.cgoal.to_i < @op_c_1 %>
+                        <% if option.cgoal.to_i < @op_c_m_1 %>
                           <% @op_c_big_1 = option.cgoal.to_i %>
                           <% @op_c_big_2 = 0 %>
                           <% @op_c_big_3 = 0 %>
-                        <% elsif option.cgoal.to_i < @op_c_1 + @op_c_2 %>
-                          <% @op_c_big_1 = @op_c_1 %>
-                          <% @op_c_big_2 = option.cgoal.to_i - @op_c_1 %>
-                        <% elsif option.cgoal.to_i < @op_c_1 + @op_c_2 + @op_c_3 %>
-                          <% @op_c_big_1 = @op_c_1 %>
-                          <% @op_c_big_2 = @op_c_2 %>
-                          <% @op_c_big_3 = option.cgoal.to_i - @op_c_1 - @op_c_2 %>
+                        <% elsif option.cgoal.to_i < @op_c_m_1 + @op_c_m_2 %>
+                          <% @op_c_big_1 = @op_c_m_1 %>
+                          <% @op_c_big_2 = option.cgoal.to_i - @op_c_m_1 %>
+                        <% elsif option.cgoal.to_i < @op_c_m_1 + @op_c_m_2 + @op_c_m_3 %>
+                          <% @op_c_big_1 = @op_c_m_1 %>
+                          <% @op_c_big_2 = @op_c_m_2 %>
+                          <% @op_c_big_3 = option.cgoal.to_i - @op_c_m_1 - @op_c_m_2 %>
                         <% end %>
                       <% else %>
                         <% @op_c_big = @op_c_m %>
@@ -147,16 +147,18 @@
                       <% @op_c_biggest = (@op_c_m * 100)/ option.cgoal.to_i %>
                     <% end %>
                   <% end %>
+                  
                   <% @op_c += @op_c_big %>
-                  <% if @op_big_1 != nil %>
-                    <% @op_c_1 += @op_big_1 %>
+                  <% if @op_c_big_1 != nil %>
+                    <% @op_c_1 += @op_c_big_1 %>
                   <% end %>
-                  <% if @op_big_2 != nil %>
-                    <% @op_c_2 += @op_big_2 %>
+                  <% if @op_c_big_2 != nil %>
+                    <% @op_c_2 += @op_c_big_2 %>
                   <% end %>
-                  <% if @op_big_3 != nil %>
-                    <% @op_c_3 += @op_big_3 %>
+                  <% if @op_c_big_3 != nil %>
+                    <% @op_c_3 += @op_c_big_3 %>
                   <% end %>
+
                   <% @totalc += @op_add  %>
                 <% end %>
                 <%# ------------------------------------------------------%>
@@ -181,9 +183,9 @@
                 <% if @core_c_3 == nil %>
                  <%  @core_c_3 = 0 %>
                 <% end %>
-                <% @takent =   ((@core_c_1 + @op_c_1)*100) / @totalc %> 
-                <% @takingt = ((@core_c_2 + @op_c_2)*100) / @totalc %>
-                <% @wtaket = ((@core_c_3 + @op_c_3)*100) / @totalc %>
+                <% @takent =   ((@core_c_1 + @op_c_1) * 100) / @totalc %> 
+                <% @takingt = ((@core_c_2 + @op_c_2) * 100) / @totalc %>
+                <% @wtaket = ((@core_c_3 + @op_c_3) * 100) / @totalc %>
                 <% @need = @totalc - @core_c_1 - @op_c %>
               <% else %>
                 <% @need = 0 %>
@@ -191,6 +193,9 @@
                 <% @takingt = 0 %>
                 <% @wtaket = 0 %>
               <% end %>
+
+
+
               <div class="accordion span6 pull-left" id="accordian<%= i %><%= k %>">                        
                 <div class="accordion-group">
                   <div class="accordion-heading">
@@ -200,7 +205,7 @@
                   </div>
                   <div id="collapse<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
                     <div class="accordion-inner" >
-                      <p><b>Percent Complete: </b><%= @takent %>%<%#content goes here position[:reason]%></p>
+                      <p><b>Percent Complete: </b><%= @takent + @wtaket %>%<%#content goes here position[:reason]%></p>
                       <div class="progress">
                         <div class="bar bar-success" style="width: <%= @takent %>%;"></div>
                         <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
@@ -213,14 +218,23 @@
                       <ul>
                        <% e = corereq.ccourses.all %>
                         <% count = 0 %>
+                        <% coun = 0 %>
                         <li>
                         <% for course in e %>
                           <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
                             <%= course.department + " " + course.num.to_s %>
                             <% count += 1 %>
+                            <% coun += 1 %>
+                            <% if coun != e.length %>
+                            ,
+                            <% end %>
                           <% else %>
                             <div style = "text-decoration: line-through;" >
                               <%= course.department + " " + course.num.to_s %>
+                              <% coun += 1 %>
+                              <% if coun != e.length %>
+                              ,
+                              <% end %>
                             </div>
                           <% end %>
                         <% end %>
