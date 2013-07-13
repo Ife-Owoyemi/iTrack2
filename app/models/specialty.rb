@@ -1,5 +1,5 @@
 class Specialty < ActiveRecord::Base
-  attr_accessible :achievementname_id, :specialty, :corereqs_attributes, :opreqs_attributes
+  attr_accessible :achievementname_id, :specialty, :corereqs_attributes, :opreqs_attributes, :notes
   belongs_to :achievementname
   has_many :corereqs, dependent: :destroy
   has_many :opreqs, dependent: :destroy

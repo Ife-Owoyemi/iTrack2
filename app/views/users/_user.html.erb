@@ -1,6 +1,20 @@
+<% i = 0 %>
 <li>
-  <%= gravatar_for user, size: 52 %>
-  <%= link_to user.name, user %>
+  <%#= gravatar_for user, size: 52 %>
+  <h5><%= link_to user.name, user %></h5>
+  <b>Dream Job: </b><%= user.dreamJob %><br/>
+  <b>Year: </b><%= user.year %><br/>
+  <b>Tracks: </b>
+  <% a = user.userachievementtypes.all %>
+  <% a.each do |some| %>
+  	<% i += 1 %>
+  	<%= some.achievementname %>
+  	<% if i != a.length %>
+  	,
+  	<% end %>
+  <% end %>
+  
+
   <% if current_user.admin? && !current_user?(user) %>
   	| <%= link_to "delete", user, method: :delete,
   								data: { confirm: "You sure?" } %>

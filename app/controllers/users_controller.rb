@@ -21,6 +21,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @institution = Institution.where(:name => "Rice University")
     @users = User.paginate(page: params[:page])
   end
 
