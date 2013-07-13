@@ -43,13 +43,15 @@
                     <% if taken[course.department].has_key?(course.num.to_s) %>
                       <% @core_c_1 += 1 %>
                     <% end %>
-                  <% elsif taking.has_key?(course.department) %>
+                  <% end %>
+                  <% if taking.has_key?(course.department) %>
                     <% if taking[course.department].has_key?(course.num.to_s) %>
                       <% @core_c_2 += 1 %>
                     <% end %>
-                  <% elsif wtake.has_key?(course.department) %>
+                  <% end %>
+                  <% if wtake.has_key?(course.department) %>
                     <% if wtake[course.department].has_key?(course.num.to_s) %>
-                      <% @core_c_3 += 1 %>
+                      <%= @core_c_3 += 1 %>
                     <% end %>
                   <% end %>
 
@@ -92,12 +94,14 @@
                         <% @op_c_m += 1 %>
                         <% @op_c_m_1 += 1 %>
                       <% end %>
-                    <% elsif taking.has_key?(course.department) %>
+                    <% end %>
+                    <% if taking.has_key?(course.department) %>
                       <% if taking[course.department].has_key?(course.num.to_s) %>
                         <% @op_c_m += 1 %>
                         <% @op_c_m_2 += 1 %>
                       <% end %>
-                    <% elsif wtake.has_key?(course.department) %>
+                    <% end %>
+                    <% if wtake.has_key?(course.department) %>
                       <% if wtake[course.department].has_key?(course.num.to_s) %>
                         <% @op_c_m += 1 %>
                         <% @op_c_m_3 += 1%>
