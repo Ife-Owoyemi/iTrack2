@@ -63,23 +63,30 @@ Dir::foreach('db/course_catalog_rice'){|field|
   end
 }
 =end
-
+Institution.delete_all
 @achieve = ["BA", "BS", "BA-S", "Minors", "Pre-med"]
-Institution.create!(:name => "Rice University", :id => 1, :nickname => "Rice")
-institution = Institution.find(1)
+Institution.create(:name => "Rice University", :id => 1, :nickname => "Rice")
+@instst = Institution.all
+@instst.each do |insts|
+  @inst = insts.id
+end
+institution = Institution.find(@inst)
 
 Dir::foreach('db/institutions/rice'){|achievementtype|
   if @achieve.include?(achievementtype)
     a = institution.achievementtypes.create!(:achievementtype => achievementtype)
     Dir::foreach("db/institutions/rice/#{achievementtype}"){|college|
       if college.length > 2 and college != ".DS_Store"
-        b = a.colleges.create!(:college => college)
+        @college = college.gsub(/_/, ' ')
+        b = a.colleges.create!(:college => @college)
         Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}"){|achievementname|
           if achievementname.length > 2 and achievementname != ".DS_Store"
-            c = b.achievementnames.create!(:achievementname => achievementname)
+            @achievementname = achievementname.gsub(/_/, ' ')
+            c = b.achievementnames.create!(:achievementname => @achievementname)
             Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}"){|specialty|
               if specialty.length > 2 and specialty != ".DS_Store"
-                d = c.specialties.create!(:specialty => specialty)
+                @specialty = specialty.gsub(/_/, ' ')
+                d = c.specialties.create!(:specialty => @specialty)
                 Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}"){|reqtype|
                   if reqtype.length > 2 and reqtype != ".DS_Store" and reqtype == "Core"
                     Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Core"){|corereq|
@@ -87,7 +94,8 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                         count = 0
                         CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Core/#{corereq}") do |cell|
                           if count == 0
-                            @z = d.corereqs.create!(:corereqname => corereq[0..(corereq.length-4)], :cgoal => cell[0])
+                            @corereq = corereq.gsub(/_/, ' ')
+                            @z = d.corereqs.create!(:corereqname => @corereq[0..(@corereq.length-5)], :cgoal => cell[0])
                             count += 1
                           else
                             @z.ccourses.create!(:department => cell[0], :num => cell[1])
@@ -99,13 +107,17 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                   if reqtype.length > 2 and reqtype != ".DS_Store" and reqtype == "Multi"
                     Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi"){|opreq|
                       if opreq.length > 2 and opreq != ".DS_Store"
-                        f = d.opreqs.create!(:opreqname => opreq)
+                        @opreq = opreq.gsub(/_/, ' ')
+                        f = d.opreqs.create!(:opreqname => @opreq)
                         Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi/#{opreq}"){|option|
                           if option.length > 2 and option != ".DS_Store"
                             count = 0
                             CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi/#{opreq}/#{option}") do |cell|
                               if count == 0
-                                @g = f.options.create!(:optionname => option[0..(option.length-4)], :cgoal => cell[0])
+
+                                @option = option.gsub(/_/, ' ')
+                                @g = f.options.create!(:optionname => @option[0..(@option.length-7)], :cgoal => cell[0])
+
                                 count += 1
                               else
                                 @g.ocourses.create!(:department => cell[0], :num => cell[1])
