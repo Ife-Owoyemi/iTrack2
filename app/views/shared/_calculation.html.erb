@@ -109,6 +109,15 @@
                   <% if option.cgoal.to_i != 0 %>
                     <% if (@op_c_m * 100)/ option.cgoal.to_i >= @op_c_biggest %>
 
+                       <% if @op_c_1 == nil %>
+                          <% @op_c_1 = 0 %>
+                        <% end %>
+                        <% if @op_c_2 == nil %>
+                          <% @op_c_2 = 0 %>
+                        <% end %>
+                        <% if @op_c_3 == nil %>
+                          <% @op_c_3 = 0 %>
+                        <% end %>
                       <% if option.cgoal.to_i < @op_c_m %>
                         <% @op_c_big = option.cgoal.to_i %>
                         <% if option.cgoal.to_i < @op_c_1 %>
@@ -137,8 +146,6 @@
                   <% @op_c += @op_c_big %>
                   <% if @op_big_1 != nil %>
                     <% @op_c_1 += @op_big_1 %>
-                  
-                    
                   <% end %>
                   <% if @op_big_2 != nil %>
                     <% @op_c_2 += @op_big_2 %>
