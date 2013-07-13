@@ -173,6 +173,7 @@ DEPENDENCIES
   database_cleaner (= 0.7.0)
   faker (= 1.0.1)
   formtastic
+  haml
   haml-rails (>= 0.3.4)
   jquery-rails (= 2.0.2)
   nested_form

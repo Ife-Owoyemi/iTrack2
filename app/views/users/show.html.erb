@@ -161,8 +161,11 @@
                                   <% end %>
                                 </td>
                                 <% if course.institution == "Rice" %>
-                                  <% hours += course.credits %>
-                                  <% @ricehours += course.credits %>
+                                  <% if course.credits != nil %>
+                                    <% hours += course.credits %>
+                                    <% @ricehours += course.credits %>
+                                  <% end %>
+                                  
                                   <% if gpascore.include?(course.grade) %>
                                     <% sgpa += grades[course.grade].to_f * course.credits.to_f %>
                                     <% sgpah += course.credits.to_f %>

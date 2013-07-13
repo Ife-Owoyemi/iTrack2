@@ -44,18 +44,24 @@
                         <% e = corereq.ccourses.all %>
                         <%# ------------------------------------------------------%>
                         <% for course in e %>
-
+                          
                           <% if taken.has_key?(course.department) %>
-                            <% if taken[course.department].has_key?(course.num) %>
+                            
+
+                            <% if taken[course.department].has_key?(course.num.to_s) %>
+
                               <% @core_c_1 += 1 %>
+                              
                             <% end %>
                           <% elsif taking.has_key?(course.department) %>
-                            <% if taking[course.department].has_key?(course.num) %>
+                            <% if taking[course.department].has_key?(course.num.to_s) %>
                               <% @core_c_2 += 1 %>
+                             
                             <% end %>
                           <% elsif wtake.has_key?(course.department) %>
-                            <% if wtake[course.department].has_key?(course.num) %>
+                            <% if wtake[course.department].has_key?(course.num.to_s) %>
                               <% @core_c_3 += 1 %>
+                              
                             <% end %>
                           <% end %>
 
@@ -94,19 +100,22 @@
                             <% op_c_all += 1 %>
 
                             <% if taken.has_key?(course.department) %>
-                              <% if taken[course.department].has_key?(course.num) %>
+                              <% if taken[course.department].has_key?(course.num.to_i) %>
                                 <% op_c_m += 1 %>
                                 <% op_c_m_1 += 1 %>
+                               
                               <% end %>
                             <% elsif taking.has_key?(course.department) %>
-                              <% if taking[course.department].has_key?(course.num) %>
+                              <% if taking[course.department].has_key?(course.num.to_i) %>
                                 <% op_c_m += 1 %>
                                 <% op_c_m_2 += 1 %>
+                               
                               <% end %>
                             <% elsif wtake.has_key?(course.department) %>
-                              <% if wtake[course.department].has_key?(course.num) %>
+                              <% if wtake[course.department].has_key?(course.num.to_i) %>
                                 <% op_c_m += 1 %>
                                 <% op_c_m_3 += 1%>
+                                
                               <% end %>
                             <% end %>
 
@@ -142,9 +151,7 @@
                           <% end %>
                           <% op_c += op_c_big %>
                           <% if @op_big_1 != nil %>
-                            <% @op_c_1 += @op_big_1 %>
-                          
-                            
+                            <% @op_c_1 += @op_big_1 %>  
                           <% end %>
                           <% if @op_big_2 != nil %>
                             <% @op_c_2 += @op_big_2 %>
@@ -157,6 +164,7 @@
                         <%# ------------------------------------------------------%>
                         
                       <% end %>
+                      
                       <% if @totalc != 0 and @totalc != nil%>
                         <% if @op_c_1 == nil %>
                          <%  @op_c_1 = 0 %>
