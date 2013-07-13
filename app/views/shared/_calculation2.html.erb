@@ -112,28 +112,28 @@
 
                           <% end %>
                           <%# ------------------------------------------------------%>
-                          <% if op_c_all != 0 %>
+                          <% if option.cgoal.to_i != 0 %>
                             <% if (op_c_m * 100)/ option.cgoal.to_i >= op_c_biggest %>
 
                               <% if option.cgoal.to_i < op_c_m %>
                                 <% op_c_big = option.cgoal.to_i %>
                                 <% if option.cgoal.to_i < op_c_1 %>
-                                  <% op_c_big_1 = option.cgoal.to_i %>
-                                  <% op_c_big_2 = 0 %>
-                                  <% op_c_big_3 = 0 %>
+                                  <% @op_c_big_1 = option.cgoal.to_i %>
+                                  <% @op_c_big_2 = 0 %>
+                                  <% @op_c_big_3 = 0 %>
                                 <% elsif option.cgoal.to_i < op_c_1 + op_c_2 %>
-                                  <% op_c_big_1 = op_c_1 %>
-                                  <% op_c_big_2 = option.cgoal.to_i - op_c_1 %>
+                                  <% @op_c_big_1 = op_c_1 %>
+                                  <% @op_c_big_2 = option.cgoal.to_i - op_c_1 %>
                                 <% elsif option.cgoal.to_i < opt_c_1 + op_c_2 + op_c_3 %>
-                                  <% op_c_big_1 = op_c_1 %>
-                                  <% op_c_big_2 = op_c_2 %>
-                                  <% op_c_big_3 = option.cgoal.to_i - op_c_1 - op_c_2 %>
+                                  <% @op_c_big_1 = op_c_1 %>
+                                  <% @op_c_big_2 = op_c_2 %>
+                                  <% @op_c_big_3 = option.cgoal.to_i - op_c_1 - op_c_2 %>
                                 <% end %>
                               <% else %>
-                                <% op_c_big = op_c_m %>
-                                <% op_c_big_1 = op_c_m_1 %>
-                                <% op_c_big_2 = op_c_m_2 %>
-                                <% op_c_big_3 = op_c_m_3 %>
+                                <% @op_c_big = op_c_m %>
+                                <% @op_c_big_1 = @op_c_m_1.to_i %>
+                                <% @op_c_big_2 = @op_c_m_2.to_i %>
+                                <% @op_c_big_3 = @op_c_m_3.to_i %>
                               <% end %>
 
                               <% op_add = option.cgoal.to_i %>
@@ -141,19 +141,44 @@
                             <% end %>
                           <% end %>
                           <% op_c += op_c_big %>
-                          <% op_c_1 += op_big_1 %>
-                          <% op_c_2 += op_big_2 %>
-                          <% op_c_3 += op_big_3 %>
+                          <% if @op_big_1 != nil %>
+                            <% @op_c_1 += @op_big_1 %>
+                          
+                            
+                          <% end %>
+                          <% if @op_big_2 != nil %>
+                            <% @op_c_2 += @op_big_2 %>
+                          <% end %>
+                          <% if @op_big_3 != nil %>
+                            <% @op_c_3 += @op_big_3 %>
+                          <% end %>
                           <% totalc += op_add  %>
                         <% end %>
                         <%# ------------------------------------------------------%>
                         
                       <% end %>
-                      <% if totalc != 0 %>
-                        <%= core_c %>/<%= op_c %>/<%= totalc %>
-                        <% takent =   ((core_c_1 + op_c_1)*100)  / totalc %> 
-                        <% takingt = ((core_c_2 + op_c_2)*100) / totalc %>
-                        <% wtaket = ((core_c_3 + op_c_3)*100) / totalc %>
+                      <% if totalc != 0 and totalc != nil%>
+                        <% if @op_c_1 == nil %>
+                         <%  @op_c_1 = 0 %>
+                        <% end %>
+                        <% if @op_c_2 == nil %>
+                          <%  @op_c_2 = 0 %>
+                        <% end %>
+                        <% if @op_c_3 == nil %>
+                          <%  @op_c_3 = 0 %>
+                        <% end %>
+                        <% if core_c_1 == nil %>
+                         <%  core_c_1 = 0 %>
+                        <% end %>
+                        <% if core_c_2 == nil %>
+                         <%  core_c_2 = 0 %>
+                        <% end %>
+                        <% if core_c_3 == nil %>
+                         <%  core_c_3 = 0 %>
+                        <% end %>
+                        <% takent =   ((core_c_1 + @op_c_1)*100)  / totalc %> 
+                        <% takingt = ((core_c_2 + @op_c_2)*100) / totalc %>
+                        <% wtaket = ((core_c_3 + @op_c_3)*100) / totalc %>
                         <% need = totalc - core_c_1 - op_c %>
                       <% else %>
                         <% need = 0 %>
@@ -225,7 +250,7 @@
                                     <% end %>
                                   <% end %>
                                   <%# ------------------------------------------------------%>
-                                  <% if op_c_all != 0 %>
+                                  <% if option.cgoal.to_i != 0 %>
                                     <% if (op_c_m * 100)/ option.cgoal.to_i >= op_c_biggest %>
                                       <% if option.cgoal.to_i < op_c_m %>
                                         <% op_c_big = option.cgoal.to_i %>
