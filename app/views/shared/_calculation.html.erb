@@ -14,15 +14,15 @@
 
             <% m = 0 %> 
             <%# ------------------------------------------------------%>
-            <% takent = 0 %>
-            <% takingt = 0 %>
-            <% wtaket = 0 %>
+            <% @takent = 0 %>
+            <% @takingt = 0 %>
+            <% @wtaket = 0 %>
             <% core_completed = 0 %>
             <% option_completed = 0 %>
             <% ex = achievementname.specialties.all %>
             <%# ------------------------------------------------------%>
             <% for specialty in ex %>                   
-              <% totalc = 0 %>
+              <% @totalc = 0 %>
               <% totalh = 0 %>
               <% core_c_1 = 0 %>
               <% core_c_2 = 0 %>
@@ -33,7 +33,7 @@
               <% d = specialty.corereqs.all %> 
               <%# ------------------------------------------------------%>
               <% for corereq in d %>
-                <% totalc += corereq.cgoal.to_i %>
+                <% @totalc += corereq.cgoal.to_i %>
                 <% totalh += corereq.hgoal.to_i %>
                 <% e = corereq.ccourses.all %>
                 <%# ------------------------------------------------------%>
@@ -56,10 +56,10 @@
                 <% end %>
               <% end %>
               <%# ------------------------------------------------------%>
-              <% if totalc != 0 %>
-                <% core_completed_1 = (core_c_1 * 100) / totalc %>
-                <% core_completed_2 = (core_c_2 * 100) / totalc %>
-                <% core_completed_3 = (core_c_3 * 100) / totalc %>
+              <% if @totalc != 0 %>
+                <% core_completed_1 = (core_c_1 * 100) / @totalc %>
+                <% core_completed_2 = (core_c_2 * 100) / @totalc %>
+                <% core_completed_3 = (core_c_3 * 100) / @totalc %>
               <% else %>
                 <% core_completed_1 = 0 #taken %>
                 <% core_completed_2 = 0 #taking %>
@@ -146,12 +146,12 @@
                   <% if @op_big_3 != nil %>
                     <% @op_c_3 += @op_big_3 %>
                   <% end %>
-                  <% totalc += op_add  %>
+                  <% @totalc += op_add  %>
                 <% end %>
                 <%# ------------------------------------------------------%>
                 
               <% end %>
-              <% if totalc != 0 and totalc != nil%>
+              <% if @totalc != 0 and @totalc != nil%>
                 <% if @op_c_1 == nil %>
                  <%  @op_c_1 = 0 %>
                 <% end %>
@@ -170,30 +170,30 @@
                 <% if core_c_3 == nil %>
                  <%  core_c_3 = 0 %>
                 <% end %>
-                <% takent =   ((core_c_1 + @op_c_1)*100)  / totalc %> 
-                <% takingt = ((core_c_2 + @op_c_2)*100) / totalc %>
-                <% wtaket = ((core_c_3 + @op_c_3)*100) / totalc %>
-                <% need = totalc - core_c_1 - op_c %>
+                <% @takent =   ((core_c_1 + @op_c_1)*100)  / @totalc %> 
+                <% @takingt = ((core_c_2 + @op_c_2)*100) / @totalc %>
+                <% @wtaket = ((core_c_3 + @op_c_3)*100) / @totalc %>
+                <% @need = totalc - core_c_1 - op_c %>
               <% else %>
-                <% need = 0 %>
-                <% takent = 0 %>
-                <% takingt = 0 %>
-                <% wtaket = 0 %>
+                <% @need = 0 %>
+                <% @takent = 0 %>
+                <% @takingt = 0 %>
+                <% @wtaket = 0 %>
               <% end %>
               <div class="accordion span6 pull-left" id="accordian<%= i %><%= k %>">                        
                 <div class="accordion-group">
                   <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %><%= k %>" href="#collapse<%= i %><%= k %><%= m %>">
-                      <%= specialty.specialty %>: <%= takent %>%, <%= need %> Courses Left
+                      <%= specialty.specialty %>: <%= @takent %>%, <%= @need %> Courses Left
                     </a>
                   </div>
                   <div id="collapse<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
                     <div class="accordion-inner" >
-                      <p><b>Percent Complete: </b><%= takent %>%<%#content goes here position[:reason]%></p>
+                      <p><b>Percent Complete: </b><%= @takent %>%<%#content goes here position[:reason]%></p>
                       <div class="progress">
-                        <div class="bar bar-success" style="width: <%= takent %>%;"></div>
-                        <div class="bar bar-warning" style="width: <%= takingt %>%;"></div>
-                        <div class="bar bar-danger" style="width: <%= wtaket %>%;"></div>
+                        <div class="bar bar-success" style="width: <%= @takent %>%;"></div>
+                        <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
+                        <div class="bar bar-danger" style="width: <%= @wtaket %>%;"></div>
                       </div>
                       <% d = specialty.corereqs.all %>
                       <h4>Core Requirements</h4>
@@ -259,7 +259,7 @@
                             <% end %>
                           <% end %>
                           <% op_c += op_c_big %>
-                          <% totalc += op_add  %>
+                          <% @totalc += op_add  %>
                         <% end %>
                         <%# ---------------------------------------------------%>
                         <b><%= opreq.opreqname %></b><br />
