@@ -59,6 +59,8 @@
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %>" href="#collapse<%= k %><%= l %><%= m %><%= n %>">
                                           <%= specialty.label "Specialty" %><%= specialty.text_field(:specialty) %><br/>
                                           <%= specialty.label "Notes" %><%= specialty.text_area :notes, :size => "30x10" %>
+                                          <%= specialty.label "Faculty Advisor" %><%= specialty.text_field :advisor %>
+                                          <%= specialty.label "Link" %><%= specialty.text_field :linkhome %>
                                         </a>
                                       </div>
                                       <div id="collapse<%= k %><%= l %><%= m %><%= n %>"  class="accordion-body collapse">

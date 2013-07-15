@@ -200,10 +200,7 @@
           <% ia += 1 %>
         <% end %>
       </div>
-      <% if @peep == "yes" %>
-          <%= link_to 'Edit', edit_user_path(@user) %> |                  
-      <% end %>
-      <%= link_to 'Back', users_path %>
+      
     </section>
     <section>
       <h4>Graduation Requirements</h4>
@@ -286,6 +283,10 @@
           </div>
         </div>
       </div>
+      <% if @peep == "yes" %>
+          <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+      <% end %>
+      <%= link_to 'Back', users_path %>
     </section>
   </aside>
 </div>

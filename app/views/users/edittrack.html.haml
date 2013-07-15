@@ -1,0 +1,17 @@
+%h1 Update your Tracks
+%div.pull-left
+  = semantic_form_for @user do |f|
+    - if @user.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:"
+        %ul
+          - @user.errors.full_messages.each do |msg|
+            %li= msg
+    = f.inputs :college do
+      #userachievementtype
+        = f.semantic_fields_for :userachievementtypes do |userachievementtypes|
+          = render 'userachievementtype_fields', :f => userachievementtypes
+      .links
+        = link_to_add_association 'add achievement type', f, :userachievementtypes, :class => "btn"
+      = f.actions do
+        = f.action :submit, :as => :button

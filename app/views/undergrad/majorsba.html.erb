@@ -5,7 +5,7 @@
 <% coursearray = Array.new %>
 
 <% if signed_in? %>
-  <h1>Majors BA</h1>
+  <h1>BA</h1><p>Bachelor of Arts Degrees</p>
   <hr width="100%">
   <%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
   <ul class="nav nav-tabs">

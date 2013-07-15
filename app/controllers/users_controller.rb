@@ -51,9 +51,19 @@ class UsersController < ApplicationController
   end
 
   def edit 
-
+    @user = current_user
     @institution = Institution.where(:nickname => current_user.college)
     
+  end
+
+  def edituser
+    @user = current_user
+    @institution = Institution.where(:nickname => current_user.college)
+  end
+
+  def edittrack
+    @user = current_user
+    @institution = Institution.where(:nickname => current_user.college)
   end
 
   def update

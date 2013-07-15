@@ -10,7 +10,8 @@ ISwitched1::Application.routes.draw do
   get "undergrad/majorsbas"
   get "undergrad/majorsbs"
   get "undergrad/minors"
-
+  get "users/edituser"
+  get "users/edittrack"
   root to: 'static_pages#home'
 
   match '/signup', to: 'users#new'

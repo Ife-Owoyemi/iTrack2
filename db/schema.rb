@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130713160539) do
+ActiveRecord::Schema.define(:version => 20130714214214) do
 
   create_table "achievementnames", :force => true do |t|
     t.integer  "college_id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20130713160539) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.text     "notes"
+    t.string   "linkhome"
+    t.string   "advisor"
   end
 
   create_table "userachievementtypes", :force => true do |t|
