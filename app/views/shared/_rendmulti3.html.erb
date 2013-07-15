@@ -1,0 +1,26 @@
+<% if complete != 1 %>  
+  <% g = opreq.options.all %>
+  <% for option in g %>
+    <b><div><%= option.optionname %></div></b>
+    <% h = option.ocourses.all %>
+    <% count = 0 %>
+    <% coun = 0 %>
+    <% for course in h %>
+      <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
+        <%= course.department + " " + course.num.to_s %>
+        <% count += 1 %>
+        <% coun += 1 %>
+        <% if coun != h.length %>
+        ,
+        <% end %>
+      <% else %>
+        <div style = "text-decoration: line-through; display:inline-block;" ><%= course.department + " " + course.num.to_s %></div>
+        <% coun += 1 %>
+        <% if coun != h.length %>
+        ,
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>    
+<% end %>
+

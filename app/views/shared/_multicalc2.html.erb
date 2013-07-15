@@ -1,0 +1,22 @@
+<% for course in h %>
+  <%# op_c_all += 1 %>
+
+  <% if taken.has_key?(course.department) %>
+    <% if taken[course.department].has_key?(course.num.to_s) %>
+      <% @op_c_m += 1 %>
+      <% @op_c_m_1 += 1 %>
+    <% end %>
+  <% end %>
+  <% if taking.has_key?(course.department) %>
+    <% if taking[course.department].has_key?(course.num.to_s) %>
+      <% @op_c_m += 1 %>
+      <% @op_c_m_2 += 1 %>
+    <% end %>
+  <% end %>
+  <% if wtake.has_key?(course.department) %>
+    <% if wtake[course.department].has_key?(course.num.to_s) %>
+      <% @op_c_m += 1 %>
+      <% @op_c_m_3 += 1%>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,26 @@
+<% for opreq in f %>
+  <%# --------------------------------------------------%>
+  <% @op_c_biggest = 0 %>     
+  <% complete = 0 %>
+  <% g = opreq.options.all %>
+  <%# ------------------------------------------------------%>
+  <% for option in g %> 
+    <% @op_c_all = 0 %>
+    <% @op_c_m = 0 %>
+    <% @op_add = 0 %>
+    <% @op_c_big = 0 %>
+    <% h = option.ocourses.all %>
+    <%# ------------------------------------------------------%>
+    <%= render "shared/rendmulti2", :h => h, :user_courses => user_courses, :@coursearray => coursearray, :option => option, :@op_c_all => @op_c_all, :@op_c_m => @op_c_m, :@op_c_biggest => @op_c_biggest, :@op_c_m => @op_c_m, :@op_c_big => @op_c_big, :@op_add => @op_add, :@op_c => @op_c, :@totalc => @totalc, :@op_add => @op_add %>
+    <%# ---------------------------------------------------%>
+  <% end %>
+  <h5><%= opreq.opreqname %></h5>
+  <%# ---------------------------------------------------%>
+  <%= render "shared/rendmulti3", :opreq => opreq, :complete => complete %>
+  <%# ---------------------------------------------------%>
+  <% if complete == 1 %>
+    <ul><li>Requirement Complete</li></ul>
+  <% end %>
+  <br/>
+  <br/>
+<% end %>

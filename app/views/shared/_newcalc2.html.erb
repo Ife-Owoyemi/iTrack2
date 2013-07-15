@@ -1,0 +1,58 @@
+<% @core_c_1 = 0 %>
+<% @core_c_2 = 0 %>
+<% @core_c_3 = 0 %>
+<% @op_c = 0 %>
+<% @op_c_1 = 0 %>
+<% @op_c_2 = 0 %>
+<% @op_c_3 = 0 %>
+<% @totalc = 0 %>
+<% totalh = 0 %>
+<% core_h = 0 %>
+<% need = 0 %>
+<% d = specialty.corereqs.all %>
+<%# ------------------------------------------------------%>
+<%= render "shared/corecalc", :d => d, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
+<%# ------------------------------------------------------%>
+<% f = specialty.opreqs.all %>
+<%# ------------------------------------------------------%>
+<%= render "shared/multicalc1", :f => f, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3 %>
+<%# ------------------------------------------------------%>
+<%= render "shared/finalcalc", :@totalc => @totalc, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :@need => @need, :@op_c => @op_c %>
+<%# ------------------------------------------------------%>
+<div class="accordion span6 pull-left" id="accordian<%= i %><%= k %>">                        
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %><%= k %>" href="#collapse<%= i %><%= k %><%= m %>">
+        <%= specialty.specialty %>: <%= @takent %>%, <%= @need %> Courses Left
+      </a>
+    </div>
+    <div id="collapse<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+      <div class="accordion-inner" >
+        <p><b>Percent Complete: </b><%= @takent + @wtaket + @takingt%>%<%#content goes here position[:reason]%></p>
+        <div class="progress">
+          <div class="bar bar-success" style="width: <%= @takent %>%;"></div>
+          <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
+          <div class="bar bar-danger" style="width: <%= @wtaket %>%;"></div>
+        </div>
+        <%# --------------------------------------------------%>
+        <% d = specialty.corereqs.all %>
+        <%# --------------------------------------------------%>
+        <h4>Core Requirements</h4>
+        <%# --------------------------------------------------%>
+        <%= render "shared/rendcore", :d => d, :coursearray => coursearray %>
+        <%# --------------------------------------------------%>
+        <% f = specialty.opreqs.all %>
+        <h4>Multi Option Requirements</h4>
+        <%# --------------------------------------------------%>
+        <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses %>
+        <%# --------------------------------------------------%>
+        <h4>Notes</h4>
+        <%= specialty.notes %>
+        <h4>Advisor</h4>
+        <%= specialty.advisor %>
+        <h4>Link Page</h4>
+        <%= specialty.linkhome %>
+      </div>
+    </div>
+  </div> 
+</div>
