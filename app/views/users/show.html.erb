@@ -163,7 +163,7 @@
                                 <% if course.institution == "Rice" %>
                                   <% if course.credits != nil %>
                                     <% hours += course.credits %>
-                                    <% @ricehours += course.credits %>
+                                    
                                   <% end %>
                                   
                                   <% if gpascore.include?(course.grade) %>
@@ -220,29 +220,30 @@
 
           <div class="tab-pane" id="<%= ia %>">
             <% user_courses[department].each_key do |ind| %>
-            <div>
-              <%= department %> <%= ind %>
-
-            </div>
+              <div>
+                <%= department %> <%= ind %>
+              </div>
               <% dephours += user_courses[department][ind] %>
               <% depcourses += 1 %>
-              <% if user_courses[department][ind] >= 300 %>
+              <% if ind.to_i >= 300 %>
                 <% ulhours += user_courses[department][ind] %>
                 <% ulcourses += 1 %>
               <% end %>
             <% end %>
-            <div>
-              <b>Upper-level Hours: </b><%= ulhours %>
-            </div>
-            <div>
-              <b>Total Hours: </b><%= dephours %>
-            </div>
-            <div>
-              <b>Upper-level Courses: </b><%= ulcourses %>
-            </div>
-            <div>
-              <b>Total Courses: </b><%= depcourses %>
-            </div>
+              <div>
+                <b>Upper-level Courses: </b><%= ulcourses %>
+              </div>
+              <div>
+                <b>Total Courses: </b><%= depcourses %>
+              </div>
+
+              <div>
+                <b>Upper-level Hours: </b><%= ulhours %>
+              </div>
+              <div>
+                <b>Total Hours: </b><%= dephours %>
+              </div>
+              
           </div>   
           <% ia += 1 %>
         <% end %>

@@ -1,10 +1,20 @@
 .nested-fields
   = f.inputs :division do
-    %h4 Semester
-    = f.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => 'width: 100px', :class => "" }, :input_html => {:placeholder => "Fall",:class => "pull-left"}
-    = link_to_remove_association "remove semester", f, :class => "btn"
-    %h5 Courses
-    #course
-      = f.semantic_fields_for :usercourses do |course|
-        = render 'usercourse_fields', :f => course
-      = link_to_add_association "add course", f, :usercourses, :class => "btn"
+    .accordion-group
+      .accordion-heading
+        %a.accordion-toggle{"data-parent" => "#accordion3", "data-toggle" => "collapse", :href => "#collapsef#{@iag}"}
+          %h4 Semester
+          = f.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:placeholder => "Fall",:class => "input-small"}
+          = link_to_remove_association "remove semester", f, :class => "btn"
+          %br
+          %br
+          #course
+            - @iaf = 0
+            .accordion-body.collapse{:id => "collapsef#{@iag}"}
+              -@iag += 1
+              .accordion-inner
+                #accordian2.accordion
+                  %h5 Courses
+                  = f.semantic_fields_for :usercourses do |course|
+                    = render 'usercourse_fields', :f => course, :@iaf => @iaf
+                  = link_to_add_association "add course", f, :usercourses, :class => "btn"

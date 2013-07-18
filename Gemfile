@@ -9,6 +9,7 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails', '2.0.2'
 gem 'nested_form'
 gem 'formtastic'
+gem "formtastic-bootstrap"
 gem 'cocoon'
 gem 'haml'
 gem 'haml-rails', '>= 0.3.4', :group => :development

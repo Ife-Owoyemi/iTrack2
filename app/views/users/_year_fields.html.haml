@@ -1,10 +1,12 @@
 .nested-fields
   = f.inputs :number do
     %h3 Year
-    = f.input :year,:label => false, :wrapper_html => {  :style => 'width: 100px', :class => "" }, :input_html => {:placeholder => "2013", :class => "pull-left"}
+    = f.input :year,:label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:placeholder => "2013", :class => "input-small"}
     = link_to_remove_association "remove year", f, :class => "btn"
     #semester
-      = f.semantic_fields_for :semesters do |semester|
-        = render 'semester_fields', :f => semester
-      = link_to_add_association "add semester", f, :semesters, :class => "btn"
-      %hr
+      - @iag = 0
+      #accordian3.accordion
+        = f.semantic_fields_for :semesters do |semester|
+          = render 'semester_fields', :f => semester, :@iag => @iag
+        = link_to_add_association "add semester", f, :semesters, :class => "btn"
+        %hr
