@@ -245,9 +245,9 @@
 	      <% gg = dep.bounds.all %>
 	      <% if taken.has_key?(dep.department) %>
 	        <% for num in gg %>
-	          <% taken[dep.department].each do |number| %>
+	          <% taken[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number >= num.min and number <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
 	              <% end %>
 	            <% end %>
@@ -256,9 +256,9 @@
 	      <% end %>
 	      <% if taking.has_key?(dep.department) %>
 	        <% for num in gg %>
-	          <% taking[dep.department].each do |number| %>
+	          <% taking[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number >= num.min and number <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_2 += taking[dep.department][number] %>
 	              <% end %>
 	            <% end %>
@@ -267,9 +267,9 @@
 	      <% end %>
 	      <% if wtake.has_key?(dep.department) %>
 	        <% for num in gg %>
-	          <% wtake[dep.department].each do |number| %>
+	          <% wtake[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number >= num.min and number <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_3 += wtake[dep.department][number] %>
 	              <% end %>
 	            <% end %>
