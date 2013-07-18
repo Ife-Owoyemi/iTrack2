@@ -2,7 +2,7 @@
   = f.inputs :institution, :department, :num, :credits, :status, :prof, :profquality, :hpweek, :follows, :nopprojects, :nogprojects, :noessays, :nomidterms, :nofinals, :suggest do
     .accordion-group
       .accordion-heading
-        %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseg#{@iaf}"}
+        %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseg#{@iaf}#{@iag}"}
           %li  
             = f.input :institution, :label => false, :as => :select, :collection => ["Rice", "AP", "Other"], :wrapper_html => { :class => "float" },  :input_html => {:style => '',:placeholder => "Rice",:class => "input-small"}
           %li
@@ -12,7 +12,7 @@
           = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float" }, :input_html => {:style => '',:placeholder => "3", :class => "special input-mini"}
           = f.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"}
           = f.input :grade, :as => :select, :collection => ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs", "AP 3", "AP 4", "AP 5"], :label => "Grade", :wrapper_html => {  :style => '', :class => "float" }, :input_html => {:style => '', :class => "input-small"}
-      .accordion-body.collapse{:id => "collapseg#{@iaf}"}
+      .accordion-body.collapse{:id => "collapseg#{@iaf}#{@iag}"}
         - @iaf += 1
         .accordion-inner
           = f.input :prof, :label => "Prof Name", :wrapper_html => {:style => "", :class => " " }, :input_html => {:style => "", :placeholder => "Dr. Richard Tapia",:class => ""}

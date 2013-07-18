@@ -16,5 +16,5 @@
                 #accordian2.accordion
                   %h5 Courses
                   = f.semantic_fields_for :usercourses do |course|
-                    = render 'usercourse_fields', :f => course, :@iaf => @iaf
+                    = render 'usercourse_fields', :f => course, :@iaf => @iaf, :@iag => @iag
                   = link_to_add_association "add course", f, :usercourses, :class => "btn"
