@@ -129,6 +129,58 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                       end
                     }
                   end
+                  if reqtype.length > 2 and reqtype != ".DS_Store" and reqtype == "Depnum"
+                    Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum"){|depnumreq|
+                      if depnumreq.length > 2 and depnumreq != ".DS_Store"
+                        @depnumreq = depnumreq.gsub(/_/, ' ')
+                        count = 0
+                        cds = 0
+
+                        @depnumreq.each_char {|c|
+                          if c == "-"
+                            if count == 0
+                              print @p1 = cds
+                            elsif count == 1
+                              print @p2 = cds
+                            elsif count == 2
+                              print @p3 = cds
+                            end
+                            count += 1
+                          end
+                          cds += 1
+                        }
+                        fa = d.depnumreqs.create!(:depnumreqname => @depnumreq[0..@p1], :cgoal => @depnumreq[(@p1 + 1)..@p2], :hgoal => @depnumreq[(@p2 + 1)..@p3], :doublecount => @depnumreq[(@p3 + 1)..(@depnumreq.length - 1)])
+                        Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum/#{depnumreq}"){|depabbr|
+                          if depabbr.length > 2 and depabbr != ".DS_Store"
+                            @depabbr = depabbr.gsub(/_/, ' ')
+                            fb = fa.deps.create!(:department => @depabbr)
+                            Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum/#{depnumreq}/#{depabbr}"){|reqtype|
+                              if reqtype.length > 2 and reqtype != ".DS_Store"
+                                if reqtype == "Bound.csv"
+                                  count = 0
+                                  CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum/#{depnumreq}/#{depabbr}/#{reqtype}") do |cell|
+                                    fb.bounds.create!(:min => cell[0], :max => cell[1])
+                                  end
+                                end
+                                if reqtype == "Exceptions.csv"
+                                  count = 0
+                                  CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum/#{depnumreq}/#{depabbr}/#{reqtype}") do |cell|
+                                    fb.cexceptions.create!(:department => cell[0], :num => cell[1])
+                                  end
+                                end
+                                if reqtype == "Lists.csv"
+                                  count = 0
+                                  CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Depnum/#{depnumreq}/#{depabbr}/#{reqtype}") do |cell|
+                                    fb.clists.create!(:department => cell[0], :num => cell[1])
+                                  end
+                                end
+                              end
+                            }
+                          end
+                        }
+                      end
+                    }
+                  end
                 }
               end
             }

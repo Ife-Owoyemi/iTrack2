@@ -200,7 +200,53 @@
           <% ia += 1 %>
         <% end %>
       </div>
-      
+    </section>
+    <section>
+      <h4>Course Stats</h4>
+      <ul class="nav nav-tabs">
+        <% ia = 25 %>
+        <% user_courses.each_key do |department| %>
+          <li><a href="#<%= ia %>" data-toggle="tab"><%= department %></a></li>
+          <% ia += 1 %>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <% ia = 25 %>
+        <% user_courses.each_key do |department| %>
+          <% dephours = 0 %>
+          <% depcourses = 0 %>
+          <% ulhours = 0 %>
+          <% ulcourses = 0 %>
+
+          <div class="tab-pane" id="<%= ia %>">
+            <% user_courses[department].each_key do |ind| %>
+            <div>
+              <%= department %> <%= ind %>
+
+            </div>
+              <% dephours += user_courses[department][ind] %>
+              <% depcourses += 1 %>
+              <% if user_courses[department][ind] >= 300 %>
+                <% ulhours += user_courses[department][ind] %>
+                <% ulcourses += 1 %>
+              <% end %>
+            <% end %>
+            <div>
+              <b>Upper-level Hours: </b><%= ulhours %>
+            </div>
+            <div>
+              <b>Total Hours: </b><%= dephours %>
+            </div>
+            <div>
+              <b>Upper-level Courses: </b><%= ulcourses %>
+            </div>
+            <div>
+              <b>Total Courses: </b><%= depcourses %>
+            </div>
+          </div>   
+          <% ia += 1 %>
+        <% end %>
+      </div>
     </section>
     <section>
       <h4>Graduation Requirements</h4>

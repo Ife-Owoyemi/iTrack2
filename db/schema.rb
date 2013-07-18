@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130714214214) do
+ActiveRecord::Schema.define(:version => 20130717190353) do
 
   create_table "achievementnames", :force => true do |t|
     t.integer  "college_id"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(:version => 20130714214214) do
     t.datetime "updated_at",      :null => false
   end
 
+  create_table "bounds", :force => true do |t|
+    t.integer  "dep_id"
+    t.integer  "min"
+    t.integer  "max"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "catalogs", :force => true do |t|
     t.integer  "institution_id"
     t.datetime "created_at",     :null => false
@@ -36,6 +44,22 @@ ActiveRecord::Schema.define(:version => 20130714214214) do
 
   create_table "ccourses", :force => true do |t|
     t.integer  "corereq_id"
+    t.string   "department"
+    t.integer  "num"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "cexceptions", :force => true do |t|
+    t.integer  "dep_id"
+    t.string   "department"
+    t.integer  "num"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "clists", :force => true do |t|
+    t.integer  "dep_id"
     t.string   "department"
     t.integer  "num"
     t.datetime "created_at", :null => false
@@ -78,6 +102,39 @@ ActiveRecord::Schema.define(:version => 20130714214214) do
     t.string   "departmentname"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "depnumreqs", :force => true do |t|
+    t.integer  "specialty_id"
+    t.string   "depnumreqname"
+    t.integer  "cgoal"
+    t.integer  "hgoal"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "doublecount"
+  end
+
+  create_table "deps", :force => true do |t|
+    t.integer  "depnumreq_id"
+    t.string   "department"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "groupopreqs", :force => true do |t|
+    t.integer  "specialty_id"
+    t.string   "groupopreqname"
+    t.integer  "ggoal"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.integer  "groupopreq_id"
+    t.string   "groupname"
+    t.integer  "cgoal"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "institutions", :force => true do |t|
@@ -138,6 +195,7 @@ ActiveRecord::Schema.define(:version => 20130714214214) do
     t.integer  "hgoal"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "group_id"
   end
 
   create_table "relationships", :force => true do |t|

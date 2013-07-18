@@ -1,10 +1,11 @@
 <% if complete != 1 %>  
   <% g = opreq.options.all %>
   <% for option in g %>
-    <b><div><%= option.optionname %></div></b>
+    <ul><li><b><div><%= option.optionname %></div></b>
     <% h = option.ocourses.all %>
     <% count = 0 %>
     <% coun = 0 %>
+    <ul><li>
     <% for course in h %>
       <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
         <%= course.department + " " + course.num.to_s %>
@@ -21,6 +22,11 @@
         <% end %>
       <% end %>
     <% end %>
+    </li></ul></li></ul>
   <% end %>    
+<% end %>
+
+<% if complete == 1 %>
+  <ul><li>Requirement Complete</li></ul>
 <% end %>
 

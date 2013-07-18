@@ -19,7 +19,7 @@
   <div class="tab-content">
     <% i = 0 %>
     <% for college in b %>
-      <%= render "shared/newcalc", :college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray %>
+      <%= render "shared/calculation", :college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray %>
       <% i += 1 %>
     <% end %>
   </div>

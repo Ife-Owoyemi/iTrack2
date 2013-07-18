@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  specialty_id: 1
+  groupopreqname: MyString
+  ggoal: 1
+
+two:
+  specialty_id: 1
+  groupopreqname: MyString
+  ggoal: 1

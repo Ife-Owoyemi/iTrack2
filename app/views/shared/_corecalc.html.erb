@@ -7,16 +7,19 @@
 
     <% if taken.has_key?(course.department) %>
       <% if taken[course.department].has_key?(course.num.to_s) %>
+        <% @used_courses << course.department + " " + course.num.to_s %>
         <% @core_c_1 += 1 %>
       <% end %>
     <% end %>
     <% if taking.has_key?(course.department) %>
       <% if taking[course.department].has_key?(course.num.to_s) %>
+        <% @used_courses << course.department + " " + course.num.to_s %>
         <% @core_c_2 += 1 %>
       <% end %>
     <% end %>
     <% if wtake.has_key?(course.department) %>
       <% if wtake[course.department].has_key?(course.num.to_s) %>
+        <% @used_courses << course.department + " " + course.num.to_s %>
         <%= @core_c_3 += 1 %>
       <% end %>
     <% end %>
