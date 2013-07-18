@@ -5,6 +5,7 @@
     = link_to_remove_association "remove year", f, :class => "btn"
     #semester
       - @iag = 0
+      - @iah += 1
       #accordian3.accordion
         = f.semantic_fields_for :semesters do |semester|
           = render 'semester_fields', :f => semester, :@iag => @iag

@@ -2,7 +2,7 @@
   = f.inputs :division do
     .accordion-group
       .accordion-heading
-        %a.accordion-toggle{"data-parent" => "#accordion3", "data-toggle" => "collapse", :href => "#collapsef#{@iag}"}
+        %a.accordion-toggle{"data-parent" => "#accordion3", "data-toggle" => "collapse", :href => "#collapsef#{@iag}#{@iah}"}
           %h4 Semester
           = f.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:placeholder => "Fall",:class => "input-small"}
           = link_to_remove_association "remove semester", f, :class => "btn"
@@ -10,11 +10,11 @@
           %br
           #course
             - @iaf = 0
-            .accordion-body.collapse{:id => "collapsef#{@iag}"}
+            .accordion-body.collapse{:id => "collapsef#{@iag}#{@iah}"}
               -@iag += 1
               .accordion-inner
                 #accordian2.accordion
                   %h5 Courses
                   = f.semantic_fields_for :usercourses do |course|
-                    = render 'usercourse_fields', :f => course, :@iaf => @iaf, :@iag => @iag
+                    = render 'usercourse_fields', :f => course, :@iaf => @iaf, :@iag => @iag, :@iah => @iah
                   = link_to_add_association "add course", f, :usercourses, :class => "btn"

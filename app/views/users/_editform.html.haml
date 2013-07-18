@@ -8,8 +8,9 @@
   
   = f.inputs :college do
     #year
+      - @iah = 0
       = f.semantic_fields_for :years do |year|
-        = render 'year_fields', :f => year
+        = render 'year_fields', :f => year, :@iah => @iah
     .links
       = link_to_add_association 'add year', f, :years, :class => "btn"
     
