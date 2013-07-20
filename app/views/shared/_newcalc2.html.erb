@@ -48,15 +48,15 @@
         <%# --------------------------------------------------%>
         <% d = specialty.corereqs.all %>
         <h4>Core Requirements</h4>
-        <%= render "shared/rendcore", :d => d, :coursearray => coursearray %>
+        <%= render "shared/rendcore", :d => d, :coursearray => coursearray, :i => i, :k => k, :m => m %>
         <%# --------------------------------------------------%>
         <% f = specialty.opreqs.all %>
         <h4>Multi Option Requirements</h4>
-        <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses %>
+        <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
         <%# --------------------------------------------------%>
         <% f1 = specialty.depnumreqs.all %>
         <h4>Free Electives</h4>
-        <%= render "shared/renddepnum", :fg => f1, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake %>
+        <%= render "shared/renddepnum", :fg => f1, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :k => k, :m => m %>
         <%# --------------------------------------------------%>
         <h4>Notes</h4>
         <%= specialty.notes %>

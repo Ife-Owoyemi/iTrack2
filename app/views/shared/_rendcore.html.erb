@@ -1,30 +1,46 @@
+
+<% mm = 0 %>
 <% for corereq in d %>
-  <h5><%= corereq.corereqname %></h5>
-  <% e = corereq.ccourses.all %>
-  <% count = 0 %>
-  <% coun = 0 %>
-  <ul><li>
-  <% for course in e %>
-    <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
-      <%= course.department + " " + course.num.to_s %>
-      <% count += 1 %>
-      <% coun += 1 %>
-      <% if coun != e.length %>
-      ,
-      <% end %>
-    <% else %>
-      <div style = "text-decoration: line-through;display:inline-block;" >
-        <%= course.department + " " + course.num.to_s %>
-        <% coun += 1 %>
-        <% if coun != e.length %>
-        ,
-        <% end %>
+  <div class="accordion span5 pull-left" id="accordian1<%= i %><%= k %><%= m %>">        
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian1<%= i %><%= k %><%= m %>" href="#collapse1<%= i %><%= k %><%= m %><%= mm %>">
+          <%= corereq.corereqname %>
+        </a>
+
       </div>
-    <% end %>
-  <% end %>
-  </li></ul>
-  <% if count == 0 %>
-    Requirement Complete
-  <% end %>
-  
+      <div id="collapse1<%= i %><%= k %><%= m %><%= mm %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >
+          <% e = corereq.ccourses.all %>
+          <% count = 0 %>
+          <% coun = 0 %>
+
+          <ul><li>
+          <% for course in e %>
+            <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
+              <%= course.department + " " + course.num.to_s %>
+              <% count += 1 %>
+              <% coun += 1 %>
+              <% if coun != e.length %>
+              ,
+              <% end %>
+            <% else %>
+              <div style = "text-decoration: line-through;display:inline-block;" >
+                <%= course.department + " " + course.num.to_s %>
+                <% coun += 1 %>
+                <% if coun != e.length %>
+                ,
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
+          </li></ul>
+          <% if count == 0 %>
+            Requirement Complete
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <% mm += 1 %>
+  </div>
 <% end %>

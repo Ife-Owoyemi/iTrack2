@@ -5,233 +5,250 @@
 <% @dep_c_2 = 0 %>
 <% @dep_c_3 = 0 %>
 <% @depnumgoal = 0 %>
+<% mo = 0 %>
 <% for depnumcalc in fg %>
-  <h5><%= depnumcalc.depnumreqname %></h5>
-  <% g = depnumcalc.deps.all %>
-  <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
-    <% for dep in g %>
-      <% gg = dep.bounds.all %>
-      <p><%= depnumcalc.cgoal %> Courses in <%= dep.department %> with numbers within ranges
-        <% coun = 0 %>
-      <% for num in gg %>
-        <% coun += 1 %>
-        <% if coun == gg.length and coun != 1 %>
-        and
-        <% end %>
-        <%= num.min %>-<%= num.max %>
-        <% if coun != gg.length %>
-          ,
-        <% end %>
-      <% end %>
-      .
-      <h6>Exceptions</h6>
-      <% exceps = dep.cexceptions.all %>
-      <% excepsarray = Array.new %>
-      <% coun = 0 %>
-      <ul><li>
-        <% for excep in exceps %>
-          <div style = "display:inline-block;" >
-            <% excepsarray << excep.department + excep.num.to_s %>
-            <% coun += 1 %>
-            <%= excep.department + " " + excep.num.to_s %>
-            <% if coun != exceps.length %>
-            ,
-            <% end %>
-          </div>
-        <% end %>
-      </li></ul> 
+  <div class="accordion span5 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mo %>">
+          <%= depnumcalc.depnumreqname %>
+        </a>
 
-      <h6>Other Options</h6>
-      <% clists = dep.clists.all %>
-      <% clistsarray = Array.new %>
-      <% coun = 0 %>
-      <ul><li>
-        <% for clist in clists %>
-          <div style = "display:inline-block;" >
-            <% clistsarray << clist.department + clist.num.to_s %>
-            <% coun += 1 %>
-            <%= clist.department + " " + clist.num.to_s %>
-            <% if coun != clists.length %>
-            ,
-            <% end %>
-          </div>
-        <% end %>
-      </li></ul>   
-      <% if taken.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% taken[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_m_1 += 1 %>
+      </div>
+      <div id="collapse3<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >
+    
+          <% g = depnumcalc.deps.all %>
+          <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
+            <% for dep in g %>
+              <% gg = dep.bounds.all %>
+              <p><%= depnumcalc.cgoal %> Courses in <%= dep.department %> with numbers within ranges
+                <% coun = 0 %>
+              <% for num in gg %>
+                <% coun += 1 %>
+                <% if coun == gg.length and coun != 1 %>
+                and
+                <% end %>
+                <%= num.min %>-<%= num.max %>
+                <% if coun != gg.length %>
+                  ,
                 <% end %>
               <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <% if taking.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% taking[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_2 += 1 %>
+              .
+              <h6>Exceptions</h6>
+              <% exceps = dep.cexceptions.all %>
+              <% excepsarray = Array.new %>
+              <% coun = 0 %>
+              <ul><li>
+                <% for excep in exceps %>
+                  <div style = "display:inline-block;" >
+                    <% excepsarray << excep.department + excep.num.to_s %>
+                    <% coun += 1 %>
+                    <%= excep.department + " " + excep.num.to_s %>
+                    <% if coun != exceps.length %>
+                    ,
+                    <% end %>
+                  </div>
                 <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <% if wtake.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% wtake[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %> 
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_3 += 1 %>
-                <% end %>
-              <% end %>
-            <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <% if depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
-        <% if depnumcalc.cgoal.to_i < @dep_c_m_1 %>
-          <% @dep_c_1 = depnumcalc.cgoal.to_i %>
-          <% @dep_c_1 = 0 %>
-          <% @dep_c_1 = 0 %>
-        <% elsif depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_2 %>
-          <% @dep_c_1 = @dep_c_m_1 %>
-          <% @dep_c_1 = depnumcalc.cgoal.to_i - @dep_c_m_1 %>
-          <% @dep_c_1 = 0 %>
-        <% elsif depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
-          <% @dep_c_1 = @dep_c_m_1 %>
-          <% @dep_c_1 = @dep_c_m_2 %>
-          <% @dep_c_1 = depnumcalc.cgoal.to_i - @dep_c_m_1 - @dep_c_m_2 %>
-        <% end %>
-      <% else %>
-        <% @dep_c_1 = @dep_c_m_1.to_i %>
-        <% @dep_c_2 = @dep_c_m_2.to_i %>
-        <% @dep_c_3 = @dep_c_m_3.to_i %>
-      <% end %>
-    <% @totalc += depnumcalc.cgoal %>
-  <% elsif depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
-    <% for dep in g %>
-      <% gg = dep.bounds.all %>
-      <p><%= depnumcalc.hgoal %> Hours in <%= dep.department %> with numbers within ranges
-        <% coun = 0 %>
-      <% for num in gg %>
-        <% coun += 1 %>
-        <% if coun == gg.length and coun += 1%>
-        and
-        <% end %>
-        <%= num.min %>-<%= num.max %>
-        <% if coun != gg.length %>
-          ,
-        <% end %>
-      <% end %>
-      .
-      <h6>Exceptions</h6>
-      <% exceps = dep.cexceptions.all %>
-      <% excepsarray = Array.new %>
-      <% coun = 0 %>
-      <ul><li>
-        <% for excep in exceps %>
-          <div style = "display:inline-block;" >
-            <% excepsarray << excep.department + excep.num.to_s %>
-            <% coun += 1 %>
-            <%= excep.department + " " + excep.num.to_s %>
-            <% if coun != exceps.length %>
-            ,
-            <% end %>
-          </div>
-        <% end %>
-      </li></ul>
+              </li></ul> 
 
-      <h6>Other Options</h6>
-      <% clists = dep.clists.all %>
-      <% clistsarray = Array.new %>
-      <% coun = 0 %>
-      <ul><li>
-        <% for clist in clists %>
-          <div style = "display:inline-block;" >
-            <% clistsarray << clist.department + clist.num.to_s %>
-            <% coun += 1 %>
-            <%= clist.department + " " + clist.num.to_s %>
-            <% if coun != clists.length %>
-            ,
-            <% end %>
-          </div>
-        <% end %>
-      </li></ul>
-      
-      <% if taken.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% taken[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_m_1 += taken[dep.department][number] %>
+              <h6>Other Options</h6>
+              <% clists = dep.clists.all %>
+              <% clistsarray = Array.new %>
+              <% coun = 0 %>
+              <ul><li>
+                <% for clist in clists %>
+                  <div style = "display:inline-block;" >
+                    <% clistsarray << clist.department + clist.num.to_s %>
+                    <% coun += 1 %>
+                    <%= clist.department + " " + clist.num.to_s %>
+                    <% if coun != clists.length %>
+                    ,
+                    <% end %>
+                  </div>
+                <% end %>
+              </li></ul>   
+              <% if taken.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% taken[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_m_1 += 1 %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% if taking.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% taking[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_2 += 1 %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% if wtake.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% wtake[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %> 
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_3 += 1 %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <% if taking.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% taking[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_2 += taking[dep.department][number] %>
+            <% if depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
+                <% if depnumcalc.cgoal.to_i < @dep_c_m_1 %>
+                  <% @dep_c_1 = depnumcalc.cgoal.to_i %>
+                  <% @dep_c_1 = 0 %>
+                  <% @dep_c_1 = 0 %>
+                <% elsif depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_2 %>
+                  <% @dep_c_1 = @dep_c_m_1 %>
+                  <% @dep_c_1 = depnumcalc.cgoal.to_i - @dep_c_m_1 %>
+                  <% @dep_c_1 = 0 %>
+                <% elsif depnumcalc.cgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
+                  <% @dep_c_1 = @dep_c_m_1 %>
+                  <% @dep_c_1 = @dep_c_m_2 %>
+                  <% @dep_c_1 = depnumcalc.cgoal.to_i - @dep_c_m_1 - @dep_c_m_2 %>
+                <% end %>
+              <% else %>
+                <% @dep_c_1 = @dep_c_m_1.to_i %>
+                <% @dep_c_2 = @dep_c_m_2.to_i %>
+                <% @dep_c_3 = @dep_c_m_3.to_i %>
+              <% end %>
+            <% @totalc += depnumcalc.cgoal %>
+          <% elsif depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
+            <% for dep in g %>
+              <% gg = dep.bounds.all %>
+              <p><%= depnumcalc.hgoal %> Hours in <%= dep.department %> with numbers within ranges
+                <% coun = 0 %>
+              <% for num in gg %>
+                <% coun += 1 %>
+                <% if coun == gg.length and coun += 1%>
+                and
+                <% end %>
+                <%= num.min %>-<%= num.max %>
+                <% if coun != gg.length %>
+                  ,
+                <% end %>
+              <% end %>
+              .
+              <h6>Exceptions</h6>
+              <% exceps = dep.cexceptions.all %>
+              <% excepsarray = Array.new %>
+              <% coun = 0 %>
+              <ul><li>
+                <% for excep in exceps %>
+                  <div style = "display:inline-block;" >
+                    <% excepsarray << excep.department + excep.num.to_s %>
+                    <% coun += 1 %>
+                    <%= excep.department + " " + excep.num.to_s %>
+                    <% if coun != exceps.length %>
+                    ,
+                    <% end %>
+                  </div>
+                <% end %>
+              </li></ul>
+
+              <h6>Other Options</h6>
+              <% clists = dep.clists.all %>
+              <% clistsarray = Array.new %>
+              <% coun = 0 %>
+              <ul><li>
+                <% for clist in clists %>
+                  <div style = "display:inline-block;" >
+                    <% clistsarray << clist.department + clist.num.to_s %>
+                    <% coun += 1 %>
+                    <%= clist.department + " " + clist.num.to_s %>
+                    <% if coun != clists.length %>
+                    ,
+                    <% end %>
+                  </div>
+                <% end %>
+              </li></ul>
+              
+              <% if taken.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% taken[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_m_1 += taken[dep.department][number] %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% if taking.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% taking[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_2 += taking[dep.department][number] %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% if wtake.has_key?(dep.department) %>
+                <% for num in gg %>
+                  <% wtake[dep.department].each_key do |number| %>
+                    <% if !excepsarray.include?(dep.department + number.to_s) %>
+                      <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
+                        <% if number.to_i >= num.min and number.to_i <= num.max %>
+                          <% @used_courses << dep.department + " " + number.to_s %>
+                          <% @dep_c_3 += wtake[dep.department][number] %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
                 <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <% if wtake.has_key?(dep.department) %>
-        <% for num in gg %>
-          <% wtake[dep.department].each_key do |number| %>
-            <% if !excepsarray.include?(dep.department + number.to_s) %>
-              <% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-                <% if number.to_i >= num.min and number.to_i <= num.max %>
-                  <% @used_courses << dep.department + " " + number.to_s %>
-                  <% @dep_c_3 += wtake[dep.department][number] %>
+            <% if depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
+                <% if depnumcalc.hgoal.to_i < @dep_c_m_1 %>
+                  <% @dep_c_1 = depnumcalc.hgoal.to_i / 3 %>
+                  <% @dep_c_1 = 0 %>
+                  <% @dep_c_1 = 0 %>
+                <% elsif depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_2 %>
+                  <% @dep_c_1 = @dep_c_m_1 / 3 %>
+                  <% @dep_c_1 = (depnumcalc.hgoal.to_i - @dep_c_m_1) / 3%>
+                  <% @dep_c_1 = 0 %>
+                <% elsif depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
+                  <% @dep_c_1 = @dep_c_m_1 / 3%>
+                  <% @dep_c_1 = @dep_c_m_2 / 3%>
+                  <% @dep_c_1 = (depnumcalc.hgoal.to_i - @dep_c_m_1 - @dep_c_m_2) / 3 %>
                 <% end %>
+              <% else %>
+                <% @dep_c_1 = @dep_c_m_1.to_i / 3 %>
+                <% @dep_c_2 = @dep_c_m_2.to_i / 3 %>
+                <% @dep_c_3 = @dep_c_m_3.to_i / 3 %>
               <% end %>
-            <% end %>
+            <% @totalc += depnumcalc.hgoal / 3 %>
           <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <% if depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
-        <% if depnumcalc.hgoal.to_i < @dep_c_m_1 %>
-          <% @dep_c_1 = depnumcalc.hgoal.to_i / 3 %>
-          <% @dep_c_1 = 0 %>
-          <% @dep_c_1 = 0 %>
-        <% elsif depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_2 %>
-          <% @dep_c_1 = @dep_c_m_1 / 3 %>
-          <% @dep_c_1 = (depnumcalc.hgoal.to_i - @dep_c_m_1) / 3%>
-          <% @dep_c_1 = 0 %>
-        <% elsif depnumcalc.hgoal.to_i < @dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3 %>
-          <% @dep_c_1 = @dep_c_m_1 / 3%>
-          <% @dep_c_1 = @dep_c_m_2 / 3%>
-          <% @dep_c_1 = (depnumcalc.hgoal.to_i - @dep_c_m_1 - @dep_c_m_2) / 3 %>
-        <% end %>
-      <% else %>
-        <% @dep_c_1 = @dep_c_m_1.to_i / 3 %>
-        <% @dep_c_2 = @dep_c_m_2.to_i / 3 %>
-        <% @dep_c_3 = @dep_c_m_3.to_i / 3 %>
-      <% end %>
-    <% @totalc += depnumcalc.hgoal / 3 %>
-  <% end %>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <% mo += 1 %>
 <% end %>
