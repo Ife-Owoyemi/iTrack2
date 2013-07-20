@@ -47,16 +47,55 @@
         <p><b>Hours Will Take: <%= @specialtyhourswtaket %></b></p>
         <%# --------------------------------------------------%>
         <% d = specialty.corereqs.all %>
-        <h4>Core Requirements</h4>
-        <%= render "shared/rendcore", :d => d, :coursearray => coursearray, :i => i, :k => k, :m => m %>
+        <div class="accordion span5 pull-left" id="accordian11<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian11<%= i %><%= k %>" href="#collapse11<%= i %><%= k %><%= m %>">
+              <h4>Core Requirements</h4>
+                </a>
+            </div>
+            <div id="collapse11<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+                <%= render "shared/rendcore", :d => d, :coursearray => coursearray, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <%# --------------------------------------------------%>
         <% f = specialty.opreqs.all %>
-        <h4>Multi Option Requirements</h4>
-        <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
+        <div class="accordion span5 pull-left" id="accordian12<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian12<%= i %><%= k %>" href="#collapse12<%= i %><%= k %><%= m %>">
+              <h4>Multi Option Requirements</h4>
+                </a>
+            </div>
+            <div id="collapse12<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+        
+                <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
         <%# --------------------------------------------------%>
         <% f1 = specialty.depnumreqs.all %>
-        <h4>Free Electives</h4>
-        <%= render "shared/renddepnum", :fg => f1, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :k => k, :m => m %>
+        <div class="accordion span5 pull-left" id="accordian13<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian13<%= i %><%= k %>" href="#collapse13<%= i %><%= k %><%= m %>">
+              <h4>Free Electives</h4>
+                </a>
+            </div>
+            <div id="collapse13<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+        
+                <%= render "shared/renddepnum", :fg => f1, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
         <%# --------------------------------------------------%>
         <h4>Notes</h4>
         <%= specialty.notes %>
