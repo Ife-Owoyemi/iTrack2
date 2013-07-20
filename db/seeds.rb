@@ -94,7 +94,7 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                         count = 0
                         CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Core/#{corereq}") do |cell|
                           if count == 0
-                            @corereq = corereq.gsub(/_/, ' ')
+                            @corereq = corereq[1..(corereq.length - 1 )].gsub(/_/, ' ')
                             @z = d.corereqs.create!(:corereqname => @corereq[0..(@corereq.length-5)], :cgoal => cell[0])
                             count += 1
                           else
@@ -107,7 +107,7 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                   if reqtype.length > 2 and reqtype != ".DS_Store" and reqtype == "Multi"
                     Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi"){|opreq|
                       if opreq.length > 2 and opreq != ".DS_Store"
-                        @opreq = opreq.gsub(/_/, ' ')
+                        @opreq = opreq[1..(opreq.length - 1)].gsub(/_/, ' ')
                         f = d.opreqs.create!(:opreqname => @opreq)
                         Dir::foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi/#{opreq}"){|option|
                           if option.length > 2 and option != ".DS_Store"
@@ -115,7 +115,7 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                             CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Multi/#{opreq}/#{option}") do |cell|
                               if count == 0
 
-                                @option = option.gsub(/_/, ' ')
+                                @option = option[1..(option.length - 1)].gsub(/_/, ' ')
                                 @g = f.options.create!(:optionname => @option[0..(@option.length-7)], :cgoal => cell[0])
 
                                 count += 1
@@ -190,6 +190,40 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
     }
   end
 }
+
+=begin
+count1 = 7
+Dir::foreach('db/institutions/users'){|username|
+  count1 += 1
+  if username.length > 2 and username != ".DS_Store"
+    @user = User.all(:conditions => {:name => username})
+    if @user != []
+      User.delete(@user.id)
+    end
+    @username = username.gsub(/_/, ' ')
+    a = User.create!(:name => @username, :email => "itrackuser#{count1}@gmail.com", :password => "Melissas1", :password_confirmation => "Melissas1")
+    
+    Dir::foreach("db/institutions/users/#{username}"){|year|
+      if year.length > 2 and year != ".DS_Store"
+        b = a.years.create!(:year => year)
+        Dir::foreach("db/institutions/users/#{username}/#{year}"){|semester|
+          if semester.length > 2 and semester != ".DS_Store"
+            c = b.semesters.create!(:semester => semester)
+            Dir::foreach("db/institutions/users/#{username}/#{year}/#{semester}"){|document|
+              if document.length > 2 and document != ".DS_Store"
+                count = 0
+                CSV.foreach("db/institutions/users/#{username}/#{year}/#{semester}/Courses.csv") do |cell|
+                  c.usercourses.create!(:department => cell[0], :num => cell[1], :credits => cell[2], :institution => cell[3], :status => cell[4])
+                end
+              end
+            }
+          end
+        }
+      end
+    }
+  end
+}
+=end
 #print institution
 
 
