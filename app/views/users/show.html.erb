@@ -291,7 +291,7 @@
                 <% dephours += user_courses[department][ind] %>
               <% end %>
               <% depcourses += 1 %>
-              <% if ind.to_i != nil %>
+              <% if user_courses[department][ind] != nil %>
 
                 <% if ind.to_i >= 300 %>
                   <% ulhours += user_courses[department][ind] %>
