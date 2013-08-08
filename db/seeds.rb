@@ -6,63 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 require 'csv'
-
-=begin
-Dir::foreach('db/course_catalog_rice'){|field| 
-  if field.length > 2 and field != ".DS_Store"
-    Dir::foreach("db/course_catalog_rice/#{field}"){|subfield| 
-      if subfield.length > 2 and subfield != ".DS_Store"
-        count = 0
-        CSV.foreach("db/course_catalog_rice/#{field}/#{subfield}") do |cell|
-          if count == 0
-            count1 = 0
-            dI = 0
-            dII = 0
-            dIII = 0
-            for cell.each do |string|
-              if string == "DI"
-                dI = count1
-              elsif string == "DII"
-                dII = count1
-              elsif string == "DIII"
-                dIII = count1
-              end
-              count1 += 1
-            end
-            count += 1
-            departmentname = cell[0]
-          elsif cell[0] != nil
-            if cell[dI] == "1"
-              di = "true"
-            else 
-              di = "false"
-            end
-            if cell[dII] == "1"
-              dii = "true"
-            else 
-              dii = "false"
-            end
-            if cell[dIII] == "1"
-              diii = "true"
-            else 
-              diii = "false"
-            end
-
-            params = {:u => {:institution_id => 1, :coleges_attributes => [{
-              :colegename => field, :departments_attributes => [{
-                :departmentabbr => subfield[0..3], :departmentname => departmentname, :nums_attributes => [{
-                  :number => cell[0][5..7], :name => cell[1], :di => di, :dii => dii, :diii => diii, :credit =>  cell[2]
-                  }]
-                }]
-              }]}}
-            Catalog.create!(params[:u])
-          end
-        end
-      end
-    }
-  end
-}
-=end
 Institution.delete_all
 @achieve = ["BA", "BS", "BA-S", "Minors", "Pre-med"]
 Institution.create(:name => "Rice University", :id => 1, :nickname => "Rice")
@@ -95,7 +38,7 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
                         CSV.foreach("db/institutions/rice/#{achievementtype}/#{college}/#{achievementname}/#{specialty}/Core/#{corereq}") do |cell|
                           if count == 0
                             @corereq = corereq[1..(corereq.length - 1 )].gsub(/_/, ' ')
-                            @z = d.corereqs.create!(:corereqname => @corereq[0..(@corereq.length-5)], :cgoal => cell[0])
+                            @z = d.corereqs.create!(:corereqname => @corereq[0..(@corereq.length - 5)], :cgoal => cell[0])
                             count += 1
                           else
                             @z.ccourses.create!(:department => cell[0], :num => cell[1])
@@ -190,6 +133,71 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
     }
   end
 }
+count1 = 0
+dI = 0
+dII = 0
+dIII = 0
+Catalog.delete_all
+@riceCatalog = Catalog.create!(:institution_id => @inst)
+Dir::foreach('db/course_catalog_rice'){|field|
+  if field.length > 2 and field != ".DS_Store"
+    field1 = field.gsub(/_/, ' ')
+    @college = @riceCatalog.coleges.create!( :colegename => field1 )
+    Dir::foreach("db/course_catalog_rice/#{field}"){|subfield|
+      if subfield.length > 2 and subfield != ".DS_Store"
+        count = 0
+        CSV.foreach("db/course_catalog_rice/#{field}/#{subfield}") do |cell|
+          if count == 0
+            count1 = 0
+            dI = 0
+            dII = 0
+            dIII = 0
+            cell.each do |string|
+              if string == "DI"
+                dI = count1
+              elsif string == "DII"
+                dII = count1
+              elsif string == "DIII"
+                dIII = count1
+              end
+              count1 += 1
+            end
+            count += 1
+            departmentname = cell[0]
+            subfield1 = subfield[0..3].gsub(/_/, ' ')
+            @department = @college.departments.create!( :departmentabbr => subfield1, :departmentname => departmentname)
+
+          elsif cell[0] != nil
+            print dI
+            print cell
+            if cell[dI] == "1"
+              di = "true"
+            else
+              di = "false"
+            end
+            if cell[dII] == "1"
+              dii = "true"
+            else
+              dii = "false"
+            end
+            if cell[dIII] == "1"
+              diii = "true"
+            else
+              diii = "false"
+            end
+            @department.nums.create!(:number => cell[0][5..7], :name => cell[1], :di => di, :dii => dii, :diii => diii, :credit =>  cell[2])
+          end
+
+        end
+
+      end
+
+    }
+
+  end
+}
+
+
 
 =begin
 count1 = 7

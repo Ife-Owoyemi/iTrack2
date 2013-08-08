@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @courses = Catalog.all
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
     @years = @user.years.all

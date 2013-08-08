@@ -1,3 +1,41 @@
+<% @catalog = @courses %>
+
+<% i = 0 %>
+<% @ucatalog = Hash.new %>
+<% @catalog.each do |catalog| %>
+<% @ucatalog["di"] = Hash.new %>
+<% @ucatalog["dii"] = Hash.new %>
+<% @ucatalog["diii"] = Hash.new %>
+<% @colleges = catalog.coleges.all %>
+  <% @colleges.each do |college| %>
+    <% college.colegename %>
+    <% @departments = college.departments.all %>
+    <% @departments.each do |department| %>
+      <% @nums = department.nums.all %>
+      <% @nums.each do |num| %>
+        <% if num.number != nil %>
+          <% if num.di %>
+
+            <% @ucatalog["di"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          <% if num.dii %>
+
+            <% @ucatalog["dii"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          <% if num.diii %>
+
+            <% @ucatalog["diii"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% i += 1 %>
+<% end %>
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
@@ -212,6 +250,9 @@
       </ul>
       <div class="tab-content">
         <% ia = 25 %>
+        <% @di = 0 %>
+        <% @dii = 0 %>
+        <% @diii = 0 %>
         <% user_courses.each_key do |department| %>
           <% dephours = 0 %>
           <% depcourses = 0 %>
@@ -220,6 +261,15 @@
 
           <div class="tab-pane" id="<%= ia %>">
             <% user_courses[department].each_key do |ind| %>
+              <% if @ucatalog["di"].has_key?(department + " " + ind) %>
+                <% @di += user_courses[department][ind] %>
+              <% end %>
+              <% if @ucatalog["dii"].has_key?(department + " " + ind) %>
+                <% @dii += user_courses[department][ind] %>
+              <% end %>
+              <% if @ucatalog["diii"].has_key?(department + " " + ind) %>
+                <% @diii += user_courses[department][ind] %>
+              <% end %>
               <div>
                 <%= department %> <%= ind %>
               </div>
@@ -306,9 +356,10 @@
           </div>
           <div id="collapseThree" class="accordion-body collapse">
             <div class="accordion-inner">
-              <p>Group I: /12</p>
-              <p>Group II: /12</p>
-              <p>Group III: /12</p>
+              <p>Group I: <%= @di %>/12</p>
+              <p>Group II: <%= @dii %>/12</p>
+              <p>Group III: <%= @diii %>/12</p>
+              <p>Source: http://registrar.rice.edu/students/master_lists/</p>
             </div>
           </div>
         </div>
@@ -337,8 +388,4 @@
     </section>
   </aside>
 </div>
-
-
-
-
 <br>

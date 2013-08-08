@@ -13,6 +13,8 @@ gem "formtastic-bootstrap"
 gem 'cocoon'
 gem 'haml'
 gem 'haml-rails', '>= 0.3.4', :group => :development
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
