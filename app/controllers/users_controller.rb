@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @courses = Catalog.all
   	@user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
     @years = @user.years.all
@@ -21,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @institution = Institution.where(:name => "Rice University")
     @users = User.paginate(page: params[:page])
   end
 
@@ -50,9 +52,19 @@ class UsersController < ApplicationController
   end
 
   def edit 
-
+    @user = current_user
     @institution = Institution.where(:nickname => current_user.college)
     
+  end
+
+  def edituser
+    @user = current_user
+    @institution = Institution.where(:nickname => current_user.college)
+  end
+
+  def edittrack
+    @user = current_user
+    @institution = Institution.where(:nickname => current_user.college)
   end
 
   def update

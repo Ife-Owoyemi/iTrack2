@@ -1,0 +1,111 @@
+
+<% @totalc = 0 %>
+<% totalh = 0 %>
+<% core_h = 0 %>
+<% @used_courses = Array.new %>
+<%# ------------------------------------------------------%>
+<% d = specialty.corereqs.all %>
+<% @core_c_1 = 0 %>
+<% @core_c_2 = 0 %>
+<% @core_c_3 = 0 %>
+<%= render "shared/corecalc", :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
+<%# ------------------------------------------------------%>
+<% f = specialty.opreqs.all %>
+<% @op_c = 0 %>
+<% @op_c_1 = 0 %>
+<% @op_c_2 = 0 %>
+<% @op_c_3 = 0 %>
+<%= render "shared/multicalc1", :f => f, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3 %>
+<%# ------------------------------------------------------%>
+<% ff = specialty.groupopreqs.all %>
+<%= render "shared/groupcalc1", :f => ff, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses %>
+<%# ------------------------------------------------------%>
+<% fg = specialty.depnumreqs.all %>
+
+<%= render "shared/depnumcalc1", :fg => fg, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses %>
+<%# ------------------------------------------------------%>
+<% need = 0 %>
+<%= render "shared/finalcalc", :@totalc => @totalc, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@dep_c_1 => @dep_c_1, :@dep_c_2 => @dep_c_2, :@dep_c_3 => @dep_c_3, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :@need => @need, :@op_c => @op_c %>
+<%# ------------------------------------------------------%>
+<div class="accordion span6 pull-left" id="accordian<%= i %><%= k %>">                        
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %><%= k %>" href="#collapse<%= i %><%= k %><%= m %>">
+        <%= specialty.specialty %>: <%= @takent + @wtaket + @takingt%>%, <%= @need %> Courses Left
+      </a>
+    </div>
+    <div id="collapse<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+      <div class="accordion-inner" >
+        <p><b>Prospected Percent Complete: </b><%= @takent + @wtaket + @takingt%>%<%#content goes here position[:reason]%></p>
+        <div class="progress">
+          <div class="bar bar-success" style="width: <%= @takent %>%;"></div>
+          <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
+          <div class="bar bar-danger" style="width: <%= @wtaket %>%;"></div>
+        </div>
+        <p><b>Hours Taken: <%= @specialtyhourstaken %></b></p>
+        <p><b>Hours Taking: <%= @specialtyhourstaking %></b></p>
+        <p><b>Hours Will Take: <%= @specialtyhourswtaket %></b></p>
+        <%# --------------------------------------------------%>
+        <% d = specialty.corereqs.all %>
+        <div class="accordion span5 pull-left" id="accordian11<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian11<%= i %><%= k %>" href="#collapse11<%= i %><%= k %><%= m %>">
+              <h4>Core Requirements</h4>
+                </a>
+            </div>
+            <div id="collapse11<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+                <%= render "shared/rendcore", :d => d, :coursearray => coursearray, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%# --------------------------------------------------%>
+        <% f = specialty.opreqs.all %>
+        <div class="accordion span5 pull-left" id="accordian12<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian12<%= i %><%= k %>" href="#collapse12<%= i %><%= k %><%= m %>">
+              <h4>Multi Option Requirements</h4>
+                </a>
+            </div>
+            <div id="collapse12<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+        
+                <%= render "shared/rendmulti1", :f => f, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%# --------------------------------------------------%>
+        <% f1 = specialty.depnumreqs.all %>
+        <div class="accordion span5 pull-left" id="accordian13<%= i %><%= k %>">                        
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian13<%= i %><%= k %>" href="#collapse13<%= i %><%= k %><%= m %>">
+              <h4>Free Electives</h4>
+                </a>
+            </div>
+            <div id="collapse13<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+              <div class="accordion-inner" >
+        
+                <%= render "shared/renddepnum", :fg => f1, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :k => k, :m => m %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%# --------------------------------------------------%>
+        <h4>Notes</h4>
+        <%= specialty.notes %>
+        <%# --------------------------------------------------%>
+        <h4>Advisor</h4>
+        <%= specialty.advisor %>
+        <%# --------------------------------------------------%>
+        <h4>Link Page</h4>
+        <%= specialty.linkhome %>
+      </div>
+    </div>
+  </div> 
+</div>

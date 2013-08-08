@@ -1,3 +1,44 @@
+<% @catalog = @courses %>
+
+<% i = 0 %>
+<% @di = 0 %>
+<% @dii = 0 %>
+<% @diii = 0 %>
+<% @ucatalog = Hash.new %>
+<% @catalog.each do |catalog| %>
+<% @ucatalog["di"] = Hash.new %>
+<% @ucatalog["dii"] = Hash.new %>
+<% @ucatalog["diii"] = Hash.new %>
+<% @colleges = catalog.coleges.all %>
+  <% @colleges.each do |college| %>
+    <% college.colegename %>
+    <% @departments = college.departments.all %>
+    <% @departments.each do |department| %>
+      <% @nums = department.nums.all %>
+      <% @nums.each do |num| %>
+        <% if num.number != nil %>
+          <% if num.di %>
+
+            <% @ucatalog["di"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          <% if num.dii %>
+
+            <% @ucatalog["dii"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          <% if num.diii %>
+
+            <% @ucatalog["diii"][department.departmentname + " " + num.number.to_s] = num.credit %>
+    
+          <% end %>
+          
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <% i += 1 %>
+<% end %>
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
@@ -25,7 +66,7 @@
   <% end %>
 <% end %>
 
-
+<% @peep = "yes" %>
 <%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
@@ -89,6 +130,9 @@
       <div class="accordion" id="accordion">
         <% ia = 0 %>
         <% @ricehours = 0 %>
+        <% @diArray = Array.new %>
+        <% @diiArray = Array.new %>
+        <% @diiiArray = Array.new %>
         <% @aphours = 0 %>
         <% fullSemesterAtInstitution = 0 %>
         <% gpah = 0 %>
@@ -122,8 +166,26 @@
                           <table border="0" padding="1">
                           <% @courses = semester.usercourses.all %>
                           <% @courses.each do |course| %>
+                            <% @color = "label-default"%>
+                            <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+                              <% @di += course.credits %>
+                              <% @diArray << course.department + " " + course.num.to_s %>
+                              <% @color = "label-warning" %>
+                            <% end %>
+                            <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+                              <% @dii += course.credits %>
+                              <% @diiArray << course.department + " " + course.num.to_s %>
+                              <% @color = "label-info"%>
+                            <% end %>
+                            <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+                              <% @diii += course.credits %>
+                              <% @diiiArray << course.department + " " + course.num.to_s %>
+                              <% @color = "label-success"%>
+                            <% end %>
+
+
                             <% if course.institution == "Rice" %>
-                              <% color = "blue" %>
+                              <% color = "" %>
                               <% if course.department == "LPAP" %>
                                 <% @lpap += 1 %>
                               <% end %>
@@ -146,23 +208,26 @@
                                           <% f = "No" %>
                                         <% end %>
                                     
-                                      <div 
-                                         class="btn btn-small popover-link"
+                                      <h4 
+                                         class="label <%= @color %> popover-link" 
                                          data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
                                          data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %> <%= course.grade %></font>
-                                      </div>​
+                                      </h4>​
                                     
                                   <% else %>
-                                    <div 
-                                         class="btn btn-small popover-link"
+                                    <h4
+                                         class="label  <%= @color %> popover-link"
                                          data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
                                          data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %></font>
-                                      </div>​
+                                      </h4>​
                                   <% end %>
                                 </td>
                                 <% if course.institution == "Rice" %>
-                                  <% hours += course.credits %>
-                                  <% @ricehours += course.credits %>
+                                  <% if course.credits != nil %>
+                                    <% hours += course.credits %>
+                                    
+                                  <% end %>
+                                  
                                   <% if gpascore.include?(course.grade) %>
                                     <% sgpa += grades[course.grade].to_f * course.credits.to_f %>
                                     <% sgpah += course.credits.to_f %>
@@ -197,10 +262,56 @@
           <% ia += 1 %>
         <% end %>
       </div>
-      <% if @peep == "yes" %>
-          <%= link_to 'Edit', edit_user_path(@user) %> |                  
-      <% end %>
-      <%= link_to 'Back', users_path %>
+    </section>
+    <section>
+      <h4>Course Stats</h4>
+      <ul class="nav nav-tabs">
+        <% ia = 25 %>
+        <% user_courses.each_key do |department| %>
+          <li><a href="#<%= ia %>" data-toggle="tab"><%= department %></a></li>
+          <% ia += 1 %>
+        <% end %>
+      </ul>
+      <div class="tab-content">
+        <% ia = 25 %>
+        
+        <% user_courses.each_key do |department| %>
+          <% dephours = 0 %>
+          <% depcourses = 0 %>
+          <% ulhours = 0 %>
+          <% ulcourses = 0 %>
+
+          <div class="tab-pane" id="<%= ia %>">
+            <% user_courses[department].each_key do |ind| %>
+              
+              <div>
+                <%= department %> <%= ind %>
+              </div>
+              <% dephours += user_courses[department][ind] %>
+              <% depcourses += 1 %>
+              <% if ind.to_i >= 300 %>
+                <% ulhours += user_courses[department][ind] %>
+                <% ulcourses += 1 %>
+              <% end %>
+            <% end %>
+              <div>
+                <b>Upper-level Courses: </b><%= ulcourses %>
+              </div>
+              <div>
+                <b>Total Courses: </b><%= depcourses %>
+              </div>
+
+              <div>
+                <b>Upper-level Hours: </b><%= ulhours %>
+              </div>
+              <div>
+                <b>Total Hours: </b><%= dephours %>
+              </div>
+              
+          </div>   
+          <% ia += 1 %>
+        <% end %>
+      </div>
     </section>
     <section>
       <h4>Graduation Requirements</h4>
@@ -259,9 +370,74 @@
           </div>
           <div id="collapseThree" class="accordion-body collapse">
             <div class="accordion-inner">
-              <p>Group I: </p>
-              <p>Group II: </p>
-              <p>Group III: </p>
+              <% dinote = "" %>
+              <% diinote = "" %>
+              <% diiinote = "" %>
+              <% if @di > 11 %>
+                <% dinote = "Done" %>
+              <% end %>
+              <% if @dii > 11 %>
+                <% diinote = "Done" %>
+              <% end %>
+              <% if @diii > 11 %>
+                <% diiinote = "Done" %>
+              <% end %>
+
+              <div class="accordion" id="accordion1000">
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1000" href="#collapseOneb">
+                      <p>Group I: <%= @di %>/12 <font color = "green"><%= dinote %></font></p>
+                    </a>
+                  </div>
+                  <div id="collapseOneb" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <% @diArray.each do |course| %>
+                        <ul>
+                          <li><%= course %></li>
+                        </ul>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1000" href="#collapseTwob">
+                      <p>Group II: <%= @dii %>/12 <font color = "green"><%= diinote %></font></p>
+                    </a>
+                  </div>
+                  <div id="collapseTwob" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <% @diiArray.each do |course| %>
+                        <ul>
+                          <li><%= course %></li>
+                        </ul>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-group">
+                  <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1000" href="#collapseThreeb">
+                      Group III: <%= @diii %>/12 <font color = "green"><%= diiinote %></font>
+                    </a>
+                  </div>
+                  <div id="collapseThreeb" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                      <% @diiiArray.each do |course| %>
+                        <ul>
+                          <li><%= course %></li>
+                        </ul>
+                      <% end %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+              
+              
+              <p>Source: http://registrar.rice.edu/students/master_lists/</p>
             </div>
           </div>
         </div>
@@ -283,11 +459,11 @@
           </div>
         </div>
       </div>
+      <% if @peep == "yes" %>
+          <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+      <% end %>
+      <%= link_to 'Back', users_path %>
     </section>
   </aside>
 </div>
-
-
-
-
 <br>

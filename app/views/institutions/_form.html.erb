@@ -57,7 +57,10 @@
                                     <div class="accordion-group">
                                       <div class="accordion-heading">
                                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= k %><%= l %><%= m %>" href="#collapse<%= k %><%= l %><%= m %><%= n %>">
-                                          <%= specialty.label "Specialty" %><%= specialty.text_field(:specialty) %>
+                                          <%= specialty.label "Specialty" %><%= specialty.text_field(:specialty) %><br/>
+                                          <%= specialty.label "Notes" %><%= specialty.text_area :notes, :size => "30x10" %>
+                                          <%= specialty.label "Faculty Advisor" %><%= specialty.text_field :advisor %>
+                                          <%= specialty.label "Link" %><%= specialty.text_field :linkhome %>
                                         </a>
                                       </div>
                                       <div id="collapse<%= k %><%= l %><%= m %><%= n %>"  class="accordion-body collapse">
@@ -180,6 +183,88 @@
                                               <% r +=1 %>
                                             <% end %>
                                           </div>
+                                          <h3> Department Range Requirements </h3>
+                                          <p><%= specialty.link_to_add "Add a Dep Range Requirement", :depnumreqs %></p>
+                                          <%= specialty.fields_for :depnumreqs do |depnum| %>
+                                            <%= depnum.label "Dep Range Requirement Name" %><%= depnum.text_field(:depnumreqname) %>
+                                            <%= depnum.label "Course Number Goal" %><br />
+                                            <%= depnum.text_field(:cgoal) %><br />
+                                            <%= depnum.label "Hours Goal" %><br />
+                                            <%= depnum.text_field(:hgoal) %><br />
+                                            <%= depnum.label "Allow Double Count" %><br />
+                                            <%= depnum.text_field(:doublecount) %><br />
+                                            <%= depnum.link_to_remove "Remove this Dep Range Requirement" %>
+                                            <p><%= depnum.link_to_add "Add a Deparment Requirement", :deps %></p>
+                                            <h4> Department Range Requirements </h4>
+                                            <%= depnum.fields_for :deps do |depart| %>
+                                              <%= depart.label "Department" %><br />
+                                              <%= depart.text_field(:department) %><br />
+                                              <%= depart.link_to_remove "Remove Department Requirement" %>
+                                              <p><%= depart.link_to_add "Add an Exception", :cexceptions %></p>
+                                              <h5> Exceptions </h5>
+                                              <%= depart.fields_for :cexceptions do |excep| %>
+                                                <%= excep.label "Department" %><br />
+                                                <%= excep.text_field(:department) %><br />
+                                                <%= excep.label "Number" %><br />
+                                                <%= excep.text_field(:num) %><br />
+                                                <%= excep.link_to_remove "Remove Exception" %>
+                                              <% end %>
+                                              <p><%= depart.link_to_add "Add a Course Range Requirement", :bounds %></p>
+                                              <h5> Range Requirements </h5>
+                                              <%= depart.fields_for :bounds do |bound| %>
+                                                <%= bound.label "Range min" %><br />
+                                                <%= bound.text_field(:min) %><br />
+                                                <%= bound.label "Range Max" %><br />
+                                                <%= bound.text_field(:max) %><br />
+                                                <%= bound.link_to_remove "Remove Course Range Requirement" %>
+                                              <% end %>
+                                              <p><%= depart.link_to_add "Add a Course Option Requirement", :clists %></p>
+                                              <h5> Options </h5>
+                                              <%= depart.fields_for :clists do |list| %>
+                                                <%= list.label "Department" %><br />
+                                                <%= list.text_field(:department) %><br />
+                                                <%= list.label "Number" %><br />
+                                                <%= list.text_field(:num) %><br />
+                                                <%= list.link_to_remove "Remove Option" %>
+                                              <% end %>
+                                            <% end %>
+                                          <% end %>
+                                          <h3> Multi Group Requirements </h3>
+                                          <p><%= specialty.link_to_add "Add a Multi Requirement", :groupopreqs %></p>
+                                          <%= specialty.fields_for :groupopreqs do |groupop| %>
+                                            <%= groupop.label "Group Requirement Name" %><%= groupop.text_field(:groupopreqname) %>
+                                            <%= groupop.label "Group Number Goal" %><br />
+                                            <%= groupop.text_field(:ggoal) %><br />
+                                            <%= groupop.link_to_remove "Remove this Group Requirement" %>
+                                            <p><%= groupop.link_to_add "Add an Group", :groups %></p>
+                                            <h4>Group</h4>
+                                            <%= groupop.fields_for :groups do |group| %>
+                                              <%= group.label "Group Name" %><br />
+                                              <%= group.text_field(:groupname) %><br />
+                                              <%= group.label "Course Goal" %><br />
+                                              <%= group.text_field(:cgoal) %><br />
+                                              <%= group.link_to_remove "Remove Group" %>
+                                              <p><%= group.link_to_add "Add an Option", :options %></p>
+                                              <h5>Option</h5>
+                                              <%= group.fields_for :options do |option| %>
+                                                <%= option.label "Course Number Goal" %><br />
+                                                <%= option.text_field(:cgoal) %><br />
+                                                <%= option.label "Hours Goal" %><br />
+                                                <%= option.text_field(:hgoal) %><br />
+                                                <%= option.link_to_remove "Remove Option" %>
+                                                <h6> Courses </h6>
+                                                <p><%= option.link_to_add "Add an Course", :ocourses %></p>
+                                                <%= option.fields_for :ocourses do |course| %>
+                                                  <%= course.label "Department" %>
+                                                  <%= course.text_field(:department) %>
+                                                  <%= course.label "Course Number" %>
+                                                  <%= course.text_field(:num) %>
+                                                  <%= course.link_to_remove "Remove this Core Course" %>
+                                                <% end %>
+                                              <% end %>
+                                            <% end %>
+
+                                          <% end %>
                                         </div>
                                       </div>
                                       </div>

@@ -1,0 +1,26 @@
+<% for opreq in f %>
+  <% @op_c_biggest = 0 %>     
+  <% complete = 0 %>
+  <% g = opreq.options.all %>
+  <%# ------------------------------------------------------%>
+  <% for option in g %> 
+    <% op_c_all = 0 %>
+    <% @op_c_m_1 = 0 %>
+    <% @op_c_m_2 = 0 %>
+    <% @op_c_m_3 = 0 %>
+    <% @op_c_m = 0 %>
+    <% @op_add = 0 %>
+    <% @op_c_big = 0 %>
+    <% @op_c_big_1 = 0 %>
+    <% @op_c_big_2 = 0 %>
+    <% @op_c_big_3 = 0 %>
+    
+    <% h = option.ocourses.all %>
+    <%# ------------------------------------------------------%>
+    <%= render "shared/multicalc2", :h => h, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses, :@op_c_m => @op_c_m, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3 %> 
+    <%# ------------------------------------------------------%>
+    <%= render "shared/multicalc3", :option => option, :@used_courses => @used_courses, :@totalc => @totalc, :@op_add => @op_add, :@op_c => @op_c, :@op_c_big => @op_c_big, :@op_c_biggest => @op_c_biggest, :@op_c_m => @op_c_m, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3, :@op_c_big_1 => @op_c_big_1, :@op_c_big_2 => @op_c_big_2, :@op_c_big_3 => @op_c_big_3 %>   
+    <%# ------------------------------------------------------%>
+  <% end %>
+  <%# ------------------------------------------------------%>
+<% end %>

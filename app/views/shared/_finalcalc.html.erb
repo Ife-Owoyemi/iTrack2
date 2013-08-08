@@ -1,0 +1,36 @@
+<% if @totalc != 0 and @totalc != nil%>
+  <% if @op_c_1 == nil %>
+   <%  @op_c_1 = 0 %>
+  <% end %>
+  <% if @op_c_2 == nil %>
+    <%  @op_c_2 = 0 %>
+  <% end %>
+  <% if @op_c_3 == nil %>
+    <%  @op_c_3 = 0 %>
+  <% end %>
+  <% if @core_c_1 == nil %>
+   <%  @core_c_1 = 0 %>
+  <% end %>
+  <% if @core_c_2 == nil %>
+   <%  @core_c_2 = 0 %>
+  <% end %>
+  <% if @core_c_3 == nil %>
+   <%  @core_c_3 = 0 %>
+  <% end %>
+  <% @specialtyhourstaken =  @core_c_1 + @op_c_1 + @dep_c_1 %>
+  <% @specialtyhourstaking =  @core_c_2 + @op_c_2 + @dep_c_2 %>
+  <% @specialtyhourswtaket =  @core_c_3 + @op_c_3 + @dep_c_3 %>
+  <% @takent =   ((@specialtyhourstaken) * 100) / @totalc %> 
+  <% @takingt = ((@specialtyhourstaking) * 100) / @totalc %>
+  <% @wtaket = ((@specialtyhourswtaket) * 100) / @totalc %>
+  
+  <% @need = @totalc - @core_c_1 - @op_c %>
+<% else %>
+  <% @specialtyhourstaken =  0 %>
+  <% @specialtyhourstaking =  0 %>
+  <% @specialtyhourswtaket =  0 %>
+  <% @need = 0 %>
+  <% @takent = 0 %>
+  <% @takingt = 0 %>
+  <% @wtaket = 0 %>
+<% end %>

@@ -9,8 +9,12 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails', '2.0.2'
 gem 'nested_form'
 gem 'formtastic'
+gem "formtastic-bootstrap"
 gem 'cocoon'
+gem 'haml'
 gem 'haml-rails', '>= 0.3.4', :group => :development
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -23,6 +27,7 @@ end
 
 group :production do
 	gem 'thin'
+  gem 'pg'
 end
 
 gem 'bcrypt-ruby', '3.0.1'

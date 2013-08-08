@@ -4,7 +4,7 @@
 <% user_courses = Hash.new %>
 <% coursearray = Array.new %>
 <% if signed_in? %>
-  <h1>Pre-Med</h1>
+  <h1>Pre-Med</h1><p>Courses requirements for Medical Schools</p>
   <hr width="100%">
 
   <%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>

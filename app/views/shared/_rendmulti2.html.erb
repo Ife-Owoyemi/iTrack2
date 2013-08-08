@@ -1,0 +1,28 @@
+<% for course in h %>
+  <% @op_c_all += 1 %>
+  <% if user_courses.has_key?(course.department) %>
+    <% if user_courses[course.department].has_key?(course.num) %>
+      <% @op_c_m += 1 %>
+      <%# op_h += user_courses[course.department][course.num] %>
+    <% end %>
+  <% end %>
+<% end %>
+<%# ------------------------------------------------------%>
+<% if option.cgoal.to_i != 0 %>
+  <% if (@op_c_m * 100)/ option.cgoal.to_i >= @op_c_biggest %>
+    <% if option.cgoal.to_i < @op_c_m %>
+      <% @op_c_big = option.cgoal.to_i %>
+    <% else %>
+      <% @op_c_big = @op_c_m %>
+    <% end %>
+    <% @op_add = option.cgoal.to_i %>
+    <% @op_c_biggest = (@op_c_m * 100)/ option.cgoal.to_i %>
+    <% if (@op_c_big * 100)/ option.cgoal.to_i == 100 %>
+      <% complete = 1 %>
+    <% end %>
+  <% end %>
+<% end %>
+<% @op_c += @op_c_big %>
+<% @totalc += @op_add  %>
+
+

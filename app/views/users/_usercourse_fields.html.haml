@@ -1,40 +1,28 @@
 .nested-fields
-  = f.inputs :institution, :department, :num, :credits, :status do
-    %br
-    %li
-      = f.input :institution, :label => false, :as => :select, :collection => ["Rice", "AP", "Other"],   :wrapper_html => {:class => "pull-left" }, :input_html => {:style => 'width: 75px',:placeholder => "Rice",:class => ""}
-    %li
-      = f.input :department, :label => false, :wrapper_html => { :class => "pull-left" }, :input_html => {:style => 'width: 50px',:placeholder => "ANTH",:class => ""}
-    %li
-      = f.input :num, :label => false, :wrapper_html => { :class => "pull-left" }, :input_html => {:style => 'width: 50px',:placeholder => "101", :class => ""}
-    %li
-      = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "pull-left" }, :input_html => {:style => 'width: 50px',:placeholder => "3", :class => "special"}
-    %li
-      = f.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "pull-left" }, :input_html => {:style => 'width: 100px', :placeholder => "Taken",:class => ""}
-    %li
-      = f.input :grade, :as => :select, :collection => ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs", "AP 3", "AP 4", "AP 5"], :label => "Grade", :wrapper_html => {  :style => 'width: 160px', :class => "pull-left" }, :input_html => {:style => 'width: 75px', :class => ""}
-    %br
-    %br
-    %br
-    %li
-      = f.input :prof, :label => "Prof Name", :wrapper_html => {:style => "width: 300px", :class => "pull-left" }, :input_html => {:style => "width: 200px", :placeholder => "Dr. Richard Tapia",:class => ""}
-    %li
-      = f.input :profquality, :as => :number, :min => 0, :max => 10, :step => 1,:label => "Professor Quality", :wrapper_html => {:style => 'width: 500px', :class => "pull-left" }, :input_html => {:style => 'width: 40px', :class => "special"}
-    %li
-      = f.input :hpweek, :as => :number, :min => 0, :max => 40, :step => 1,:label => "Workload: Hours per week", :wrapper_html => {:style => 'width: 730px', :class => "pull-left" }, :input_html => {:style => 'width: 50px',:class => "special"}
-    %li
-      = f.input :follows,:as => :select, :collection => ["0/100", "25/75", "50/50", "75/25", "100/0"],:label => "Book/Lecture Focus", :wrapper_html => {:style => 'width: 550px', :class => "pull-left" }, :input_html => {:style => 'width: 100px', :class => ""}
-    %li
-      = f.input :nopprojects,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Individual Projects", :wrapper_html => {:style => 'width: 810px', :class => "pull-left" }, :input_html => {:style => 'width: 50px', :class => "special"}
-    %li
-      = f.input :nogprojects,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Group Projects", :wrapper_html => {:style => 'width: 710px', :class => "pull-left" }, :input_html => {:style => 'width: 50px', :class => "special"} 
-    %li
-      = f.input :noessays,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Essays", :wrapper_html => {:style => 'width: 510px', :class => "pull-left" }, :input_html => {:style => 'width: 50px', :class => "special"}
-    %li
-      = f.input :nomidterms, :as => :number, :min => 0, :max => 16, :step => 1, :label => "Number of Midterms", :wrapper_html => {:style => 'width: 550px', :class => "" }, :input_html => {:style => 'width: 50px',:class => "special"}
-    %li
-      = f.input :nofinals,:as => :number, :min => 0, :max => 1, :step => 1, :label => "Final", :wrapper_html => {:style => 'width: 210px', :class => "pull-left" }, :input_html => {:style => 'width: 50px', :class => "special"}
-    %li
-      = f.input :suggest, :label => "Suggestions", :wrapper_html => {:style => 'width: 510px; height: 100px;', :class => "pull-left" }, :input_html => { :placeholder => "Read the book,  Go to lecture...",:class => ""}
-    %li
-      = link_to_remove_association "remove course", f, :class => "btn pull-left"
+  = f.inputs :institution, :department, :num, :credits, :status, :prof, :profquality, :hpweek, :follows, :nopprojects, :nogprojects, :noessays, :nomidterms, :nofinals, :suggest do
+    .accordion-group
+      .accordion-heading
+        %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", :href => "#collapseg#{@iaf}#{@iag}#{@iah}"}
+          %li  
+            = f.input :institution, :label => false, :as => :select, :collection => ["Rice", "AP", "Other"], :wrapper_html => { :class => "float" },  :input_html => {:style => '',:placeholder => "Rice",:class => "input-small"}
+          %li
+            = f.input :department, :label => false, :wrapper_html => { :class => "float" }, :input_html => {:placeholder => "ANTH",:class => "input-small"}
+          %li
+            = f.input :num, :label => false, :wrapper_html => { :class => "float" }, :input_html => {:style => '',:placeholder => "101", :class => "input-small"}
+          = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float" }, :input_html => {:style => '',:placeholder => "3", :class => "special input-mini"}
+          = f.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"}
+          = f.input :grade, :as => :select, :collection => ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs", "AP 3", "AP 4", "AP 5"], :label => "Grade", :wrapper_html => {  :style => '', :class => "float" }, :input_html => {:style => '', :class => "input-small"}
+      .accordion-body.collapse{:id => "collapseg#{@iaf}#{@iag}#{@iah}"}
+        - @iaf += 1
+        .accordion-inner
+          = f.input :prof, :label => "Prof Name", :wrapper_html => {:style => "", :class => " " }, :input_html => {:style => "", :placeholder => "Dr. Richard Tapia",:class => ""}
+          = f.input :profquality, :as => :number, :min => 0, :max => 10, :step => 1,:label => "Professor Quality", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "special"}
+          = f.input :hpweek, :as => :number, :min => 0, :max => 40, :step => 1,:label => "Workload: Hours per week", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '',:class => "special"}
+          = f.input :follows,:as => :select, :collection => ["0/100", "25/75", "50/50", "75/25", "100/0"],:label => "Book/Lecture Focus", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "input-small"}
+          = f.input :nopprojects,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Individual Projects", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "special"}
+          = f.input :nogprojects,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Group Projects", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "special"}
+          = f.input :noessays,:as => :number, :min => 0, :max => 10, :step => 1, :label => "Number of Essays", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "special"}
+          = f.input :nomidterms, :as => :number, :min => 0, :max => 16, :step => 1, :label => "Number of Midterms", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '',:class => "special"}
+          = f.input :nofinals,:as => :number, :min => 0, :max => 1, :step => 1, :label => "Final", :wrapper_html => {:style => '', :class => "" }, :input_html => {:style => '', :class => "special"}
+          = f.input :suggest, :label => "Suggestions", :wrapper_html => {:style => 'width: 510px; height: 100px;', :class => "pull-left" }, :input_html => { :placeholder => "Read the book,  Go to lecture...",:class => ""}
+          = link_to_remove_association "remove course", f, :class => "btn pull-left"

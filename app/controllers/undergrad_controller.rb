@@ -6,7 +6,7 @@ class UndergradController < ApplicationController
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|
-        if t.achievementtype == "Minor" 
+        if t.achievementtype == "Minors" 
           @minors = t
         end
       end 

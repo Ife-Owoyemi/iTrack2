@@ -1,0 +1,46 @@
+<div class="accordion span5 pull-left" id="accordian23<%= i %><%= k %><%= m %>">        
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian23<%= i %><%= k %><%= m %>" href="#collapse23<%= i %><%= k %><%= m %><%= mn %>">
+        <%= opreq.opreqname %>
+      </a>
+
+    </div>
+    <div id="collapse23<%= i %><%= k %><%= m %><%= mn %>"  class="accordion-body collapse">
+      <div class="accordion-inner" >
+        <% if complete != 1 %>  
+          <% g = opreq.options.all %>
+          <% for option in g %>
+            <ul><li><b><div><%= option.optionname %></div></b>
+            <% h = option.ocourses.all %>
+            <% count = 0 %>
+            <% coun = 0 %>
+            <ul><li>
+            <% for course in h %>
+              <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
+                <%= course.department + " " + course.num.to_s %>
+                <% count += 1 %>
+                <% coun += 1 %>
+                <% if coun != h.length %>
+                ,
+                <% end %>
+              <% else %>
+                <div style = "text-decoration: line-through; display:inline-block;" ><%= course.department + " " + course.num.to_s %></div>
+                <% coun += 1 %>
+                <% if coun != h.length %>
+                ,
+                <% end %>
+              <% end %>
+            <% end %>
+            </li></ul></li></ul>
+          <% end %>    
+        <% end %>
+
+        <% if complete == 1 %>
+          <ul><li>Requirement Complete</li></ul>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

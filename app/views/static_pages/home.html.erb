@@ -7,20 +7,13 @@
       <section>
         <%= render 'shared/stats' %>
       </section>
-      <section>
-        <%= render 'shared/micropost_form' %>
-      </section>
     </aside>
-    <div class="span8">
-      <h3>Micropost Feed</h3>
-      <%= render 'shared/feed' %>
-    </div>
   </div>  
 <% else %>
   <div class="center hero-unit">
-    <h1>Welcome to the iTrack</h1>
+    <h1>iTrack</h1>
 
-    <h2>Your guide to navigating the convoluted and lengthy course packages called majors, minors, and whatnot!
+    <h2>Here you will find the shoulders on which to stand so that you may be successful in your journey through college, grad school, and into the real world.  
     </h2>
 
     <%= link_to "Sign up now!", signup_path, 
