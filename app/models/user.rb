@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
   
+
   def feed
     # this is preliminary. See "Following users" for the full implementation.
     Micropost.from_users_followed_by(self)
