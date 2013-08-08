@@ -287,7 +287,9 @@
               <div>
                 <%= department %> <%= ind %>
               </div>
-              <% dephours += user_courses[department][ind] %>
+              <% if user_courses[department][ind] != nil %>
+                <% dephours += user_courses[department][ind] %>
+              <% end %>
               <% depcourses += 1 %>
               <% if ind.to_i != nil %>
 
@@ -295,7 +297,7 @@
                   <% ulhours += user_courses[department][ind] %>
                   <% ulcourses += 1 %>
                 <% end %>
-                <% end %>
+              <% end %>
             <% end %>
               <div>
                 <b>Upper-level Courses: </b><%= ulcourses %>
