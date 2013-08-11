@@ -8,12 +8,26 @@ class UsersController < ApplicationController
 
   def show
     @courses = Catalog.all
-  	@user = User.find(params[:id])
+    if (params[:id] != nil)
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
     @microposts = @user.microposts.paginate(page: params[:page])
     @years = @user.years.all
     @achievementtypes = @user.userachievementtypes.all
     @institution = Institution.where(:name => "Rice University")
   end
+
+  def show_current_user
+    @courses = Catalog.all
+    @user = current_user
+    @microposts = @user.microposts.paginate(page: params[:page])
+    @years = @user.years.all
+    @achievementtypes = @user.userachievementtypes.all
+    @institution = Institution.where(:name => "Rice University")
+    redirect_to user_path()
+  end  
 
   def destroy
     User.find(params[:id]).destroy
@@ -24,6 +38,11 @@ class UsersController < ApplicationController
   def index
     @institution = Institution.where(:name => "Rice University")
     @users = User.paginate(page: params[:page])
+    # all current vals for email, name, college, dreamJob for search
+    @allNames = User.allNames
+    @allEmails = User.allEmails
+    @allDreamJobs = User.allDreamJobs
+    @allColleges = User.allColleges
   end
 
   def create
@@ -74,6 +93,23 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       render 'edit'
+    end
+  end
+
+  def search
+    q = params[:user_search][:q]
+    searchType = params[:user_search][:qType]
+    status = params[:user_search][:status]
+    @institution = Institution.where(:name => "Rice University") 
+    @qresults = User.searchBy(q, searchType).results   
+    if (status == "Undergrad")
+      @users = User.findUndergrads(@qresults)
+    elsif (status == "Alumni")
+      @users = User.findAlumi(@qresults)
+    elsif (status == "Prospective Student")
+      @users = User.findProspStu(@qresults)
+    else
+      @users = @qresults
     end
   end
 

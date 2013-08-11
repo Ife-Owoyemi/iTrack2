@@ -1,3 +1,142 @@
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<script type"text/javascript">
+	// search accordion
+	$(document).ready( function (){	
+		jQuery("#searchAccordion").accordion({
+			collapsible: true,
+			active: false
+		});
+	});
+
+	// functions to help with autocomplete
+	function isNameSearch(){
+		if ($("#user_search_qType").val() == "Name"){		
+			return true
+		}
+		else{
+			return false
+		}
+	}
+
+	function isEmailSearch(){
+		if ($("#user_search_qType").val() == "Email"){		
+			return true
+		}
+		else{
+			return false
+		}
+	}
+
+	function isDreamJobSearch(){
+		if ($("#user_search_qType").val() == "Dream Job"){		
+			return true
+		}
+		else{
+			return false
+		}
+	}
+
+	function isCollegeSearch(){
+		if ($("#user_search_qType").val() == "College"){		
+			return true
+		}
+		else{
+			return false
+		}
+	}			
+
+	var names = [ <%= raw @allNames.to_json %> ][0];
+	var emails = [ <%= raw @allEmails.to_json %> ][0];
+	var dreamJobs = [ <%= raw @allDreamJobs.to_json %> ][0];
+	var colleges = [ <%= raw @allColleges.to_json %> ][0];
+
+
+
+	function setUserAutoComp(){
+		if(isEmailSearch()){		
+			jQuery("#user_search_q").autocomplete({
+				source: emails
+			});	
+		}
+		else if(isCollegeSearch()){
+			jQuery("#user_search_q").autocomplete({
+				source: colleges
+			});	
+		}
+		else if(isDreamJobSearch()){
+			jQuery("#user_search_q").autocomplete({
+				source: dreamJobs
+			});	
+		}
+		else{
+			jQuery("#user_search_q").autocomplete({
+				source: names
+			});			
+		}
+	}
+
+	//auto complete 
+	$(document).ready(function () {	
+
+		//set autocomplete to according to current val of searchType
+		setUserAutoComp();
+
+		// change autocomplete according to search type
+		$("#user_search_qType").change( function(){
+			setUserAutoComp();
+		});
+
+	});	
+
+
+
+</script>
+
+<style type="text/css">
+	input {
+		width: 250px;
+	}
+	select {
+		width: 250px;
+		height: 40px;
+	}
+
+</style>
+
+<div id="searchAccordion">
+ 	<h3> Search by User Details </h3>
+	<div>
+		<%= form_for(:user_search, :url => {:controller => "users", :action => "search"}) do |f| %>
+ 			<%= f.label :q, 'Search: ' %>
+			<%= f.text_field :q %>
+
+			<%= f.label :qType, 'Search by ' %>
+			<%= f.select :qType, ["Name", "Email", "College", "Dream Job"] %>		
+
+			<%= f.label :status, 'Status of Student' %>	
+			<%= f.select :status, ["All","Undergrad", "Alumni", "Prospective Student"] %> 
+
+			<%= f.submit "Search" %>
+
+
+		<% end %>
+	</div>
+	<h3> Search By Tracks </h3>
+	<div>
+		<%# form_for (:ach_search, :url => {:controller => "users" :action => "achSearch"}) do |f| %>
+
+		<%# f.label :q, "Search:" %>
+		<%# f.text_field :q %>
+
+		<%# f.label :qType, "Search By" %>
+		<%# f.select :qType, ["Achievement", "College", "Achievement Name", "Specialty"] %>
+
+		<%# end %>
+	</div>
+
+</div>
+
 <% provide(:title, 'All users') %>
 <h1>All users</h1>
 

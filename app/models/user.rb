@@ -36,6 +36,89 @@ class User < ActiveRecord::Base
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
   
+  # Solr search setup
+  searchable do 
+    text :name, :email, :college, :dreamJob, :status
+  end
+
+ # bundle exec rake sunspot:solr:start or sunspot:solr:run to start in foreground
+
+  def self.reIndexSolr
+    User.reindex
+    Sunspot.commit
+  end
+
+  def self.searchBy(q,search_type) 
+ 
+    if (search_type == "Email")    
+      User.search do
+        paginate :page => 1, :per_page => 10 
+        fulltext q do
+          fields(:email)
+        end
+      end  
+
+    elsif (search_type == "College")    
+      User.search do
+        paginate :page => 1, :per_page => 10 
+        fulltext q do
+          fields(:college)
+        end
+      end
+
+    elsif (search_type == "Dream Job")    
+      User.search do
+        paginate :page => 1, :per_page => 10 
+        fulltext q do
+          fields(:dreamJob)
+        end
+      end
+
+    else (search_type == "Name")    
+      User.search do
+        paginate :page => 1, :per_page => 10 
+        fulltext q do
+          fields(:name)
+        end
+      end
+    end
+  end
+
+  def self.allNames
+    User.all.map(&:name)
+  end
+
+  def self.allEmails
+    User.all.map(&:email)
+  end
+
+  def self.allDreamJobs
+    User.all.map(&:dreamJob)
+  end
+
+  def self.allColleges
+    User.all.map(&:college)
+  end    
+
+  def self.findUndergrads(users)
+    user_ids = users.map(&:id)
+    User.find(user_ids, :conditions => ["status = ?", "Undergrad"])
+  end   
+
+  def self.findAlumi(users)
+    user_ids = users.map(&:id)
+    User.find(user_ids, :conditions => ["status = ?", "Alumni"])
+  end   
+
+  def self.findProspStu(users)
+    user_ids = users.map(&:id)
+    User.find(user_ids, :conditions => ["status = ?", "Prospective Student"])
+  end       
+
+#  def self.searchByTrack(qTrack)
+
+#  end
+
 
   def feed
     # this is preliminary. See "Following users" for the full implementation.
@@ -53,6 +136,7 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_followed_id(other_user.id).destroy
   end
+
 private
 	def create_remember_token
 		self.remember_token = SecureRandom.urlsafe_base64

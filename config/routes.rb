@@ -13,11 +13,12 @@ ISwitched1::Application.routes.draw do
   get "users/edituser"
   get "users/edittrack"
   get "catalogs/catalog"
-  root to: 'static_pages#home'
+  root to: "users#show" # rooted to profile page
+  match '/home', to: 'static_pages#home', :as => :home
 
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
-  match 'signout', to: 'sessions#destroy', via: :delete
+  match '/signout', to: 'sessions#destroy', via: :delete
   match '/catalog', to: 'catalogs#catalog'
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'
@@ -32,6 +33,7 @@ ISwitched1::Application.routes.draw do
       get :following, :followers
     end
   end
+  match '/users/search', :to => 'users#search'
   resources :institutions
   resources :courses
   resources :sessions,      only: [:new, :create, :destroy]

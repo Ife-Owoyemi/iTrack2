@@ -99,6 +99,7 @@ GEM
     mini_portile (0.5.0)
     multi_json (1.7.7)
     nested_form (0.3.2)
+    newrelic_rpm (3.6.6.147)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     nokogiri (1.6.0-x86-mingw32)
@@ -129,7 +130,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.4)
+    rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
     rsolr (1.0.9)
@@ -190,8 +191,10 @@ DEPENDENCIES
   haml-rails (>= 0.3.4)
   jquery-rails (= 2.0.2)
   nested_form
+  newrelic_rpm
   pg
   rails (= 3.2.13)
+  rake (= 10.1.0)
   sass-rails (~> 3.2.3)
   sqlite3
   sunspot_rails

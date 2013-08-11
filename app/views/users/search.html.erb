@@ -1,0 +1,20 @@
+<% provide(:title, 'Search Results') %>
+<h1>Found users</h1>
+
+<% if @users.empty? == false %>
+
+	<%= will_paginate %>
+
+	<ul class="users">
+  		<% @users.each do |user| %>
+    		<%= render user %>
+  		<% end %>
+	</ul>
+
+	<%= will_paginate %>
+
+<% else %>
+
+	<p> No Users Found. </p>
+
+<% end %>
