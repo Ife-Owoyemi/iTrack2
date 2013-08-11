@@ -20,22 +20,22 @@
 		<% @departments = college.departments.all %>
 		<% @departments.each do |department| %>
 			
-			<% @ucatalog["all"][college.colegename][department.departmentname] = Hash.new %>
+			<% @ucatalog["all"][college.colegename][department.departmentabbr] = Hash.new %>
 			<% @nums = department.nums.all %>
 			<% @nums.each do |num| %>
 				<% if num.number != nil %>
-					<% @ucatalog["all"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+					<% @ucatalog["all"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 					<% if num.di %>
 						<% if @ucatalog["di"].has_key?(college.colegename) %>
 						<% else %>
 							<% @ucatalog["di"][college.colegename] = Hash.new %>
 						<% end %>
 
-						<% if @ucatalog["di"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["di"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+						<% if @ucatalog["di"][college.colegename].has_key?(department.departmentabbr) %>
+							<% @ucatalog["di"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
-							<% @ucatalog["di"][college.colegename][department.departmentname] = Hash.new %>
-							<% @ucatalog["di"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+							<% @ucatalog["di"][college.colegename][department.departmentabbr] = Hash.new %>
+							<% @ucatalog["di"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% end %>
 					<% end %>
 					<% if num.dii %>
@@ -43,11 +43,11 @@
 						<% else %>
 							<% @ucatalog["dii"][college.colegename] = Hash.new %>
 						<% end %>
-						<% if @ucatalog["dii"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["dii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+						<% if @ucatalog["dii"][college.colegename].has_key?(department.departmentabbr) %>
+							<% @ucatalog["dii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
-							<% @ucatalog["dii"][college.colegename][department.departmentname] = Hash.new%>
-							<% @ucatalog["dii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+							<% @ucatalog["dii"][college.colegename][department.departmentabbr] = Hash.new%>
+							<% @ucatalog["dii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% end %>
 					<% end %>
 					<% if num.diii %>
@@ -55,11 +55,11 @@
 						<% else %>
 							<% @ucatalog["diii"][college.colegename] = Hash.new %>
 						<% end %>
-						<% if @ucatalog["diii"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["diii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+						<% if @ucatalog["diii"][college.colegename].has_key?(department.departmentabbr) %>
+							<% @ucatalog["diii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
-							<% @ucatalog["diii"][college.colegename][department.departmentname] = Hash.new%>
-							<% @ucatalog["diii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
+							<% @ucatalog["diii"][college.colegename][department.departmentabbr] = Hash.new%>
+							<% @ucatalog["diii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% end %>
 					<% end %>
 				<% end %>
@@ -107,21 +107,23 @@
 							        
 							        <% m = 0 %>
 							  		<% @ucatalog[type][college][department].each_key do |num| %>	
-							  			<div class="accordion" id="accordion4<%= m %>|<%= l %>|<%= j %>|<%= k %>">
+							  			<div class="accordion" id="accordion4<%= m %><%= l %><%= j %><%= k %>">
 										  <div class="accordion-group">
 										    <div class="accordion-heading">
-										      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4<%= m %>|<%= l %>|<%= j %>|<%= k %>" href="#collapse1<%= m %>|<%= l %>|<%= j %>|<%= k %>">
+										      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4<%= m %><%= l %><%= j %><%= k %>" href="#collapse2<%= m %><%= l %><%= j %><%= k %>">
 										        <%= department %> <%= num %>
 										      </a>
 										    </div>
-										    <div id="collapse1<%= m %>|<%= l %>|<%= j %>|<%= k %>" class="accordion-body collapse">
+										    <div id="collapse2<%= m %><%= l %><%= j %><%= k %>" class="accordion-body collapse">
 										      <div class="accordion-inner">
-										        ...
+										      	<p><b>Name: </b><%= @ucatalog[type][college][department][num][:name] %><p>
+										        <p><b>Brief: </b><%= @ucatalog[type][college][department][num][:brief] %><p>
+										        <p><b>Credits: </b><%= @ucatalog[type][college][department][num][:credit] %><p>
 										      </div>
 										    </div>
 										  </div>
 										</div>  
-									  <% m += 1 %>	
+									  	<% m += 1 %>	
 									<% end %>
 
 							      </div>

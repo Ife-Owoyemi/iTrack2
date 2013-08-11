@@ -1,11 +1,1 @@
-PORT,Hours,DI
-PORT 101,5,
-PORT 102,5,
-PORT 105,5,
-PORT 201,4,1
-PORT 202,4,1
-PORT 204,4,1
-PORT 301,3,1
-PORT 400,V,
-PORT 401,3,
-,,
+Portuguese,,Hours,DIPORT 101,Introduction to Portuguese Language and Culture I,5,PORT 102,Introduction to Portuguese Language and Culture II,5,PORT 105,Accelerated Introductory Portuguese for Spanish Speakers,5,PORT 201,Intermeidate Portuguese Language and Culture I,4,1PORT 202,Intermediate Portuguese Language and Culture II,4,1PORT 204,Portuguese Language and Culture of Prazil,4,1PORT 301,Advanced Portuguese for Written and Oral Communication,3,1PORT 400,Independent Study,V,PORT 401,Independent Study,3,PORT 500,Brazil: Culture and Society,3,

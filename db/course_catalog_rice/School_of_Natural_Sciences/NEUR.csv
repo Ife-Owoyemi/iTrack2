@@ -1,36 +1,1 @@
-NEUR,,Hours
-NEUR 111,"Science and Art in Dialogue: Experiment, Imagination, and the Invention of Neurscience",1
-NEUR 362,,
-NEUR 380,Fundamental Neuroscience Systems,3
-NEUR 385,Fundamentals of Cellular and Molecular Neuroscience,3
-NEUR 415,Theoretical Neurscience I: Biophysical Modeling of Cells and Circuits,3
-NEUR 416,"Theoretical Neurscience II: Learning, Perception, and Cognition",3
-NEUR 481,Computational Neurscience and Neural Engineering,3
-NEUR 485,Neurscience Research,V
-NEUR 500,,
-NEUR 501,Advanced Cognitive Neuroscience: Attention and Perception,3
-NEUR 502,Cognitive Neurscience II,3
-NEUR 504,Cellular Neurophysiology I & II,3
-NEUR 505,Optical Imaging,3
-NEUR 506,Concepts of Learning and Memory,3
-NEUR 508,Introduction to Cognitive Neuroscience,3
-NEUR 510,Neuropharmocology,3
-NEUR 515,Neural Development,3
-NEUR 516,Sensory Systems,3
-NEUR 517,Mechanisms of Memory,3
-NEUR 518,Introduction to Neuroscience Methods,3
-NEUR 519,Introduction to Neuroscience Methods Lab,3
-NEUR 520,Ten Unsolved Questions in Neuroscience,3
-NEUR 521,Analyses of Neuronal Function,3
-NEUR 522,Anatomy and Development of the Nervous System,3
-NEUR 523,Genetics for Neuroscience,3
-NEUR 525,Neuroscience and Law,3
-NEUR 530,"Theory, Content, and Execution in Cognitive Neuroscience",3
-NEUR 535,Cellular Neurophysiology I & II,3
-NEUR 540,Graduate Neuroanatomy,3
-NEUR 550,Molecular Neurobiology,3
-NEUR 576,Neurobiology of Disease,3
-NEUR 577,Neuroanatomy: Functional Organization of the Central Nervouse System\,V
-NEUR 578,Higher Brain Function,3
-NEUR 579,Neurobiology of Sensation and Movement,3
-NEUR 580,Physiology of Visual System,3
+Neuroscience,,HoursNEUR 111,"Science and Art in Dialogue: Experiment, Imagination, and the Invention of Neurscience",1NEUR 362,,NEUR 380,Fundamental Neuroscience Systems,3NEUR 385,Fundamentals of Cellular and Molecular Neuroscience,3NEUR 415,Theoretical Neurscience I: Biophysical Modeling of Cells and Circuits,3NEUR 416,"Theoretical Neurscience II: Learning, Perception, and Cognition",3NEUR 481,Computational Neurscience and Neural Engineering,3NEUR 485,Neurscience Research,VNEUR 500,,NEUR 501,Advanced Cognitive Neuroscience: Attention and Perception,3NEUR 502,Cognitive Neurscience II,3NEUR 504,Cellular Neurophysiology I & II,3NEUR 505,Optical Imaging,3NEUR 506,Concepts of Learning and Memory,3NEUR 508,Introduction to Cognitive Neuroscience,3NEUR 510,Neuropharmocology,3NEUR 515,Neural Development,3NEUR 516,Sensory Systems,3NEUR 517,Mechanisms of Memory,3NEUR 518,Introduction to Neuroscience Methods,3NEUR 519,Introduction to Neuroscience Methods Lab,3NEUR 520,Ten Unsolved Questions in Neuroscience,3NEUR 521,Analyses of Neuronal Function,3NEUR 522,Anatomy and Development of the Nervous System,3NEUR 523,Genetics for Neuroscience,3NEUR 525,Neuroscience and Law,3NEUR 530,"Theory, Content, and Execution in Cognitive Neuroscience",3NEUR 535,Cellular Neurophysiology I & II,3NEUR 540,Graduate Neuroanatomy,3NEUR 550,Molecular Neurobiology,3NEUR 576,Neurobiology of Disease,3NEUR 577,Neuroanatomy: Functional Organization of the Central Nervouse System\,VNEUR 578,Higher Brain Function,3NEUR 579,Neurobiology of Sensation and Movement,3NEUR 580,Physiology of Visual System,3

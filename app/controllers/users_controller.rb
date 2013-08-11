@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  respond_to :json, :html, :xml, :js
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
@@ -13,6 +14,7 @@ class UsersController < ApplicationController
     @years = @user.years.all
     @achievementtypes = @user.userachievementtypes.all
     @institution = Institution.where(:name => "Rice University")
+    
   end
 
   def destroy
@@ -75,6 +77,7 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+
   end
 
   private

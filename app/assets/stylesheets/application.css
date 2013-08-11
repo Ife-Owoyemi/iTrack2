@@ -21,3 +21,8 @@
   float: none;
   padding: 10px 5px 10px;
 }
+
+.form_header_style {
+	background-color: white;
+	color: black;
+}
