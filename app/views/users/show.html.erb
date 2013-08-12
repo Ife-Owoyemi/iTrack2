@@ -38,6 +38,22 @@
   <% end %>
   <% i += 1 %>
 <% end %>
+<% cuser_courses = Array.new %>
+<% current_user.years.all.each do |year| %>
+  <% year.semesters.all.each do |semester| %>
+    <% semester.usercourses.all.each do |course| %>
+      <% cuser_courses << course.department + " " + course.num.to_s %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+
+
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
@@ -184,6 +200,7 @@
       <div class="accordion" id="accordion">
         <% ia = 0 %>
         <% @ricehours = 0 %>
+        <% @fwis = 0 %>
         <% @diArray = Array.new %>
         <% @diiArray = Array.new %>
         <% @diiiArray = Array.new %>
@@ -268,10 +285,15 @@
                                       </h4>​
                                     
                                   <% else %>
+                                    <% strike = "" %>
+                                    <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                                      <% strike = "*" %>
+                                    <% end %>
+
                                     <h4
                                          class="label  <%= @color %> popover-link"
                                          data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
-                                         data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %></font>
+                                         data-original-title="Course Overview"><font  color = "<%= color %>"><%=course.department%> <%= course.num.to_s %><%= strike %></font>
                                       </h4>​
                                   <% end %>
                                 </td>
@@ -287,6 +309,9 @@
                                     <% gpah += course.credits.to_f %>
                                     <%# gpa += grades[course.grade].to_f %>
                                   <% end %>
+                                <% end %>
+                                <% if course.department == "FWIS" or "COMC" %>
+                                  <% @fwis += 1 %>
                                 <% end %>
                               </div>
                             </tr>
@@ -508,6 +533,21 @@
                 <font color = "green">Completed</font></p>
               <% else %>
                 Incomplete</p>
+              <% end %>
+              <% @smallest_year = 0 %>
+              <% @years.each do |year| %>
+                <% if @smallest_year > year.year.to_i %>
+                  <% @smallest_year = year.to_i %>
+                <% end %>
+              <% end %>
+              <% if @smallest_year > 2012 %>
+                FWIS Requirement: 
+                <% if @fwis > 1 %>
+                  <%= @fwis %>/2 <font color = "green">Completed</font>
+                <% else %>
+                  <%= @fwis %>/2
+                <% end %>
+
               <% end %>
             </div>
           </div>

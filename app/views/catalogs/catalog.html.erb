@@ -1,6 +1,14 @@
 <h1>Course Catalog 2.0</h1>
 <hr width="100%">
 <% @catalog = @courses %>
+<% cuser_courses = Array.new %>
+<% current_user.years.all.each do |year| %>
+  <% year.semesters.all.each do |semester| %>
+    <% semester.usercourses.all.each do |course| %>
+      <% cuser_courses << course.department + " " + course.num.to_s %>
+    <% end %>
+  <% end %>
+<% end %>
 <%# Catalog- :institution_id, :coleges_attributes
 		Coleges-  :catalog_id, :colegename, :department_attributes
 			Department-  :colege_id, :departmentname, :departmentname2, :num_attributes
@@ -106,17 +114,19 @@
 							      <div class="accordion-inner">
 							        
 							        <% m = 0 %>
-							  		<% @ucatalog[type][college][department].each_key do |num| %>	
+							  		<% @ucatalog[type][college][department].each_key do |num| %>
+							  			<% if cuser_courses.include?(department + " " + num.to_s) %>
+	                                      <% strike = "*" %>
+	                                    <% end %>	
 							  			<div class="accordion" id="accordion4<%= m %><%= l %><%= j %><%= k %>">
 										  <div class="accordion-group">
 										    <div class="accordion-heading">
 										      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4<%= m %><%= l %><%= j %><%= k %>" href="#collapse2<%= m %><%= l %><%= j %><%= k %>">
-										        <%= department %> <%= num %>
+										        <%= department %> <%= num %>: <%= @ucatalog[type][college][department][num][:name] %> <%=strike %>
 										      </a>
 										    </div>
 										    <div id="collapse2<%= m %><%= l %><%= j %><%= k %>" class="accordion-body collapse">
 										      <div class="accordion-inner">
-										      	<p><b>Name: </b><%= @ucatalog[type][college][department][num][:name] %><p>
 										        <p><b>Brief: </b><%= @ucatalog[type][college][department][num][:brief] %><p>
 										        <p><b>Credits: </b><%= @ucatalog[type][college][department][num][:credit] %><p>
 										      </div>
