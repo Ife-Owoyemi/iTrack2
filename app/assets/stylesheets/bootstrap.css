@@ -5956,10 +5956,13 @@ a.badge:focus {
 
 .accordion-heading {
   border-bottom: 0;
+
 }
 
 .accordion-heading .accordion-toggle {
   display: block;
+  background-color: white;
+  color: black;
   padding: 8px 15px;
 }
 

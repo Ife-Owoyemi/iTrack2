@@ -1,3 +1,4 @@
+
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
@@ -12,6 +13,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require best_in_place
 //= require jquery_nested_form
 //= require bootstrap
 //= require bootstrap-tooltip.js
@@ -24,8 +27,10 @@ $(function () {
   }).popover('hide');
   $(".popover-link").popover({ html : true }).popover('hide');
   $('.popover-test').on('click', function(e) {e.preventDefault(); return true;});
-}
+});
+$(document).ready(function() {
+  /* Activating Best In Place */
+  jQuery(".best_in_place").best_in_place();
+});
 
-
-);
 
