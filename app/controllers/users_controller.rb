@@ -113,6 +113,24 @@ class UsersController < ApplicationController
     end
   end
 
+  def search_by_achievement
+    q = params[:ach_search][:q]
+    searchType = params[:ach_search][:qType]
+    status = params[:ach_search][:status]    
+    @institution = Institution.where(:name => "Rice University") 
+    @qresults = Userachievementtype.searchBy(q,searchType).results
+    @qusers = Userachievementtype.findUsers(@qresults)
+    if (status == "Undergrad")
+      @users = User.findUndergrads(@qusers)
+    elsif (status == "Alumni")
+      @users = User.findAlumi(@qusers)
+    elsif (status == "Prospective Student")
+      @users = User.findProspStu(@qusers)
+    else
+      @users = @qusers
+    end        
+  end
+
   private
     def signed_in_user
       unless signed_in?

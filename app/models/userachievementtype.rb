@@ -6,10 +6,17 @@ class Userachievementtype < ActiveRecord::Base
   	text :achievementname, :achievementtype, :college, :specialty
   end
 
+ # bundle exec rake sunspot:solr:start or sunspot:solr:run to start in foreground
+
+  def self.reIndexSolr
+    Userachievementtype.reindex
+    Sunspot.commit
+  end  
+
   def self.searchBy(q,search_type) 
  
     if (search_type == "Achievement Type")    
-      Userachievement.search do
+      Userachievementtype.search do
         paginate :page => 1, :per_page => 10 
         fulltext q do
           fields(:email)
@@ -17,7 +24,7 @@ class Userachievementtype < ActiveRecord::Base
       end  
 
     elsif (search_type == "College")    
-      Userachievement.search do
+      Userachievementtype.search do
         paginate :page => 1, :per_page => 10 
         fulltext q do
           fields(:college)
@@ -25,7 +32,7 @@ class Userachievementtype < ActiveRecord::Base
       end
 
     elsif (search_type == "Specialty")    
-      Userachievement.search do
+      Userachievementtype.search do
         paginate :page => 1, :per_page => 10 
         fulltext q do
           fields(:specialty)
@@ -33,7 +40,7 @@ class Userachievementtype < ActiveRecord::Base
       end
 
     else   
-      Userachievement.search do
+      Userachievementtype.search do
         paginate :page => 1, :per_page => 10 
         fulltext q do
           fields(:achievementname)
@@ -42,7 +49,7 @@ class Userachievementtype < ActiveRecord::Base
     end
   end
 
-  def self.findUser(userachievements)
+  def self.findUsers(userachievements)
   	user_ids = userachievements.map(&:user_id)
   	users = User.find(user_ids)
   	return users

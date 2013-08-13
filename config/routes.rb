@@ -34,6 +34,7 @@ ISwitched1::Application.routes.draw do
     end
   end
   match '/users/search', :to => 'users#search'
+  match '/users/search_by_achievement', :to => 'users#search_by_achievement'  
   resources :institutions
   resources :courses
   resources :sessions,      only: [:new, :create, :destroy]
