@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
         end
       end
 
-    else (search_type == "Name")    
+    else    
       User.search do
         paginate :page => 1, :per_page => 10 
         fulltext q do
@@ -93,11 +93,27 @@ class User < ActiveRecord::Base
   end
 
   def self.allDreamJobs
-    User.all.map(&:dreamJob)
+    dreamJobs = []
+    User.all.each do |user|
+      if (user.dreamJob != nil )
+        dreamJobs << user.dreamJob
+      else
+        dreamJobs << "not set"
+      end
+    end
+    return dreamJobs
   end
 
   def self.allColleges
-    User.all.map(&:college)
+    colleges = []
+    User.all.each do |user|
+      if (user.college != nil )
+        colleges << user.college
+      else
+        colleges << "not set"
+      end
+    end
+    return colleges
   end    
 
   def self.findUndergrads(users)

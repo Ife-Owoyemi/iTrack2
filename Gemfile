@@ -17,6 +17,7 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'newrelic_rpm'
 gem 'rake', '10.1.0'
+gem 'best_in_place'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
