@@ -7,22 +7,23 @@
 <% @depnumgoal = 0 %>
 <% mo = 0 %>
 <% for depnumcalc in fg %>
-  <div class="accordion span4 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
+  <div class="accordion span6 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
     <div class="accordion-group">
       <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mo %>">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
           <%= depnumcalc.depnumreqname %>
         </a>
 
       </div>
-      <div id="collapse3<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
+      <div id="collapse4<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
         <div class="accordion-inner" >
     
           <% g = depnumcalc.deps.all %>
           <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
+            <p><%= depnumcalc.cgoal %> courses total, db: <%= depnumcalc.doublecount %></p>
             <% for dep in g %>
               <% gg = dep.bounds.all %>
-              <p><%= depnumcalc.cgoal %> Courses in <%= dep.department %> with numbers within ranges
+              <p><%= dep.department %> within ranges
                 <% coun = 0 %>
               <% for num in gg %>
                 <% coun += 1 %>
@@ -132,9 +133,11 @@
               <% end %>
             <% @totalc += depnumcalc.cgoal %>
           <% elsif depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
+            <p><%= depnumcalc.hgoal %> hours total, db: <%= depnumcalc.doublecount %></p>
             <% for dep in g %>
               <% gg = dep.bounds.all %>
-              <p><%= depnumcalc.hgoal %> Hours in <%= dep.department %> with numbers within ranges
+              <p><%= dep.department %> within ranges
+              
                 <% coun = 0 %>
               <% for num in gg %>
                 <% coun += 1 %>

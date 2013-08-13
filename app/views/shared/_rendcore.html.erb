@@ -1,15 +1,15 @@
 
 <% mm = 0 %>
 <% for corereq in d %>
-  <div class="accordion span4 pull-left" id="accordian1<%= i %><%= k %><%= m %>">        
+  <div class="accordion span6 pull-left" id="accordian1<%= i %><%= k %><%= m %>">        
     <div class="accordion-group">
       <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian1<%= i %><%= k %><%= m %>" href="#collapse1<%= i %><%= k %><%= m %><%= mm %>">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian1<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mm %>">
           <%= corereq.corereqname %>
         </a>
 
       </div>
-      <div id="collapse1<%= i %><%= k %><%= m %><%= mm %>"  class="accordion-body collapse">
+      <div id="collapse3<%= i %><%= k %><%= m %><%= mm %>"  class="accordion-body collapse">
         <div class="accordion-inner" >
           <% e = corereq.ccourses.all %>
           <% count = 0 %>
