@@ -125,7 +125,7 @@
 	</div>
 	<h3> Search By Tracks </h3>
 	<div>
-		<%= form_for (:ach_search, :url => {:controller => "users" :action => "search_by_achievement"}) do |f| %>
+		<%= form_for(:ach_search, :url => { :controller => "users", :action => "search_by_achievement"}) do |f| %>
 
 			<%= f.label :q, "Search:" %>
 			<%= f.text_field :q %>

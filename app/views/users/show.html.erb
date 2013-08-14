@@ -71,6 +71,20 @@
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
 
+<!-- style by Ife -->
+<style type="text/css">
+  select {
+    height: 40px;
+  }
+
+  .best_in_place {
+    display: inline;
+  }
+
+</style>
+
+<!-- end style by Ife -->
+
 
 <div class="row">
 	<aside class="span3">
@@ -80,11 +94,21 @@
 			</h1>
 		</section>
     <section>
-      <p><b>Dream Job: </b><%= @user.dreamJob %></p>
-      <p><b>Status: </b><%= @user.status %></p>
-      <p><b>Year: </b><%= @user.year %></p>
-      <p><b>College: </b><%= @user.college %></p>
-      <p><b>Email: </b><%= @user.email %></p>
+      <p><b>Dream Job: </b>
+        <%= best_in_place @user, :dreamJob, :type => :input %>
+      </p>
+      <p id="user_status"><b>Status: </b>
+        <%= best_in_place @user, :status, :type => :select, :collection => [ ["Undergrad","Undergrad"], ["Alumni","Alumni"], ["Prospective Student","Prospective Student"]] %>
+      </p> 
+      <p><b>Year: </b>
+        <%= best_in_place @user, :year, :type => :select, :collection => [ ["Senior","Senior"], ["Junior","Junior"], ["Sophomore","Sophomore"], ["Freshman", "Freshman"] ] %>
+      </p>
+      <p><b>College: </b>
+        <%= best_in_place @user, :college, :type => :select, :collection => [ ["Baker","Baker"], ["Brown","Brown"], ["Duncan","Duncan"], ["Hanszen", "Hanszen"], ["Jones","Jones"], ["Lovett","Lovett"], ["Martel","Martel"], ["McMurtry", "McMurtry"], ["Will Rice","Will Rice"], ["Sid Richardson","Sid Richardson"], ["Wiess","Wiess"] ] %>
+      </p>
+      <p><b>Email: </b>
+        <%= best_in_place @user, :email, :type => :input %>
+      </p>
     </section>
     <section>
       <%= render 'shared/stats' %>

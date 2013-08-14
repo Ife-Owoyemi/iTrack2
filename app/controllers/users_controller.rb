@@ -90,9 +90,15 @@ class UsersController < ApplicationController
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
-      redirect_to @user
+      respond_to do |format|
+        format.html {redirect_to @user}
+        format.json {respond_with_bip(@user)}
+      end
     else
-      render 'edit'
+      respond_to do |format|
+        format.html {render 'edit'}
+        format.json {respond_with_bip(@user)}
+      end
     end
   end
 
