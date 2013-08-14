@@ -125,15 +125,15 @@ class User < ActiveRecord::Base
     return colleges
   end 
 
-# Find User MArgin finds all the users that mtach a certain margin. Ex: all Undergrad
+# Find User MArgin finds all the users that mtach a certain segment. Ex: all Undergrad
 # It is to be used by more specific functions i.e. findUndergrads
   require 'will_paginate/array' # need this line to use will_paginate with an array
-  def self.findUserMargin(users,margin)
+  def self.findUserSegment(users,segment)
     user_ids = users.map(&:id)
     returnUsers = []
     potUsers = User.find(user_ids)
     potUsers.each do |pUser|
-      if (pUser.status == margin)
+      if (pUser.status == segment)
         returnUsers << pUser
       end
     end

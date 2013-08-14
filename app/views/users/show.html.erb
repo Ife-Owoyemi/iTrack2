@@ -234,7 +234,7 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
-                                         data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
+                                         data-content="<b>Prof: </b><%= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
                                          data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %> <%= course.grade %></font>
                                       </h4>​
                                     
