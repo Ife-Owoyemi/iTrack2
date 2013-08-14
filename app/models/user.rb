@@ -43,11 +43,16 @@ class User < ActiveRecord::Base
 
  # bundle exec rake sunspot:solr:start or sunspot:solr:run to start in foreground
 
+# reIndex Solr important when pushing up to Heroku for old users that 
+# were not indexed or for new attributes
   def self.reIndexSolr
     User.reindex
     Sunspot.commit
   end
 
+
+# function gets a certain search and the search value and uses Solr to find 
+# users with that match the given conditions
   def self.searchBy(q,search_type) 
  
     if (search_type == "Email")    
@@ -84,14 +89,17 @@ class User < ActiveRecord::Base
     end
   end
 
+# return all current users names
   def self.allNames
     User.all.map(&:name)
   end
 
+# return all current users' emails
   def self.allEmails
     User.all.map(&:email)
   end
 
+# find all current users' dreamjobs
   def self.allDreamJobs
     dreamJobs = []
     User.all.each do |user|
@@ -104,6 +112,7 @@ class User < ActiveRecord::Base
     return dreamJobs
   end
 
+# find all current users' colleges
   def self.allColleges
     colleges = []
     User.all.each do |user|
@@ -114,21 +123,33 @@ class User < ActiveRecord::Base
       end
     end
     return colleges
-  end    
+  end 
+
+# Find User MArgin finds all the users that mtach a certain margin. Ex: all Undergrad
+# It is to be used by more specific functions i.e. findUndergrads
+  require 'will_paginate/array' # need this line to use will_paginate with an array
+  def self.findUserMargin(users,margin)
+    user_ids = users.map(&:id)
+    returnUsers = []
+    potUsers = User.find(user_ids)
+    potUsers.each do |pUser|
+      if (pUser.status == margin)
+        returnUsers << pUser
+      end
+    end
+    return returnUsers.paginate(:page => 1, :per_page => 10)
+  end   
 
   def self.findUndergrads(users)
-    user_ids = users.map(&:id)
-    User.find(user_ids, :conditions => ["status = ?", "Undergrad"])
+    User.findUserMargin(users, "Undergrad")
   end   
 
   def self.findAlumi(users)
-    user_ids = users.map(&:id)
-    User.find(user_ids, :conditions => ["status = ?", "Alumni"])
+    User.findUserMargin(users, "Alumni")
   end   
 
   def self.findProspStu(users)
-    user_ids = users.map(&:id)
-    User.find(user_ids, :conditions => ["status = ?", "Prospective Student"])
+    User.findUserMargin(users, "Prospective Student")    
   end       
 
 #  def self.searchByTrack(qTrack)
