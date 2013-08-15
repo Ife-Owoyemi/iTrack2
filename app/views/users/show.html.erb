@@ -1,3 +1,4 @@
+<% if signed_in? %>
 <% @catalog = @courses %>
 <% i = 0 %>
 <% @di = 0 %>
@@ -150,15 +151,68 @@
 			</h1>
 		</section>
     <section>
-      <p class="inline-block"><b>Dream Job: </b><%= @user.dreamJob %></p>
       <p><b>Status: </b><%= @user.status %></p>
       <p><b>Year: </b><%= @user.year %></p>
       <p><b>College: </b><%= @user.college %></p>
+      <p><b>Postgrad: </b><%= @user.postgradplans %></p>
+      <p class="inline-block"><b>Dream Job: </b><%= @user.dreamJob %></p>
       <p><b>Email: </b><%= @user.email %></p>
     </section>
     <section>
-      <%= render 'shared/stats' %>
+      <%#= render 'shared/stats' %>
+    
+      <h1>Awards</h1>
+      <% @awardscounter = 0 %>
+      <% @user.awards.all.each do |award| %>
+        <div class="accordion span3" id="awardsaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
+                <%= award.providername %><%= award.year %> 
+              </a>
+            </div>
+            <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Title: </b><%= award.awardtitle %></p>
+                <p><b>Perks: </b><%= award.awardperks %></p>
+                <p><b>Prereqs: </b><%= award.awardprereqs %></p>
+                <p><b>Tips: </b><%= award.tipsforapp %></p>
+              </div>
+            </div>
+          </div>
+          <% @awardscount += 1 %>
+        </div>
+      <% end %>
+      <% if @user == current_user %>
+      <% end %>
     </section>
+    <section>
+      <h1>Internships</h1>
+      <% @interncounter = 0 %>
+      <% @user.internships.all.each do |ship| %>
+        <div class="accordion span3" id="internaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
+                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
+              </a>
+            </div>
+            <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Title: </b><%= ship.stutitle %></p>
+                <p><b>Application Found: </b><%= ship.source %></p>
+                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
+                <p><b>Tips for Appling: </b><%= ship.tipsforapp %></p>
+              </div>
+            </div>
+          </div>
+          <% @interncount += 1 %>
+        </div>
+      <% end %>
+      <% if @user == current_user %>
+      <% end %>
+    </section>
+
 	</aside>
 
 <p id="notice"><%= notice %></p>
@@ -225,7 +279,7 @@
                   <% sgpa = 0 %>
                   <% sgpah = 0 %>
                   <% hours = 0 %>
-                  <div class="accordion pull-left span3" id="accordion<%= ia %><%= ha %>">
+                  <div class="accordion pull-left span2" id="accordion<%= ia %><%= ha %>">
                     <div class="accordion-group">
                       <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion<%= ia %><%= ha %>" href="#collapseb<%= ia %><%= ha %>">
@@ -558,6 +612,19 @@
       <% end %>
       <%= link_to 'Back', users_path %>
     </section>
+    <section>
+      <h1>Advice to Freshmen</h1>
+      <p><%= @user.notestofresh %></p>
+    </section>
+    <section>
+      <h1>Advice to Peers in my Major</h1>
+      <p><%= @user.notestomym %></p>
+    </section>
+    <section>
+      <h1>Unconventional Resources</h1>
+      <p>We know that the internet is changing the way the world works.  We want to know if it is changing the way you study or look for resources?  Coursera, EdX, Kahn Academy, Codecademy, Massive Online Open Courseware, MIT Open Course Ware, Harvard Open Courses for Free Online Learning Initiative provided by Carnegie Mellon, Stanford Online, TEDx, iTunes U, Peer 2 Peer University, University of the People, Academic Earth, or something else are among the list.  
+    </section>
   </aside>
 </div>
 <br>
+<% end %>

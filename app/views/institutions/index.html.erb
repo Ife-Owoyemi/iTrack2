@@ -1,3 +1,4 @@
+<% if signed_in? %>
 <h3> Institutions </h3>
 <p><%= link_to "New Institution", new_institution_path %></p>
 <div>
@@ -9,3 +10,4 @@
   <% end %>
 </div>
 
+<% end %>

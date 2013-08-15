@@ -1,3 +1,4 @@
+<% if signed_in? %>
 <h1>Course Catalog 2.0</h1>
 <hr width="100%">
 <% @catalog = @courses %>
@@ -152,6 +153,6 @@
   		<% j += 1 %>
   	<% end %>
 </div>
-
+<% end %>
 
 
