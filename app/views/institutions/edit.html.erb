@@ -1,6 +1,8 @@
+<% if signed_in? %>
 <h1>Edit Institution</h1>
 <%= render 'form' %>
 
 <p>
   <%= link_to "View All", institutions_path %>
 </p>
+<% end %>
