@@ -177,6 +177,7 @@
         <%= best_in_place @user, :email, :type => :input %>
       </p>
     </section>
+    <!--
     <section>
       <%#= render 'shared/stats' %>
     
@@ -231,7 +232,7 @@
       <% if @user == current_user %>
       <% end %>
     </section>
-
+-->
 	</aside>
 
 <p id="notice"><%= notice %></p>
@@ -635,11 +636,11 @@
     </section>
     <section>
       <h1>Advice to Freshmen</h1>
-      <p><%= @user.notestofresh %></p>
+      <p><%#= @user.notestofresh %></p>
     </section>
     <section>
       <h1>Advice to Peers in my Major</h1>
-      <p><%= @user.notestomym %></p>
+      <p><%#= @user.notestomym %></p>
     </section>
     <section>
       <h1>Unconventional Resources</h1>
