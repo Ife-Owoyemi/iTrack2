@@ -1,11 +1,7 @@
 .nested-fields
   = f.inputs :number do
     %h3 Year
-<<<<<<< HEAD
-    = f.input :year,:label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:placeholder => "2013", :class => "input-small"}
-=======
     = f.input :year,:label => false, :wrapper_html => {  :style => '', :class => "input-small" }, :input_html => {:placeholder => "2013", :class => "input-small"}
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     = link_to_remove_association "remove year", f, :class => "btn"
     #semester
       - @iag = 0

@@ -2,15 +2,8 @@
 
   = f.inputs :achievementtype, :college, :achievementname, :specialty do
     %h3 Achievement Type
-<<<<<<< HEAD
-    = f.input :achievementtype, :label => "Achievement Type", :wrapper_html => { :style => 'width: 500px', :class => "" }, :input_html => {:placeholder => "BA", :style => 'width: 100px',:class => "pull-left"}
-    = f.input :college,  :label => "College",  :wrapper_html => {:style => 'width: 200px', :class => "" }, :input_html => {:style => 'width: 200px',:placeholder => "School of Engineering",:class => "pull-left"}
-    = f.input :achievementname, :label => "Achievement Name", :wrapper_html => {  :style => 'width: 550px', :class => "" }, :input_html => {:placeholder => "Chemical Engineering",:class => "pull-left"}
-    = f.input :specialty,  :label => "Specialty", :wrapper_html => {:style => 'width: 300px', :class => "" }, :input_html => {:placeholder => "General", :class => "pull-left"}
-=======
     = f.input :achievementtype, :label => "Achievement Type", :collection => ["BA", "BS", "BA-S", "Minors", "Pre-med"], :wrapper_html => { :style => 'width: 500px', :class => "" }, :input_html => {:placeholder => "BA", :style => 'width: 100px',:class => "pull-left"} 
     = f.input :college,  :label => "College",  :collection => ["School of Engineering", "School of Natural Sciences", "School of Humanities",  "School of Social Sciences", "Jones School of Business"],:wrapper_html => {:style => 'width: 300px', :class => "" }, :input_html => {:style => 'width: 200px',:placeholder => "School of Engineering",:class => "pull-left"}
     = f.input :achievementname, :label => "Achievement Name", :wrapper_html => {  :style => 'width: 550px', :class => "" }, :input_html => {:placeholder => "Chemical Engineering",:class => "pull-left"}, :hint => "Must be typed as listed on Undergrad Page"
     = f.input :specialty,  :label => "Specialty", :wrapper_html => {:style => 'width: 300px', :class => "" }, :input_html => {:placeholder => "General", :class => "pull-left"}, :hint => "Must be typed as listed on Undergrad Page"
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     = link_to_remove_association "remove achievement type", f, :class => "btn pull-left"

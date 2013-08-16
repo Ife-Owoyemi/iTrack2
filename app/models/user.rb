@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
   
-<<<<<<< HEAD
   # Solr search setup
   searchable do 
     text :name, :email, :college, :dreamJob, :status
@@ -157,8 +156,6 @@ class User < ActiveRecord::Base
 
 #  end
 
-=======
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 
   def feed
     # this is preliminary. See "Following users" for the full implementation.

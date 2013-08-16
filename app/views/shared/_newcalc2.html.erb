@@ -27,11 +27,8 @@
 <% need = 0 %>
 <%= render "shared/finalcalc", :@totalc => @totalc, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@dep_c_1 => @dep_c_1, :@dep_c_2 => @dep_c_2, :@dep_c_3 => @dep_c_3, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :@need => @need, :@op_c => @op_c %>
 <%# ------------------------------------------------------%>
-<<<<<<< HEAD
-<div class="accordion span6 pull-left" id="accordian<%= i %><%= k %>">                        
-=======
+
 <div class="accordion span8 pull-left" id="accordian<%= i %><%= k %>">                        
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %><%= k %>" href="#collapse<%= i %><%= k %><%= m %>">
@@ -46,18 +43,6 @@
           <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
           <div class="bar bar-danger" style="width: <%= @wtaket %>%;"></div>
         </div>
-<<<<<<< HEAD
-        <p><b>Hours Taken: <%= @specialtyhourstaken %></b></p>
-        <p><b>Hours Taking: <%= @specialtyhourstaking %></b></p>
-        <p><b>Hours Will Take: <%= @specialtyhourswtaket %></b></p>
-        <%# --------------------------------------------------%>
-        <% d = specialty.corereqs.all %>
-        <div class="accordion span5 pull-left" id="accordian11<%= i %><%= k %>">                        
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian11<%= i %><%= k %>" href="#collapse11<%= i %><%= k %><%= m %>">
-              <h4>Core Requirements</h4>
-=======
         <p><b>Courses Taken: <%= @specialtyhourstaken %></b></p>
         <p><b>Courses Taking: <%= @specialtyhourstaking %></b></p>
         <p><b>Courses Will Take: <%= @specialtyhourswtaket %></b></p>
@@ -68,7 +53,6 @@
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian11<%= i %><%= k %>" href="#collapse11<%= i %><%= k %><%= m %>">
               <b>Core Requirements</b>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                 </a>
             </div>
             <div id="collapse11<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
@@ -81,19 +65,11 @@
 
         <%# --------------------------------------------------%>
         <% f = specialty.opreqs.all %>
-<<<<<<< HEAD
-        <div class="accordion span5 pull-left" id="accordian12<%= i %><%= k %>">                        
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian12<%= i %><%= k %>" href="#collapse12<%= i %><%= k %><%= m %>">
-              <h4>Multi Option Requirements</h4>
-=======
         <div class="accordion span7 pull-left" id="accordian12<%= i %><%= k %>">                        
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian12<%= i %><%= k %>" href="#collapse12<%= i %><%= k %><%= m %>">
               <b>Multi Option Requirements</b>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                 </a>
             </div>
             <div id="collapse12<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
@@ -106,19 +82,11 @@
         </div>
         <%# --------------------------------------------------%>
         <% f1 = specialty.depnumreqs.all %>
-<<<<<<< HEAD
-        <div class="accordion span5 pull-left" id="accordian13<%= i %><%= k %>">                        
-          <div class="accordion-group">
-            <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian13<%= i %><%= k %>" href="#collapse13<%= i %><%= k %><%= m %>">
-              <h4>Free Electives</h4>
-=======
         <div class="accordion span7 pull-left" id="accordian13<%= i %><%= k %>">                        
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian13<%= i %><%= k %>" href="#collapse13<%= i %><%= k %><%= m %>">
               <b>Free Electives</b>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                 </a>
             </div>
             <div id="collapse13<%= i %><%= k %><%= m %>"  class="accordion-body collapse">

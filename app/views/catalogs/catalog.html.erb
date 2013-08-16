@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<h1>Course Catalog 2.0</h1>
-<hr width="100%">
-<% @catalog = @courses %>
-=======
+
 <% if signed_in? %>
 <h1>Course Catalog 2.0</h1>
 <hr width="100%">
@@ -15,7 +11,6 @@
     <% end %>
   <% end %>
 <% end %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 <%# Catalog- :institution_id, :coleges_attributes
 		Coleges-  :catalog_id, :colegename, :department_attributes
 			Department-  :colege_id, :departmentname, :departmentname2, :num_attributes
@@ -35,38 +30,24 @@
 		<% @departments = college.departments.all %>
 		<% @departments.each do |department| %>
 			
-<<<<<<< HEAD
-			<% @ucatalog["all"][college.colegename][department.departmentname] = Hash.new %>
-			<% @nums = department.nums.all %>
-			<% @nums.each do |num| %>
-				<% if num.number != nil %>
-					<% @ucatalog["all"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-=======
+
 			<% @ucatalog["all"][college.colegename][department.departmentabbr] = Hash.new %>
 			<% @nums = department.nums.all %>
 			<% @nums.each do |num| %>
 				<% if num.number != nil %>
 					<% @ucatalog["all"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 					<% if num.di %>
 						<% if @ucatalog["di"].has_key?(college.colegename) %>
 						<% else %>
 							<% @ucatalog["di"][college.colegename] = Hash.new %>
 						<% end %>
 
-<<<<<<< HEAD
-						<% if @ucatalog["di"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["di"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-						<% else %>
-							<% @ucatalog["di"][college.colegename][department.departmentname] = Hash.new %>
-							<% @ucatalog["di"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-=======
+
 						<% if @ucatalog["di"][college.colegename].has_key?(department.departmentabbr) %>
 							<% @ucatalog["di"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
 							<% @ucatalog["di"][college.colegename][department.departmentabbr] = Hash.new %>
 							<% @ucatalog["di"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 						<% end %>
 					<% end %>
 					<% if num.dii %>
@@ -74,19 +55,11 @@
 						<% else %>
 							<% @ucatalog["dii"][college.colegename] = Hash.new %>
 						<% end %>
-<<<<<<< HEAD
-						<% if @ucatalog["dii"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["dii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-						<% else %>
-							<% @ucatalog["dii"][college.colegename][department.departmentname] = Hash.new%>
-							<% @ucatalog["dii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-=======
 						<% if @ucatalog["dii"][college.colegename].has_key?(department.departmentabbr) %>
 							<% @ucatalog["dii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
 							<% @ucatalog["dii"][college.colegename][department.departmentabbr] = Hash.new%>
 							<% @ucatalog["dii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 						<% end %>
 					<% end %>
 					<% if num.diii %>
@@ -94,19 +67,12 @@
 						<% else %>
 							<% @ucatalog["diii"][college.colegename] = Hash.new %>
 						<% end %>
-<<<<<<< HEAD
-						<% if @ucatalog["diii"][college.colegename].has_key?(department.departmentname) %>
-							<% @ucatalog["diii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-						<% else %>
-							<% @ucatalog["diii"][college.colegename][department.departmentname] = Hash.new%>
-							<% @ucatalog["diii"][college.colegename][department.departmentname][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
-=======
+
 						<% if @ucatalog["diii"][college.colegename].has_key?(department.departmentabbr) %>
 							<% @ucatalog["diii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
 						<% else %>
 							<% @ucatalog["diii"][college.colegename][department.departmentabbr] = Hash.new%>
 							<% @ucatalog["diii"][college.colegename][department.departmentabbr][num.number] = {name: num.name, brief: num.brief, credit: num.credit, department_id: num.department_id, di: num.di, dii: num.dii, diii: num.diii} %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 						<% end %>
 					<% end %>
 				<% end %>
@@ -153,19 +119,7 @@
 							      <div class="accordion-inner">
 							        
 							        <% m = 0 %>
-<<<<<<< HEAD
-							  		<% @ucatalog[type][college][department].each_key do |num| %>	
-							  			<div class="accordion" id="accordion4<%= m %>|<%= l %>|<%= j %>|<%= k %>">
-										  <div class="accordion-group">
-										    <div class="accordion-heading">
-										      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4<%= m %>|<%= l %>|<%= j %>|<%= k %>" href="#collapse1<%= m %>|<%= l %>|<%= j %>|<%= k %>">
-										        <%= department %> <%= num %>
-										      </a>
-										    </div>
-										    <div id="collapse1<%= m %>|<%= l %>|<%= j %>|<%= k %>" class="accordion-body collapse">
-										      <div class="accordion-inner">
-										        ...
-=======
+
 							  		<% @ucatalog[type][college][department].each_key do |num| %>
 							  			<% if cuser_courses.include?(department + " " + num.to_s) %>
 	                                      <% strike = "*" %>
@@ -181,16 +135,12 @@
 										      <div class="accordion-inner">
 										        <p><b>Brief: </b><%= @ucatalog[type][college][department][num][:brief] %><p>
 										        <p><b>Credits: </b><%= @ucatalog[type][college][department][num][:credit] %><p>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 										      </div>
 										    </div>
 										  </div>
 										</div>  
-<<<<<<< HEAD
-									  <% m += 1 %>	
-=======
+
 									  	<% m += 1 %>	
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 									<% end %>
 
 							      </div>
@@ -209,10 +159,8 @@
   		<% j += 1 %>
   	<% end %>
 </div>
-<<<<<<< HEAD
 
-=======
 <% end %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
+
 
 

@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-<% @catalog = @courses %>
-
-=======
 <% if signed_in? %>
 <% @catalog = @courses %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 <% i = 0 %>
 <% @di = 0 %>
 <% @dii = 0 %>
@@ -23,30 +18,17 @@
       <% @nums.each do |num| %>
         <% if num.number != nil %>
           <% if num.di %>
-
-<<<<<<< HEAD
-            <% @ucatalog["di"][department.departmentname + " " + num.number.to_s] = num.credit %>
-=======
             <% @ucatalog["di"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     
           <% end %>
           <% if num.dii %>
 
-<<<<<<< HEAD
-            <% @ucatalog["dii"][department.departmentname + " " + num.number.to_s] = num.credit %>
-=======
             <% @ucatalog["dii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     
           <% end %>
           <% if num.diii %>
 
-<<<<<<< HEAD
-            <% @ucatalog["diii"][department.departmentname + " " + num.number.to_s] = num.credit %>
-=======
             <% @ucatalog["diii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     
           <% end %>
           
@@ -56,8 +38,7 @@
   <% end %>
   <% i += 1 %>
 <% end %>
-<<<<<<< HEAD
-=======
+
 <% cuser_courses = Array.new %>
 <% current_user.years.all.each do |year| %>
   <% year.semesters.all.each do |semester| %>
@@ -68,13 +49,6 @@
 <% end %>
 
 
-
-
-
-
-
-
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
@@ -163,7 +137,7 @@
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
 
-<<<<<<< HEAD
+
 <!-- style by Ife -->
 <style type="text/css">
   select {
@@ -178,9 +152,6 @@
 
 <!-- end style by Ife -->
 
-
-=======
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 <div class="row">
 	<aside class="span3">
 		<section>
@@ -189,7 +160,7 @@
 			</h1>
 		</section>
     <section>
-<<<<<<< HEAD
+
       <p><b>Dream Job: </b>
         <%= best_in_place @user, :dreamJob, :type => :input %>
       </p>
@@ -205,14 +176,6 @@
       <p><b>Email: </b>
         <%= best_in_place @user, :email, :type => :input %>
       </p>
-=======
-      <p><b>Status: </b><%= @user.status %></p>
-      <p><b>Year: </b><%= @user.year %></p>
-      <p><b>College: </b><%= @user.college %></p>
-      <p><b>Postgrad: </b><%= @user.postgradplans %></p>
-      <p class="inline-block"><b>Dream Job: </b><%= @user.dreamJob %></p>
-      <p><b>Email: </b><%= @user.email %></p>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     </section>
     <section>
       <%#= render 'shared/stats' %>
@@ -310,10 +273,8 @@
       <div class="accordion" id="accordion">
         <% ia = 0 %>
         <% @ricehours = 0 %>
-<<<<<<< HEAD
-=======
+
         <% @fwis = 0 %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
         <% @diArray = Array.new %>
         <% @diiArray = Array.new %>
         <% @diiiArray = Array.new %>
@@ -394,18 +355,7 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
-<<<<<<< HEAD
-                                         data-content="<b>Prof: </b><%= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
-                                         data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %> <%= course.grade %></font>
-                                      </h4>​
-                                    
-                                  <% else %>
-                                    <h4
-                                         class="label  <%= @color %> popover-link"
-                                         data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
-                                         data-original-title="Course Overview"><font color = "<%= color %>"><%=course.department%> <%= course.num.to_s %></font>
-=======
-                                         data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+                                         data-content="<b>Prof: </b><%= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
                                       </h4>​
                                     
                                   <% else %>
@@ -418,7 +368,6 @@
                                          class="label  <%= @color %> popover-link"
                                          data-content="<b>Prof: </b><%= course.prof %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>"
                                          data-original-title="Course Overview"><font  color = "<%= color %>"><%=course.department%> <%= course.num.to_s %><%= strike %></font>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                                       </h4>​
                                   <% end %>
                                 </td>
@@ -490,13 +439,6 @@
               <div>
                 <%= department %> <%= ind %>
               </div>
-<<<<<<< HEAD
-              <% dephours += user_courses[department][ind] %>
-              <% depcourses += 1 %>
-              <% if ind.to_i >= 300 %>
-                <% ulhours += user_courses[department][ind] %>
-                <% ulcourses += 1 %>
-=======
               <% if user_courses[department][ind] != nil %>
                 <% dephours += user_courses[department][ind] %>
               <% end %>
@@ -507,7 +449,6 @@
                   <% ulhours += user_courses[department][ind] %>
                   <% ulcourses += 1 %>
                 <% end %>
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
               <% end %>
             <% end %>
               <div>
@@ -649,13 +590,7 @@
                   </div>
                 </div>
               </div>
-<<<<<<< HEAD
 
-              
-              
-              
-=======
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
               <p>Source: http://registrar.rice.edu/students/master_lists/</p>
             </div>
           </div>
@@ -693,12 +628,6 @@
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-      <% if @peep == "yes" %>
-          <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
-      <% end %>
-      <%= link_to 'Back', users_path %>
-=======
       <% if @user == current_user %>
           <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
       <% end %>
@@ -715,7 +644,6 @@
     <section>
       <h1>Unconventional Resources</h1>
       <p>We know that the internet is changing the way the world works.  We want to know if it is changing the way you study or look for resources?  Coursera, EdX, Kahn Academy, Codecademy, Massive Online Open Courseware, MIT Open Course Ware, Harvard Open Courses for Free Online Learning Initiative provided by Carnegie Mellon, Stanford Online, TEDx, iTunes U, Peer 2 Peer University, University of the People, Academic Earth, or something else are among the list.  
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     </section>
   </aside>
 </div>
