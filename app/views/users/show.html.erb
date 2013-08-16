@@ -153,7 +153,7 @@
 <!-- end style by Ife -->
 
 <div class="row">
-	<aside class="span3">
+	<aside class="span4">
 		<section>
 			<h1><%= provide(:title, @user) %>
 				<%= @user.name %>
@@ -177,59 +177,58 @@
         <%= best_in_place @user, :email, :type => :input %>
       </p>
     </section>
+    
     <section>
       <%#= render 'shared/stats' %>
     
       <h1>Awards</h1>
-      <% @awardscounter = 0 %>
-      <% @user.awards.all.each do |award| %>
-        <div class="accordion span3" id="awardsaccordion">
+      <%# @awardscounter = 0 %>
+      <%# @user.awards.all.each do |award| %>
+        <div class="accordion" id="awardsaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= award.providername %><%= award.year %> 
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%#= @awardscounter %>">
+                <%#= award.providername %><%#= award.year %> 
               </a>
             </div>
-            <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
+            <div id="awardscollapse<%#= @awardscounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= award.awardtitle %></p>
-                <p><b>Perks: </b><%= award.awardperks %></p>
-                <p><b>Prereqs: </b><%= award.awardprereqs %></p>
-                <p><b>Tips: </b><%= award.tipsforapp %></p>
+                <p><b>Title: </b><%#= award.awardtitle %></p>
+                <p><b>Perks: </b><%#= award.awardperks %></p>
+                <p><b>Prereqs: </b><%#= award.awardprereqs %></p>
+                <p><b>Tips: </b><%#= award.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @awardscount += 1 %>
+          <%# @awardscount += 1 %>
         </div>
-      <% end %>
-      <% if @user == current_user %>
-      <% end %>
-    </section>
-    <section>
+      <%# end %>
+      <%# if @user == current_user %>
+      <%# end %>
       <h1>Internships</h1>
-      <% @interncounter = 0 %>
-      <% @user.internships.all.each do |ship| %>
-        <div class="accordion span3" id="internaccordion">
+      <%# @interncounter = 0 %>
+      <%# @user.internships.all.each do |ship| %>
+        <div class="accordion" id="internaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
-                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%#= @interncounter %>">
+                <%#= ship.providername %> <%#= ship.internbegin %>-<%#= ship.internend %> 
               </a>
             </div>
-            <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
+            <div id="interncollapse<%#= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= ship.stutitle %></p>
-                <p><b>Application Found: </b><%= ship.source %></p>
-                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
-                <p><b>Tips for Appling: </b><%= ship.tipsforapp %></p>
+                <p><b>Title: </b><%#= ship.stutitle %></p>
+                <p><b>Application Found: </b><%#= ship.source %></p>
+                <p><b>Prereqs: </b><%#= ship.internrereqs %></p>
+                <p><b>Tips for Applying: </b><%#= ship.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @interncount += 1 %>
+          <%# @interncount += 1 %>
         </div>
-      <% end %>
-      <% if @user == current_user %>
-      <% end %>
+      <%# end %>
+      <%# if @user == current_user %>
+      <%# end %>
     </section>
 
 	</aside>
@@ -355,7 +354,7 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
-                                         data-content="<b>Prof: </b><%= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+                                         data-content="<b>Prof: </b><%#= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
                                       </h4>​
                                     
                                   <% else %>
@@ -414,60 +413,71 @@
           <% ia += 1 %>
         <% end %>
       </div>
-    </section>
-    <section>
-      <h4>Course Stats</h4>
-      <ul class="nav nav-tabs">
-        <% ia = 25 %>
-        <% user_courses.each_key do |department| %>
-          <li><a href="#<%= ia %>" data-toggle="tab"><%= department %></a></li>
-          <% ia += 1 %>
-        <% end %>
-      </ul>
-      <div class="tab-content">
-        <% ia = 25 %>
-        
-        <% user_courses.each_key do |department| %>
-          <% dephours = 0 %>
-          <% depcourses = 0 %>
-          <% ulhours = 0 %>
-          <% ulcourses = 0 %>
 
-          <div class="tab-pane" id="<%= ia %>">
-            <% user_courses[department].each_key do |ind| %>
-              
-              <div>
-                <%= department %> <%= ind %>
-              </div>
-              <% if user_courses[department][ind] != nil %>
-                <% dephours += user_courses[department][ind] %>
-              <% end %>
-              <% depcourses += 1 %>
-              <% if user_courses[department][ind] != nil %>
-
-                <% if ind.to_i >= 300 %>
-                  <% ulhours += user_courses[department][ind] %>
-                  <% ulcourses += 1 %>
+      <div class="accordion" id="coursestataccordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#coursestataccordion" href="#statcollapseOne">
+              Course Stats
+            </a>
+          </div>
+          <div id="statcollapseOne" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <ul class="nav nav-tabs">
+                <% ia = 25 %>
+                <% user_courses.each_key do |department| %>
+                  <li><a href="#<%= ia %>" data-toggle="tab"><%= department %></a></li>
+                  <% ia += 1 %>
                 <% end %>
-              <% end %>
-            <% end %>
-              <div>
-                <b>Upper-level Courses: </b><%= ulcourses %>
-              </div>
-              <div>
-                <b>Total Courses: </b><%= depcourses %>
-              </div>
+              </ul>
+              <div class="tab-content">
+                <% ia = 25 %>
+                
+                <% user_courses.each_key do |department| %>
+                  <% dephours = 0 %>
+                  <% depcourses = 0 %>
+                  <% ulhours = 0 %>
+                  <% ulcourses = 0 %>
 
-              <div>
-                <b>Upper-level Hours: </b><%= ulhours %>
+                  <div class="tab-pane" id="<%= ia %>">
+                    <% user_courses[department].each_key do |ind| %>
+                      
+                      <div>
+                        <%= department %> <%= ind %>
+                      </div>
+                      <% if user_courses[department][ind] != nil %>
+                        <% dephours += user_courses[department][ind] %>
+                      <% end %>
+                      <% depcourses += 1 %>
+                      <% if user_courses[department][ind] != nil %>
+
+                        <% if ind.to_i >= 300 %>
+                          <% ulhours += user_courses[department][ind] %>
+                          <% ulcourses += 1 %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                      <div>
+                        <b>Upper-level Courses: </b><%= ulcourses %>
+                      </div>
+                      <div>
+                        <b>Total Courses: </b><%= depcourses %>
+                      </div>
+
+                      <div>
+                        <b>Upper-level Hours: </b><%= ulhours %>
+                      </div>
+                      <div>
+                        <b>Total Hours: </b><%= dephours %>
+                      </div>
+                      
+                  </div>   
+                  <% ia += 1 %>
+                <% end %>
               </div>
-              <div>
-                <b>Total Hours: </b><%= dephours %>
-              </div>
-              
-          </div>   
-          <% ia += 1 %>
-        <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section>
@@ -635,11 +645,11 @@
     </section>
     <section>
       <h1>Advice to Freshmen</h1>
-      <p><%= @user.notestofresh %></p>
+      <p><%#= @user.notestofresh %></p>
     </section>
     <section>
       <h1>Advice to Peers in my Major</h1>
-      <p><%= @user.notestomym %></p>
+      <p><%#= @user.notestomym %></p>
     </section>
     <section>
       <h1>Unconventional Resources</h1>
