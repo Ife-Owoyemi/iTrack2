@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 MATH,,Hours,DIII
 MATH 101,Single Variable Calculus I,3,1
 MATH 102,Single Variable Calculus II,3,1
@@ -48,3 +49,6 @@ MATH 471,Mathematics of Aperiodic Order,3,
 MATH 472,Asymptotic Analysis: Introduction to Perturbation Methods,3,
 MATH 490,Supervised Readng,V,
 MATH 498,Research Themes in the Mathematical Sciences,V,
+=======
+Mathematics,,Hours,DIIIMATH 101,Single Variable Calculus I,3,1MATH 102,Single Variable Calculus II,3,1MATH 111,Fundamental Theorem of Calculus,3,1MATH 112,Calculus and Its Applications,3,1MATH 211,Ordinary Differential Equations and Linear Algebra,3,1MATH 212,Multivariable Calculus,3,1MATH 221,Honors Calculus III,3,1MATH 222,Honors Calculus IV,3,1MATH 300,Topics in Undergraduate Math,3,MATH 302,Elements of Analysis,3,1MATH 304,Elements of Knot Theory,3,1MATH 310,Mathematics of Music,2,MATH 321,Introduction to Analysis I,3,1MATH 322,Introduction to Analysis II,3,MATH 354,Honors Linear Algebra,3,1MATH 355,Linear Algebra,3,1MATH 356,Abstract Algebra I,3,MATH 365,Number Theory,3,1MATH 366,Geometry,3,1MATH 368,Topics in Combinatorics,3,1MATH 370,Calculus on Manifolds,3,1MATH 371,Lie Theory,3,1MATH 373,Elliptic Curves,3,1MATH 374,Introduction to Representation Theory,3,1MATH 381,Introduction to Partial Differential Equations,3,1MATH 382,Complex Analysis,3,1MATH 390,Undergraduate Colloquium,1,1MATH 401,Differential Geometry,3,1MATH 402,Differential Geometry,3,MATH 410,Calculus of Variations,3,MATH 423,Partial Differential Equations I,3,MATH 424,Partial Differential Equations,3,MATH 425,Integration Theory,3,MATH 426,Topics in Real Analysis,3,MATH 427,Complex Analysis,3,1MATH 428,Topics in Complex Analysis,3,MATH 435,Dynamical Systems,3,MATH 443,General Topology Geometric Topology,3,MATH 444,Geometric Topology,3,MATH 445,Algebriac Topology,3,MATH 463,Abstract Algebra II,3,MATH 464,Abstract Algebra III,3,MATH 465,Topics in Algebra: Introduction to Algebraic Geometry,3,MATH 466,Topics in Algebra II,3,MATH 468,Potpourri,3,MATH 471,Mathematics of Aperiodic Order,3,MATH 472,Asymptotic Analysis: Introduction to Perturbation Methods,3,MATH 490,Supervised Readng,V,MATH 498,Research Themes in the Mathematical Sciences,V,
+>>>>>>> fe730a6bf925561b29234bc21c6078d43b695346
