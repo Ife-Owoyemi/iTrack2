@@ -9,15 +9,23 @@ gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails', '2.0.2'
 gem 'nested_form'
 gem 'formtastic'
+<<<<<<< HEAD
 gem "formtastic-bootstrap"
+=======
+gem 'best_in_place'
+gem 'formtastic-bootstrap'
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 gem 'cocoon'
 gem 'haml'
 gem 'haml-rails', '>= 0.3.4', :group => :development
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+<<<<<<< HEAD
 gem 'newrelic_rpm'
 gem 'rake', '10.1.0'
 gem 'best_in_place'
+=======
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

@@ -195,7 +195,10 @@ DEPENDENCIES
   haml-rails (>= 0.3.4)
   jquery-rails (= 2.0.2)
   nested_form
+<<<<<<< HEAD
   newrelic_rpm
+=======
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
   pg
   rails (= 3.2.13)
   rake (= 10.1.0)

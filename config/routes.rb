@@ -13,12 +13,20 @@ ISwitched1::Application.routes.draw do
   get "users/edituser"
   get "users/edittrack"
   get "catalogs/catalog"
+<<<<<<< HEAD
   root to: "users#show" # rooted to profile page
   match '/home', to: 'static_pages#home', :as => :home
 
   match '/signup', to: 'users#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+=======
+  root to: 'static_pages#home'
+
+  match '/signup', to: 'users#new'
+  match '/signin', to: 'sessions#new'
+  match 'signout', to: 'sessions#destroy', via: :delete
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
   match '/catalog', to: 'catalogs#catalog'
   match '/help', to: 'static_pages#help'
   match '/about', to: 'static_pages#about'

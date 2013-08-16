@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  respond_to :json, :html, :xml, :js
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
   before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: :destroy
@@ -8,15 +9,20 @@ class UsersController < ApplicationController
 
   def show
     @courses = Catalog.all
+<<<<<<< HEAD
     if (params[:id] != nil)
       @user = User.find(params[:id])
     else
       @user = current_user
     end
+=======
+  	@user = User.find(params[:id])
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     @microposts = @user.microposts.paginate(page: params[:page])
     @years = @user.years.all
     @achievementtypes = @user.userachievementtypes.all
     @institution = Institution.where(:name => "Rice University")
+    
   end
 
   def show_current_user
@@ -117,6 +123,7 @@ class UsersController < ApplicationController
     else
       @users = @qresults
     end
+
   end
 
   def search_by_achievement

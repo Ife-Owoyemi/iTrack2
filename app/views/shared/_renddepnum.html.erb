@@ -7,22 +7,40 @@
 <% @depnumgoal = 0 %>
 <% mo = 0 %>
 <% for depnumcalc in fg %>
+<<<<<<< HEAD
   <div class="accordion span5 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mo %>">
+=======
+  <div class="accordion span6 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
           <%= depnumcalc.depnumreqname %>
         </a>
 
       </div>
+<<<<<<< HEAD
       <div id="collapse3<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
+=======
+      <div id="collapse4<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
         <div class="accordion-inner" >
     
           <% g = depnumcalc.deps.all %>
           <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
+<<<<<<< HEAD
             <% for dep in g %>
               <% gg = dep.bounds.all %>
               <p><%= depnumcalc.cgoal %> Courses in <%= dep.department %> with numbers within ranges
+=======
+            <p><%= depnumcalc.cgoal %> courses total, db: <%= depnumcalc.doublecount %></p>
+            <% for dep in g %>
+              <% gg = dep.bounds.all %>
+              <p><%= dep.department %> within ranges
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                 <% coun = 0 %>
               <% for num in gg %>
                 <% coun += 1 %>
@@ -132,9 +150,17 @@
               <% end %>
             <% @totalc += depnumcalc.cgoal %>
           <% elsif depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
+<<<<<<< HEAD
             <% for dep in g %>
               <% gg = dep.bounds.all %>
               <p><%= depnumcalc.hgoal %> Hours in <%= dep.department %> with numbers within ranges
+=======
+            <p><%= depnumcalc.hgoal %> hours total, db: <%= depnumcalc.doublecount %></p>
+            <% for dep in g %>
+              <% gg = dep.bounds.all %>
+              <p><%= dep.department %> within ranges
+              
+>>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
                 <% coun = 0 %>
               <% for num in gg %>
                 <% coun += 1 %>
