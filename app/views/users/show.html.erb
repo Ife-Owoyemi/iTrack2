@@ -182,55 +182,55 @@
       <%#= render 'shared/stats' %>
     
       <h1>Awards</h1>
-      <% @awardscounter = 0 %>
-      <% @user.awards.all.each do |award| %>
+      <%# @awardscounter = 0 %>
+      <%# @user.awards.all.each do |award| %>
         <div class="accordion span3" id="awardsaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= award.providername %><%= award.year %> 
+                <%#= award.providername %><%#= award.year %> 
               </a>
             </div>
             <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= award.awardtitle %></p>
-                <p><b>Perks: </b><%= award.awardperks %></p>
-                <p><b>Prereqs: </b><%= award.awardprereqs %></p>
-                <p><b>Tips: </b><%= award.tipsforapp %></p>
+                <p><b>Title: </b><%#= award.awardtitle %></p>
+                <p><b>Perks: </b><%#= award.awardperks %></p>
+                <p><b>Prereqs: </b><%#= award.awardprereqs %></p>
+                <p><b>Tips: </b><%#= award.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @awardscount += 1 %>
+          <%# @awardscount += 1 %>
         </div>
-      <% end %>
-      <% if @user == current_user %>
-      <% end %>
+      <%# end %>
+      <%# if @user == current_user %>
+      <%# end %>
     </section>
     <section>
       <h1>Internships</h1>
-      <% @interncounter = 0 %>
-      <% @user.internships.all.each do |ship| %>
+      <%# @interncounter = 0 %>
+      <%# @user.internships.all.each do |ship| %>
         <div class="accordion span3" id="internaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
-                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%#= @interncounter %>">
+                <%#= ship.providername %> <%#= ship.internbegin %>-<%#= ship.internend %> 
               </a>
             </div>
-            <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
+            <div id="interncollapse<%#= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= ship.stutitle %></p>
-                <p><b>Application Found: </b><%= ship.source %></p>
-                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
-                <p><b>Tips for Appling: </b><%= ship.tipsforapp %></p>
+                <p><b>Title: </b><%#= ship.stutitle %></p>
+                <p><b>Application Found: </b><%#= ship.source %></p>
+                <p><b>Prereqs: </b><%#= ship.internrereqs %></p>
+                <p><b>Tips for Appling: </b><%#= ship.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @interncount += 1 %>
+          <%# @interncount += 1 %>
         </div>
-      <% end %>
-      <% if @user == current_user %>
-      <% end %>
+      <%# end %>
+      <%# if @user == current_user %>
+      <%# end %>
     </section>
 -->
 	</aside>
@@ -356,7 +356,7 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
-                                         data-content="<b>Prof: </b><%= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+                                         data-content="<b>Prof: </b><%#= best_in_place_if (current_user.id == params[:id]), @usercourse, :prof, :type => :input %> <%= course.profquality %> <%= course.profquality %><br /><b>Individual Projects: </b> <%= course.nopprojects %><br/><b>Group Projects: </b> <%= course.nogprojects %><br/><b>Essays: </b> <%= course.noessays %><br/><b>Midterms: </b> <%= course.nomidterms %><br/><b>Final: </b> <%= f %><br/><b>Focus: </b> <%= course.follows %><br/><b>HPW: </b> <%= course.hpweek %><br/><b>Suggestions: </b> <%= course.suggest %><br/>" data-original-title="Course Overview"><font color = "<%= color %>"><%#= best_in_place course, :department, :type => :input %><%=course.department %> <%= course.num.to_s %> <%= course.grade %></font>
                                       </h4>​
                                     
                                   <% else %>

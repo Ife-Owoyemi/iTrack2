@@ -10,10 +10,7 @@ development:
   solr:
     hostname: localhost
     port: 8982
-<<<<<<< HEAD
-    #port: 8985
-=======
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
+
     log_level: INFO
 
 test:
