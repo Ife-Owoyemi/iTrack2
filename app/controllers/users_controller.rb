@@ -9,15 +9,11 @@ class UsersController < ApplicationController
 
   def show
     @courses = Catalog.all
-<<<<<<< HEAD
     if (params[:id] != nil)
       @user = User.find(params[:id])
     else
       @user = current_user
     end
-=======
-  	@user = User.find(params[:id])
->>>>>>> ab8b8221b50e23b2988c9705acf105f18ab385b4
     @microposts = @user.microposts.paginate(page: params[:page])
     @years = @user.years.all
     @achievementtypes = @user.userachievementtypes.all
