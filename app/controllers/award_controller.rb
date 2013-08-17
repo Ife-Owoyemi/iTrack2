@@ -13,8 +13,8 @@ class AwardController < ApplicationController
 			@errors = @award.errors.full_messages
 			flash[:alert] = @errors
 			respond_to do |format|
-				format.html{redirect_to current_user}
-				format.json {:errors => @errors}#, :status => 422
+				format.html {redirect_to current_user}
+				format.json { render :json => {:errors => @errors, :status => 422} }
 			end
 		end
 	end
