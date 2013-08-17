@@ -41,7 +41,10 @@ ISwitched1::Application.routes.draw do
   resources :sessions,      only: [:new, :create, :destroy]
   resources :microposts,    only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
-
+  resources :usercourses, only: [:create, :destroy, :update]
+  resources :awards, only: [:create, :destroy, :update]
+  resources :internships, only: [:create, :destroy, :update]
+  resources :conferences, only: [:create, :destroy, :update]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
