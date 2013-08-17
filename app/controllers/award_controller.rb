@@ -1,13 +1,13 @@
 class AwardController < ApplicationController
 
 	def  create
-		@user = User.find(params[:id])
+		@user = User.find(params[:award_user_id])
 		@award = Award.new(params[:award])
 		if (@award.save)
 			flash[:success] = "New Award created!"
 			respond_to do |format|
 				format.html {redirect_to current_user}
-				format.json {respond_with_bip(@award)}
+				format.js
 			end
 		else
 			@errors = @award.errors.full_messages

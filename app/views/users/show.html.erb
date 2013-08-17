@@ -149,11 +149,11 @@
   }
 
   .numField{
-    width: 30px;
+    width: 50px;
   }
 
   .stringField{
-    width: 100px;
+    width: 200px;
   }
 
 </style>
@@ -195,9 +195,20 @@
     
       <h1>Awards  <div 
         class="label popover-link" 
-        data-content="
+        data-content=
 
-        Award Form here!"
+        "<h5> Add a new Award </h5>
+        <%= form_for(:award, :url => {:controller => "awards", :action => "create", :award_user_id => current_user.id}) do |f|%> 
+        <b> Award Title : </b><%= f.text_field :awardtitle, :class => "stringField" %></br>
+        <b> Year : </b><%= f.text_field :year, :class => "numField" %>
+        <b> Provider Name : </b><%= f.text_field :providername, :class => "stringField" %></br>
+        <b> Tips for the Application  : </b><%= f.text_field :tipsforapp, :class => "stringField" %></br>
+        <b> Award Perks : </b><%= f.text_field :awardperks, :class => "stringField" %></br>
+        <b> Award Prereqs : </b><%= f.text_field :awardprereqs, :class => "stringField" %></br>
+        <%= f.submit "Add Award" %>
+
+
+        <% end %>"
         
         data-original-title="Add Award">+</div>
       </h1>
