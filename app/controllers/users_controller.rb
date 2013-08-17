@@ -14,7 +14,9 @@ class UsersController < ApplicationController
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @achievementtypes = @user.userachievementtypes.all
-      @institution = Institution.where(:name => "Rice University")      
+      @institution = Institution.where(:name => "Rice University")  
+      @awards = @user.awards.all
+      @internships = @user.internships.all
     elsif current_user == nil
         redirect_to signin_path
     else
@@ -22,7 +24,9 @@ class UsersController < ApplicationController
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @achievementtypes = @user.userachievementtypes.all
-      @institution = Institution.where(:name => "Rice University")      
+      @institution = Institution.where(:name => "Rice University")
+      @awards = @user.awards.all
+      @internships = @user.internships.all            
     end
 
     

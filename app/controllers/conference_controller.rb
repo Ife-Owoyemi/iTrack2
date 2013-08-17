@@ -14,7 +14,7 @@ class ConferenceController < ApplicationController
 			flash[:alert] = @errors
 			respond_to do |format|
 				format.html{redirect_to current_user}
-				format.json {:errors => @errors}, :status => 422
+				format.json {:errors => @errors}#, :status => 422
 			end
 		end
 	end
@@ -33,7 +33,7 @@ class ConferenceController < ApplicationController
 			flash[:warning] = @errors
 			respond_to do |format|
 				format.html {redirect_to current_user}
-				format.json {:errors => @errors}, :status => 422
+				format.json {:errors => @errors}#, :status => 422
 			end
 		end
 	end

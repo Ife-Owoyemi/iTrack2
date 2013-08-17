@@ -170,7 +170,7 @@
     <section>
 
       <p><b>Dream Job: </b>
-         <%= best_in_place_if current_user?(@user), @user, :dreamJob, :type => :input %>
+         <%= best_in_place_if current_user?(@user), @user, :dreamJob, :nil => 'Click to add your dreamJob', :type => :input %>
       </p>
       <p id="user_status"><b>Status: </b>
         <%= best_in_place_if current_user?(@user), @user, :status, :nil => 'Click to add year', :type => :select, :collection => [ ["Undergrad","Undergrad"], ["Alumni","Alumni"], ["Prospective Student","Prospective Student"]] %>
@@ -190,51 +190,52 @@
       <%#= render 'shared/stats' %>
     
       <h1>Awards</h1>
-      <%# @awardscounter = 0 %>
-      <%# @user.awards.all.each do |award| %>
+      <% @awardscounter = 0 %>
+      <% @awards.each do |award| %>
         <div class="accordion" id="awardsaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%#= @awardscounter %>">
-                <%#= award.providername %><%#= award.year %> 
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
+                <%= award.providername %><%= award.year %> 
               </a>
             </div>
-            <div id="awardscollapse<%#= @awardscounter %>" class="accordion-body collapse">
+            <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%# award.awardtitle %></p>
-                <p><b>Perks: </b><%#= award.awardperks %></p>
-                <p><b>Prereqs: </b><%#= award.awardprereqs %></p>
-                <p><b>Tips: </b><%#= award.tipsforapp %></p>
+                <p><b>Title: </b><%= award.awardtitle %></p>
+                <p><b>Perks: </b><%= award.awardperks %></p>
+                <p><b>Prereqs: </b><%= award.awardprereqs %></p>
+                <p><b>Tips: </b><%= award.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <%# @awardscount += 1 %>
+          <% @awardscount += 1 %>
         </div>
-      <%# end %>
+      <% end %>
+
       <%# if @user == current_user %>
       <%# end %>
       <h1>Internships</h1>
-      <%# @interncounter = 0 %>
-      <%# @user.internships.all.each do |ship| %>
+      <% @interncounter = 0 %>
+      <% @internships.each do |ship| %>
         <div class="accordion" id="internaccordion">
           <div class="accordion-group">
             <div class="accordion-heading">
-              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%#= @interncounter %>">
-                <%#= ship.providername %> <%#= ship.internbegin %>-<%#= ship.internend %> 
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
+                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
               </a>
             </div>
-            <div id="interncollapse<%#= @interncounter %>" class="accordion-body collapse">
+            <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%#= ship.stutitle %></p>
-                <p><b>Application Found: </b><%#= ship.source %></p>
-                <p><b>Prereqs: </b><%#= ship.internrereqs %></p>
-                <p><b>Tips for Applying: </b><%#= ship.tipsforapp %></p>
+                <p><b>Title: </b><%= ship.stutitle %></p>
+                <p><b>Application Found: </b><%= ship.source %></p>
+                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
+                <p><b>Tips for Applying: </b><%= ship.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <%# @interncount += 1 %>
+          <% @interncount += 1 %>
         </div>
-      <%# end %>
+      <% end %>
       <%# if @user == current_user %>
       <%# end %>
     </section>
@@ -653,11 +654,11 @@
     </section>
     <section>
       <h1>Advice to Freshmen</h1>
-      <p><%#= @user.notestofresh %></p>
+      <p><%= best_in_place_if current_user?(@user), @user, :notesToFresh, :nil => 'Click to add words of advice you want to give to any freshman. Things you wish you knew as freshman.', :type => :textarea %></p>
     </section>
     <section>
       <h1>Advice to Peers in my Major</h1>
-      <p><%#= @user.notestomym %></p>
+      <p><%= best_in_place_if current_user?(@user), @user, :notesToMym, :nil => 'Click to add words of advice you want to give to anyone with the same major as you.', :type => :textarea %></p>
     </section>
     <section>
       <h1>Unconventional Resources</h1>
