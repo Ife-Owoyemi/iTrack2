@@ -11,25 +11,41 @@ class UsersController < ApplicationController
     @courses = Catalog.all
     if (params[:id] != nil)
       @user = User.find(params[:id])
+      @microposts = @user.microposts.paginate(page: params[:page])
+      @years = @user.years.all
+      @achievementtypes = @user.userachievementtypes.all
+      @institution = Institution.where(:name => "Rice University")      
+    elsif current_user == nil
+        redirect_to signin_path
     else
       @user = current_user
+      @microposts = @user.microposts.paginate(page: params[:page])
+      @years = @user.years.all
+      @achievementtypes = @user.userachievementtypes.all
+      @institution = Institution.where(:name => "Rice University")      
     end
-    @microposts = @user.microposts.paginate(page: params[:page])
-    @years = @user.years.all
-    @achievementtypes = @user.userachievementtypes.all
-    @institution = Institution.where(:name => "Rice University")
+
     
   end
 
+=begin
+  
   def show_current_user
-    @courses = Catalog.all
-    @user = current_user
-    @microposts = @user.microposts.paginate(page: params[:page])
-    @years = @user.years.all
-    @achievementtypes = @user.userachievementtypes.all
-    @institution = Institution.where(:name => "Rice University")
-    redirect_to user_path()
-  end  
+    if (current_user != nil)    
+      @courses = Catalog.all
+      @user = current_user
+      @microposts = @user.microposts.paginate(page: params[:page])
+      @years = @user.years.all
+      @achievementtypes = @user.userachievementtypes.all
+      @institution = Institution.where(:name => "Rice University")
+      redirect_to user_path()
+    else
+      redirect_to signin_path
+    end
+  end
+
+=end
+
 
   def destroy
     User.find(params[:id]).destroy

@@ -1,5 +1,5 @@
 class Internship < ActiveRecord::Base
-  attr_accessible :internbegin, :internend, :internprereqs, :providername, :source, :stutitle, :tipsforapp
+  attr_accessible :internbegin, :internend, :internprereqs, :providername, :source, :stutitle, :tipsforapp, :user_id
   belongs_to :user
 
   validates :internbegin, presence: true

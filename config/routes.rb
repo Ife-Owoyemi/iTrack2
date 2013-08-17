@@ -17,7 +17,7 @@ ISwitched1::Application.routes.draw do
   match '/home', to: 'static_pages#home', :as => :home
 
   match '/signup', to: 'users#new'
-  match '/signin', to: 'sessions#new'
+  match '/signin', to: 'sessions#new', :as => :signin
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match '/catalog', to: 'catalogs#catalog'

@@ -10,7 +10,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :userachievementtypes_attributes
+  attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans
   has_many :userachievementtypes
   has_many :years
   has_many :internships
@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     text :name, :email, :college, :dreamJob, :status
   end
 
- # bundle exec rake sunspot:solr:start or sunspot:solr:run to start in foreground
+ # bundle exec rake sunspot:solr:start or bundle exec rake sunspot:solr:run to start in foreground
 
 # reIndex Solr important when pushing up to Heroku for old users that 
 # were not indexed or for new attributes
