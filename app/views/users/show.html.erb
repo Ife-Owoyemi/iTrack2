@@ -425,6 +425,7 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
+
                                          data-original-title="Course Overview"
                                          data-content="
                                          <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
@@ -448,6 +449,8 @@
                                          <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" 
                                          >
                                          <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+
+                                         
                                       </h4>​
                                     
                                   <% else %>
