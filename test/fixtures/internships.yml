@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  providername: MyString
+  stutitle: MyString
+  source: MyText
+  internprereqs: MyText
+  internbegin: 
+  internend: 
+
+two:
+  providername: MyString
+  stutitle: MyString
+  source: MyText
+  internprereqs: MyText
+  internbegin: 
+  internend: 

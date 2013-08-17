@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  awardtitle: MyString
+  year: 1
+  providername: MyString
+  tipsforapp: MyText
+  awardperks: MyText
+  awardprereqs: MyText
+
+two:
+  awardtitle: MyString
+  year: 1
+  providername: MyString
+  tipsforapp: MyText
+  awardperks: MyText
+  awardprereqs: MyText

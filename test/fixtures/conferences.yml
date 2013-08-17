@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  conferencename: MyString
+  tipsforapp: MyText
+  contakeaway: MyText
+  conbegin: 
+  : 
+
+two:
+  conferencename: MyString
+  tipsforapp: MyText
+  contakeaway: MyText
+  conbegin: 
+  : 
