@@ -425,7 +425,6 @@
                                     
                                       <h4 
                                          class="label <%= @color %> popover-link" 
-
                                          data-original-title="Course Overview"
                                          data-content="
                                          <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
@@ -442,7 +441,7 @@
 
                                          <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => "numField" %><br/>
 
-                                         <b>Focus: </b> <%#= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus', :inner_class => "stringField", :type => :select, :collection => [ ["0/100", "0/100"], ["25/75", "25/75"], ["50/50", "50/50"], ["75/25", "75/25"], ["100/0", "100/0"]  ] %><br/>
+                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => "stringField" %><br/>
 
                                          <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => "numField" %><br/>
 
@@ -450,7 +449,6 @@
                                          >
                                          <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
-                                         
                                       </h4>​
                                     
                                   <% else %>
