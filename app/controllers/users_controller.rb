@@ -129,7 +129,7 @@ class UsersController < ApplicationController
     searchType = params[:user_search][:qType]
     status = params[:user_search][:status]
     @institution = Institution.where(:name => "Rice University") 
-    @qresults = User.searchBy(q, searchType).results   
+    @qresults = User.railSearchBy(q, searchType)#.results   
     if (status == "Undergrad")
       @users = User.findUndergrads(@qresults)
     elsif (status == "Alumni")
@@ -137,7 +137,7 @@ class UsersController < ApplicationController
     elsif (status == "Prospective Student")
       @users = User.findProspStu(@qresults)
     else
-      @users = @qresults
+      @users = @qresults.paginate(:page => 1, :per_page => 10)
     end
 
   end
@@ -147,7 +147,7 @@ class UsersController < ApplicationController
     searchType = params[:ach_search][:qType]
     status = params[:ach_search][:status]    
     @institution = Institution.where(:name => "Rice University") 
-    @qresults = Userachievementtype.searchBy(q,searchType).results
+    @qresults = Userachievementtype.railSearchBy(q,searchType)#.results
     @qusers = Userachievementtype.findUsers(@qresults)
     if (status == "Undergrad")
       @users = User.findUndergrads(@qusers)
@@ -156,7 +156,7 @@ class UsersController < ApplicationController
     elsif (status == "Prospective Student")
       @users = User.findProspStu(@qusers)
     else
-      @users = @qusers
+      @users = @qusers.paginate(:page => 1, :per_page => 10)
     end        
   end
 

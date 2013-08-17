@@ -2,6 +2,7 @@ class Userachievementtype < ActiveRecord::Base
   attr_accessible :achievementname, :achievementtype, :college, :specialty
   belongs_to :user
 
+=begin
   searchable do
   	text :achievementname, :achievementtype, :college, :specialty
   end
@@ -12,6 +13,7 @@ class Userachievementtype < ActiveRecord::Base
     Userachievementtype.reindex
     Sunspot.commit
   end  
+
 
   def self.searchBy(q,search_type) 
  
@@ -48,6 +50,25 @@ class Userachievementtype < ActiveRecord::Base
       end
     end
   end
+
+=end
+
+  def self.railSearchBy(q,search_type) 
+ 
+    if (search_type == "Achievement Type") 
+      results = Userachievementtype.where(['achievementtype LIKE ?', "%#{q}%"])      
+
+    elsif (search_type == "College")    
+      results = Userachievementtype.where(['college LIKE ?', "%#{q}%"])
+
+    elsif (search_type == "Specialty")    
+      results = Userachievementtype.where(['specialty LIKE ?', "%#{q}%"])
+
+    else   
+      results = Userachievementtype.where(['achievementname LIKE ?', "%#{q}%"])
+    end
+  end
+
 
   def self.findUsers(userachievements)
   	user_ids = userachievements.map(&:user_id)

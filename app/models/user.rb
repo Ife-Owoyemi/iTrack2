@@ -38,7 +38,8 @@ class User < ActiveRecord::Base
   #validates :password, presence: true, length: { minimum: 6 }
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
-  
+
+=begin  
   # Solr search setup
   searchable do 
     text :name, :email, :college, :dreamJob, :status
@@ -92,6 +93,32 @@ class User < ActiveRecord::Base
     end
   end
 
+=end
+
+  require 'will_paginate/array' # need this line to use will_paginate with an array
+
+# function gets a certain search and the search value and uses rails where and like methods instead of solr to find 
+# users with that match the given conditions
+  def self.railSearchBy(q,search_type) 
+    if (search_type == "Email")    
+      results = User.where(['email LIKE ?', "%#{q}%"])
+
+    elsif (search_type == "College")    
+      results = User.where(['college LIKE ?', "%#{q}%"])
+
+    elsif (search_type == "Dream Job")    
+      results = User.where(['dreamJob LIKE ?', "%#{q}%"])
+
+    else    
+      results = User.where(['name LIKE ?', "%#{q}%"])
+
+    end
+    return results
+  end
+
+
+
+
 # return all current users names
   def self.allNames
     User.all.map(&:name)
@@ -130,7 +157,7 @@ class User < ActiveRecord::Base
 
 # Find User MArgin finds all the users that mtach a certain segment. Ex: all Undergrad
 # It is to be used by more specific functions i.e. findUndergrads
-  require 'will_paginate/array' # need this line to use will_paginate with an array
+
   def self.findUserSegment(users,segment)
     user_ids = users.map(&:id)
     returnUsers = []
@@ -144,15 +171,15 @@ class User < ActiveRecord::Base
   end   
 
   def self.findUndergrads(users)
-    User.findUserMargin(users, "Undergrad")
+    User.findUserSegment(users, "Undergrad")
   end   
 
   def self.findAlumi(users)
-    User.findUserMargin(users, "Alumni")
+    User.findUserSegment(users, "Alumni")
   end   
 
   def self.findProspStu(users)
-    User.findUserMargin(users, "Prospective Student")    
+    User.findUserSegment(users, "Prospective Student")    
   end       
 
 #  def self.searchByTrack(qTrack)
