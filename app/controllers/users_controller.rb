@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       @institution = Institution.where(:name => "Rice University")  
       @awards = @user.awards.all
       @internships = @user.internships.all
+      @conferences = @user.conferences.all
     elsif current_user == nil
         redirect_to signin_path
     else
@@ -27,6 +28,7 @@ class UsersController < ApplicationController
       @institution = Institution.where(:name => "Rice University")
       @awards = @user.awards.all
       @internships = @user.internships.all            
+      @conferences = @user.conferences.all
     end
 
     

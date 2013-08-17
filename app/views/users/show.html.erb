@@ -55,7 +55,7 @@
 <% user_courses = Hash.new %>
 <% coursearray = Array.new %>
 <% achievements = Array.new %>
-<%provide(:title, @user.name) %>
+<% provide(:title, @user.name) %>
 <% achievementhash = Hash.new %>
 <% @achievement = Array.new %>
 <% @achievementtypes.each do |type| %>
@@ -169,27 +169,39 @@
 		</section>
     <section>
 
-      <p><b>Dream Job: </b>
-         <%= best_in_place_if current_user?(@user), @user, :dreamJob, :nil => 'Click here to add your dreamJob', :type => :input %>
-      </p>
+      
       <p id="user_status"><b>Status: </b>
         <%= best_in_place_if current_user?(@user), @user, :status, :nil => 'Click here to add year', :type => :select, :collection => [ ["Undergrad","Undergrad"], ["Alumni","Alumni"], ["Prospective Student","Prospective Student"]] %>
       </p> 
       <p><b>Year: </b>
         <%= best_in_place_if current_user?(@user), @user, :year, :nil => 'Click here to add year', :type => :select, :collection => [ ["Senior","Senior"], ["Junior","Junior"], ["Sophomore","Sophomore"], ["Freshman", "Freshman"] ] %>
       </p>
+      <p><b>Post Grad Plans: </b>
+         <%= best_in_place_if current_user?(@user), @user, :postGradPlans, :nil => 'Click here to add your dreamJob', :type => :select, :collection => [ ["Business School", "Business School"], ["Graduate Studies", "Graduate Studies"], ["Law School", "Law School"], ["Medical School", "Medical School"], ["Industry", "Industry"], ["Vet School", "Vet School"], ["Pharm School", "Pharm School"] ] %>
+      </p>
+      <p><b>Dream Job: </b>
+         <%= best_in_place_if current_user?(@user), @user, :dreamJob, :nil => 'Click here to add your dreamJob', :type => :input %>
+      </p>
       <p><b>College: </b>
         <%= best_in_place_if current_user?(@user), @user, :college, :nil => 'Click here to add college', :type => :select, :collection => [ ["Baker","Baker"], ["Brown","Brown"], ["Duncan","Duncan"], ["Hanszen", "Hanszen"], ["Jones","Jones"], ["Lovett","Lovett"], ["Martel","Martel"], ["McMurtry", "McMurtry"], ["Will Rice","Will Rice"], ["Sid Richardson","Sid Richardson"], ["Wiess","Wiess"] ] %>
       </p>
       <p><b>Email: </b>
-        <%= best_in_place_if current_user?(@user), @user, :email, :nil => 'Click here to add email',:type => :input %>
+        <%= best_in_place_if false, @user, :email, :nil => 'Click here to add email',:type => :input %>
       </p>
     </section>
     
     <section>
       <%#= render 'shared/stats' %>
     
-      <h1>Awards</h1>
+      <h1>Awards  <div 
+        class="label popover-link" 
+        data-content="
+
+        Award Form here!"
+        
+        data-original-title="Add Award">+</div>
+      </h1>
+
       <% @awardscounter = 0 %>
       <% @awards.each do |award| %>
         <div class="accordion" id="awardsaccordion">
@@ -212,9 +224,21 @@
         </div>
       <% end %>
 
+
+
+
+
       <%# if @user == current_user %>
       <%# end %>
-      <h1>Internships</h1>
+      <h1>Internships <div 
+        class="label popover-link" 
+        data-content="
+
+        Internship Form here!"
+        
+        data-original-title="Add Internship">+</div>
+      </h1>
+      
       <% @interncounter = 0 %>
       <% @internships.each do |ship| %>
         <div class="accordion" id="internaccordion">
@@ -238,6 +262,35 @@
       <% end %>
       <%# if @user == current_user %>
       <%# end %>
+
+      <h1>Conferences <div 
+        class="label popover-link" 
+        data-content="
+
+        Conference Form here!"
+        
+        data-original-title="Add Conference">+</div>
+      </h1>
+      
+      <% @conferencecounter = 0 %>
+      <% @conferences.each do |conf| %>
+        <div class="accordion" id="conferenceaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#conferenceaccordion" href="#conferencecollapse<%= @conferencecounter %>">
+                <%= conf.conferencename %> <%= conf.conbegin %>-<%= conf.conend %> 
+              </a>
+            </div>
+            <div id="conferencecollapse<%= @conferencecounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Take Away: </b><%= conf.contakeaway %></p>
+                <p><b>Tips for Applying: </b><%= conf.tipsforapp %></p>
+              </div>
+            </div>
+          </div>
+          <% @conferencecount += 1 %>
+        </div>
+      <% end %>
     </section>
 
 	</aside>
