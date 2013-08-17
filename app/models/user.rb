@@ -13,6 +13,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :userachievementtypes_attributes
   has_many :userachievementtypes
   has_many :years
+  has_many :internships
+  has_many :awards
+  has_many :conferences
   accepts_nested_attributes_for :userachievementtypes, :allow_destroy => true
   accepts_nested_attributes_for :years, :allow_destroy => true
   has_many :reverse_relationships, foreign_key: "followed_id",

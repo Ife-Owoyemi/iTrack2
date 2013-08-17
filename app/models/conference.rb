@@ -1,3 +1,10 @@
 class Conference < ActiveRecord::Base
-  attr_accessible :, :conbegin, :conferencename, :contakeaway, :tipsforapp
+  attr_accessible :conend, :conbegin, :conferencename, :contakeaway, :tipsforapp
+  belongs_to :user
+
+  validates :conbegin, presence: true
+  validates :conend, presence: true
+  validates :conferencename, presence: true
+  validates :contakeaway, presence: true
+
 end
