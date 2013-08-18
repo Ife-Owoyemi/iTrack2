@@ -6,10 +6,12 @@
 <% @diii = 0 %>
 <%# @ucatalog = Hash.new %>
 <% @catalog.each do |catalog| %>
+
 <%# @ucatalog["di"] = Hash.new %>
 <%# @ucatalog["dii"] = Hash.new %>
 <%# @ucatalog["diii"] = Hash.new %>
 <% @colleges = catalog.coleges.all %>
+
   <% @colleges.each do |college| %>
     <% college.colegename %>
     <% @departments = college.departments.all %>
@@ -19,19 +21,13 @@
         <% if num.number != nil %>
           <% if num.di %>
             <% @ucatalog["di"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
           <% if num.dii %>
-
             <% @ucatalog["dii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
           <% if num.diii %>
-
             <% @ucatalog["diii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
-          
         <% end %>
       <% end %>
     <% end %>
@@ -179,9 +175,6 @@
 <!-- end scripts by Ife -->
 
 
-
-
-
 <div class="row">
 	<aside class="span4">
 		<section>
@@ -199,7 +192,7 @@
         <%= best_in_place_if current_user?(@user), @user, :year, :nil => 'Click here to add year', :type => :select, :collection => [ ["Senior","Senior"], ["Junior","Junior"], ["Sophomore","Sophomore"], ["Freshman", "Freshman"] ] %>
       </p>
       <p><b>Post Grad Plans: </b>
-         <%= best_in_place_if current_user?(@user), @user, :postGradPlans, :nil => 'Click here to add your dreamJob', :type => :select, :collection => [ ["Business School", "Business School"], ["Graduate Studies", "Graduate Studies"], ["Law School", "Law School"], ["Medical School", "Medical School"], ["Industry", "Industry"], ["Vet School", "Vet School"], ["Pharm School", "Pharm School"] ] %>
+         <%= best_in_place_if current_user?(@user), @user, :postGradPlans, :nil => 'Click here to add your dreamJob', :type => :select, :collection => [ ["Undecided", "Undecided"], ["Business School", "Business School"], ["Graduate Studies", "Graduate Studies"], ["Law School", "Law School"], ["Medical School", "Medical School"], ["Industry", "Industry"], ["Vet School", "Vet School"], ["Pharm School", "Pharm School"] ] %>
       </p>
       <p><b>Dream Job: </b>
          <%= best_in_place_if current_user?(@user), @user, :dreamJob, :nil => 'Click here to add your dreamJob', :type => :input %>
@@ -215,7 +208,8 @@
     <section>
       <%#= render 'shared/stats' %>
     
-      <h1>Awards  <div 
+      <h1>Awards  <% if @user == current_user %>
+      <div 
         class="label popover-link" 
         data-original-title="Add Award"
         data-content=
@@ -224,13 +218,15 @@
           <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
           <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
           <b> Provider Name : </b><%= f.text_field :providername %></br>
-          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
-          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'toolArea' %></br>
           <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'toolArea' %></br>
+          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'toolArea' %></br>
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
+          
           <%= f.submit 'Add Award' %>
         <% end %>'
         
-        >+</div>
+        >+</div><% end %>
       </h1>
 
       <% @awardscounter = 0 %>
@@ -239,15 +235,15 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= best_in_place_if current_user?(@user), award, :providername, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "stringField" %> - <%= best_in_place_if current_user?(@user), award, :year, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "numField" %> 
+                <b><%= best_in_place_if current_user?(@user), award, :providername, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "stringField" %> - <%= best_in_place_if current_user?(@user), award, :year, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "numField" %></b>  
               </a>
             </div>
             <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= award.awardtitle %></p>
-                <p><b>Perks: </b><%= award.awardperks %></p>
-                <p><b>Prereqs: </b><%= award.awardprereqs %></p>
-                <p><b>Tips: </b><%= award.tipsforapp %></p>
+                <p><b>Title: </b><%= best_in_place_if current_user?(@user), award, :awardtitle, :type => :input %></p>
+                <p><b>Perks: </b><%= best_in_place_if current_user?(@user), award, :awardperks, :type => :textarea %></p>
+                <p><b>Prereqs: </b><%= best_in_place_if current_user?(@user), award, :awardprereqs, :type => :textarea %></p>
+                <p><b>Tips: </b><%= best_in_place_if current_user?(@user), award, :tipsforapp, :type => :textarea %></p>
               </div>
             </div>
           </div>
@@ -259,9 +255,9 @@
 
 
 
-      <%# if @user == current_user %>
-      <%# end %>
-      <h1>Internships <div 
+      
+      
+      <h1>Internships <% if @user == current_user %><div 
         class="label popover-link" 
         data-content=
 
@@ -269,17 +265,19 @@
 
           <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
           <b> Student Title : </b><%= f.text_area :stutitle, :class => 'toolArea' %></br>     
-          <b> Source : </b><%= f.text_area :source, :class => 'toolArea' %></br>
-          <b> Award Title : </b><%= f.text_field :internprereqs, :class => 'toolArea' %></br>     
-          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
           <b> Internship Begin date : </b><%= f.text_field :internbegin, :class => 'stringField' %></br>
           <b> Internship End date : </b><%= f.text_field :internend, :class => 'stringField' %></br>
+          <b> Source : </b><%= f.text_area :source, :class => 'toolArea' %></br>
+          <b> Intern Prereqs : </b><%= f.text_field :internprereqs, :class => 'toolArea' %></br>     
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
 
           <%= f.submit 'Add Internship' %>
         <% end %>'
 
         
         data-original-title="Add Internship">+</div>
+        <% end %>
       </h1>
       
       <% @interncounter = 0 %>
@@ -288,15 +286,15 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
-                <%= ship.providername %> <%= ship.internbegin.to_date.to_formatted_s(:long) %> - <%= ship.internend.to_date.to_formatted_s(:long) %> 
+                <b><%= best_in_place_if current_user?(@user), ship, :providername, :type => :input %> <%= ship.internbegin.to_date.to_formatted_s(:long) %> - <%= ship.internend.to_date.to_formatted_s(:long) %></b> 
               </a>
             </div>
             <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Title: </b><%= ship.stutitle %></p>
-                <p><b>Application Found: </b><%= ship.source %></p>
-                <p><b>Prereqs: </b><%= ship.internprereqs %></p>
-                <p><b>Tips for Applying: </b><%= ship.tipsforapp %></p>
+                <p><b>Title: </b><%= best_in_place_if current_user?(@user), ship, :stutitle, :type => :input %></p>
+                <p><b>Application Found: </b><%= best_in_place_if current_user?(@user), ship, :source, :type => :input %></p>
+                <p><b>Prereqs: </b><%= best_in_place_if current_user?(@user), ship, :internprereqs, :type => :textarea %></p>
+                <p><b>Tips for Applying: </b><%= best_in_place_if current_user?(@user), ship, :tipsforapp, :type => :textarea %></p>
               </div>
             </div>
           </div>
@@ -306,21 +304,22 @@
       <%# if @user == current_user %>
       <%# end %>
 
-      <h1>Conferences <div 
+      <h1>Conferences <% if @user == current_user %><div 
         class="label popover-link" 
         data-content=
 
         '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create'}) do |f|%> 
           <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
-          <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
-          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
           <b> Conference Begin date : </b><%= f.text_field :conbegin, :class => 'stringField' %></br>
           <b> Conference End date : </b><%= f.text_field :conend, :class => 'stringField' %></br>
+          <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
 
           <%= f.submit 'Add Conference' %>
         <% end %>'
         
-        data-original-title="Add Conference">+</div>
+        data-original-title="Add Conference">+</div><% end %>
       </h1>
       
       <% @conferencecounter = 0 %>
@@ -329,13 +328,13 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#conferenceaccordion" href="#conferencecollapse<%= @conferencecounter %>">
-                <%= conf.conferencename %> <%= conf.conbegin.to_date.to_formatted_s(:long) %> - <%= conf.conend.to_date.to_formatted_s(:long) %> 
+                <b><%= best_in_place_if current_user?(@user), conf, :conferencename, :type => :input %> <%= conf.conbegin.to_date.to_formatted_s(:long) %> - <%= conf.conend.to_date.to_formatted_s(:long) %></b> 
               </a>
             </div>
             <div id="conferencecollapse<%= @conferencecounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
-                <p><b>Take Away: </b><%= conf.contakeaway %></p>
-                <p><b>Tips for Applying: </b><%= conf.tipsforapp %></p>
+                <p><b>Take Away: </b><%= best_in_place_if current_user?(@user), conf, :contakeaway, :type => :textarea %></p>
+                <p><b>Tips for Applying: </b><%= best_in_place_if current_user?(@user), conf, :tipsforapp, :type => :textarea %></p>
               </div>
             </div>
           </div>
@@ -411,7 +410,7 @@
                   <% sgpa = 0 %>
                   <% sgpah = 0 %>
                   <% hours = 0 %>
-                  <div class="accordion pull-left span7" id="accordion<%= ia %><%= ha %>">
+                  <div class="accordion pull-left span2" id="accordion<%= ia %><%= ha %>">
                     <div class="accordion-group">
                       <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion<%= ia %><%= ha %>" href="#collapseb<%= ia %><%= ha %>">
@@ -464,7 +463,7 @@
                                         <% else %>
                                           <% f = "No" %>
                                         <% end %>
-                                    
+
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
@@ -482,7 +481,9 @@
 
                                          <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => 'stringField' %><br/>
+
+                                         <b>Focus: </b> <%#= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => 'stringField' %><br/>
+
 
                                          <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
 
@@ -553,7 +554,7 @@
         <div class="accordion-group">
           <div class="accordion-heading">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="#coursestataccordion" href="#statcollapseOne">
-              Course Stats
+              <b>Course Stats</b>
             </a>
           </div>
           <div id="statcollapseOne" class="accordion-body collapse">

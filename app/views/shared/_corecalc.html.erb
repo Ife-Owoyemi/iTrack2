@@ -4,7 +4,6 @@
   <% e = corereq.ccourses.all %>
   <%# ------------------------------------------------------%>
   <% for course in e %>
-
     <% if taken.has_key?(course.department) %>
       <% if taken[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>
@@ -23,7 +22,6 @@
         <%= @core_c_3 += 1 %>
       <% end %>
     <% end %>
-
   <% end %>
 <% end %>
 <%# ------------------------------------------------------%>
