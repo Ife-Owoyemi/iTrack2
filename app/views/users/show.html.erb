@@ -4,11 +4,11 @@
 <% @di = 0 %>
 <% @dii = 0 %>
 <% @diii = 0 %>
-<% @ucatalog = Hash.new %>
+<%# @ucatalog = Hash.new %>
 <% @catalog.each do |catalog| %>
-<% @ucatalog["di"] = Hash.new %>
-<% @ucatalog["dii"] = Hash.new %>
-<% @ucatalog["diii"] = Hash.new %>
+<%# @ucatalog["di"] = Hash.new %>
+<%# @ucatalog["dii"] = Hash.new %>
+<%# @ucatalog["diii"] = Hash.new %>
 <% @colleges = catalog.coleges.all %>
   <% @colleges.each do |college| %>
     <% college.colegename %>
@@ -171,17 +171,18 @@
 
 <!-- scripts by Ife -->
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
  <script>
+ 
   $(function() {
     jQuery( "#internship_internbegin" ).datepicker({
       changeMonth: true,
       changeYear: true
     });
 
-    jQuery( "#internship_internend" ).datepicker({
+    $( "#internship_internend" ).datepicker({
       changeMonth: true,
       changeYear: true
     });
@@ -332,7 +333,7 @@
 
       <h1>Conferences <div 
         class="label popover-link" 
-        data-content="
+        data-content=
 
         '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create', :conference_user_id => current_user.id}) do |f|%> 
           <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
@@ -492,7 +493,7 @@
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
-                                         data-content'                                         <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
+                                         data-content=                                         "<b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
 
                                          <b> Prof Quality: </b> <%= best_in_place course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
 
@@ -500,17 +501,17 @@
 
                                          <b>Group Projects: </b> <%= best_in_place course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
 
-                                         <b>Essays: </b> <%= best_in_place course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Essays: </b> <%= best_in_place course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Midterms: </b> <%= best_in_place course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Midterms: </b> <%= best_in_place course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => "stringField" %><br/>
+                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => 'stringField' %><br/>
 
-                                         <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>' 
+                                         <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" 
                                          >
                                          <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 

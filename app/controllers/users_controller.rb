@@ -8,6 +8,10 @@ class UsersController < ApplicationController
   end
 
   def show
+    @ucatalog = Hash.new
+    @ucatalog["di"] = Hash.new
+    @ucatalog["dii"] = Hash.new
+    @ucatalog["diii"] = Hash.new
     @courses = Catalog.all
     if (params[:id] != nil)
       @user = User.find(params[:id])

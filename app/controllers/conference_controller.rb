@@ -20,8 +20,7 @@ class ConferenceController < ApplicationController
 	end
 
 	def update
-		@user = current_user
-		@conference = Conference.find(params[:conference][:id])
+		@conference = Conference.find(params[:id])
 		if (@conference.update_attributes(params[:conference]))
 			flash[:success] = "Conference Update was a success"
 			respond_to do |format|

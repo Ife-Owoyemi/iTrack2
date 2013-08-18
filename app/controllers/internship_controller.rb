@@ -22,8 +22,7 @@ class InternshipController < ApplicationController
 	end
 
 	def update
-		@user = current_user
-		@internship = Internship.find(params[:internship][:id])
+		@internship = Internship.find(params[:id])
 		if (@internship.update_attributes(params[:internship]))
 			flash[:success] = "Internship Update was a success"
 			respond_to do |format|

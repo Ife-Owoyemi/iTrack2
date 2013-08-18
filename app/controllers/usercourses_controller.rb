@@ -1,4 +1,4 @@
-class UsercourseController < ApplicationController
+class UsercoursesController < ApplicationController
 
 =begin
 	def  create
@@ -22,12 +22,12 @@ class UsercourseController < ApplicationController
 =end
 
 	def update
-		@user = current_user
-		if (@usercouse.update_attributes(params[:usercouse]))
+		@usercourse = Usercourse.find(params[:id])
+		if (@usercourse.update_attributes(params[:usercourse]))
 			flash[:success] = "Course Update was a success"
 			respond_to do |format|
-				format.html {redirect_to current_user}
-				format.json{respond_with_bip(@usercourse)}
+				format.html { redirect_to current_user }
+				format.json {respond_with_bip(@usercourse)}
 			end
 		else
 			@errors = @usercourse.errors.full_messages
