@@ -239,7 +239,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= award.providername %> <%= award.year %> 
+                <%= best_in_place_if current_user?(@user), award, :providername, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "stringField" %> - <%= best_in_place_if current_user?(@user), award, :year, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "numField" %> 
               </a>
             </div>
             <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
