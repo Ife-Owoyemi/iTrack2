@@ -172,33 +172,8 @@
 <!-- scripts by Ife -->
 
 
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
- <script>
- 
-  $(function() {
-    jQuery( "#internship_internbegin" ).datepicker({
-      changeMonth: true,
-      changeYear: true
-    });
-
-    $( "#internship_internend" ).datepicker({
-      changeMonth: true,
-      changeYear: true
-    });
-
-    jQuery( "#conference_conbegin" ).datepicker({
-      changeMonth: true,
-      changeYear: true
-    });
-
-    jQuery( "#conference_conend" ).datepicker({
-      changeMonth: true,
-      changeYear: true
-    });
-
-
-  });
+ <script type="text/javascript">
+    $("#internship_internbegin").datepicker();
 </script>
 
 <!-- end scripts by Ife -->
@@ -245,7 +220,7 @@
         data-original-title="Add Award"
         data-content=
 
-        '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create', :award_user_id => current_user.id}) do |f|%> 
+        '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create'}) do |f|%> 
           <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
           <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
           <b> Provider Name : </b><%= f.text_field :providername %></br>
@@ -264,7 +239,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= award.providername %><%= award.year %> 
+                <%= award.providername %> <%= award.year %> 
               </a>
             </div>
             <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
@@ -276,7 +251,7 @@
               </div>
             </div>
           </div>
-          <% @awardscount += 1 %>
+          <% @awardscount =+ 1 %>
         </div>
       <% end %>
 
@@ -290,7 +265,7 @@
         class="label popover-link" 
         data-content=
 
-        '<%= form_for(:internship, :url => {:controller => 'internships', :action => 'create', :internship_user_id => current_user.id}) do |f|%> 
+        '<%= form_for(:internship, :url => {:controller => 'internships', :action => 'create'}) do |f|%> 
 
           <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
           <b> Student Title : </b><%= f.text_area :stutitle, :class => 'toolArea' %></br>     
@@ -313,19 +288,19 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
-                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
+                <%= ship.providername %> <%= ship.internbegin.to_date.to_formatted_s(:long) %> - <%= ship.internend.to_date.to_formatted_s(:long) %> 
               </a>
             </div>
             <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
                 <p><b>Title: </b><%= ship.stutitle %></p>
                 <p><b>Application Found: </b><%= ship.source %></p>
-                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
+                <p><b>Prereqs: </b><%= ship.internprereqs %></p>
                 <p><b>Tips for Applying: </b><%= ship.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @interncount += 1 %>
+          <% @interncount =+ 1 %>
         </div>
       <% end %>
       <%# if @user == current_user %>
@@ -335,7 +310,7 @@
         class="label popover-link" 
         data-content=
 
-        '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create', :conference_user_id => current_user.id}) do |f|%> 
+        '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create'}) do |f|%> 
           <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
           <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
           <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
@@ -354,7 +329,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#conferenceaccordion" href="#conferencecollapse<%= @conferencecounter %>">
-                <%= conf.conferencename %> <%= conf.conbegin %>-<%= conf.conend %> 
+                <%= conf.conferencename %> <%= conf.conbegin.to_date.to_formatted_s(:long) %> - <%= conf.conend.to_date.to_formatted_s(:long) %> 
               </a>
             </div>
             <div id="conferencecollapse<%= @conferencecounter %>" class="accordion-body collapse">
@@ -364,7 +339,7 @@
               </div>
             </div>
           </div>
-          <% @conferencecount += 1 %>
+          <% @conferencecount =+ 1 %>
         </div>
       <% end %>
     </section>

@@ -19,6 +19,7 @@
 //= require bootstrap
 //= require bootstrap-tooltip.js
 //= require bootstrap-popover.js
+//= require bootstrap-datepicker
 //= require cocoon
 //= require_tree .
 $(function () {
