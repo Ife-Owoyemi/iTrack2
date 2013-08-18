@@ -1,7 +1,7 @@
 class ConferenceController < ApplicationController
 
 	def  create
-		@user = User.find(params[:id])
+		@user = current_user
 		@conference = Conference.new(params[:conference])
 		if (@conference.save)
 			flash[:success] = "New conference created!"
@@ -20,7 +20,7 @@ class ConferenceController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:id])
+		@user = current_user
 		@conference = Conference.find(params[:conference][:id])
 		if (@conference.update_attributes(params[:conference]))
 			flash[:success] = "Conference Update was a success"
@@ -39,6 +39,7 @@ class ConferenceController < ApplicationController
 	end
 
 	def destroy 
+		#@user = current_user
 		@user = User.find(params[:id])
 		if (current_user?(@user))
 			@conference = Conference.find(params[:conference][:id])

@@ -156,9 +156,55 @@
     width: 150px;
   }
 
+  #award_providername{
+    width: 125px;
+  }
+
+  .toolArea{
+    width: 217px;
+    height: 43px;
+  }
+
 </style>
 
 <!-- end style by Ife -->
+
+<!-- scripts by Ife -->
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+ <script>
+  $(function() {
+    jQuery( "#internship_internbegin" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+
+    jQuery( "#internship_internend" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+
+    jQuery( "#conference_conbegin" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+
+    jQuery( "#conference_conend" ).datepicker({
+      changeMonth: true,
+      changeYear: true
+    });
+
+
+  });
+</script>
+
+<!-- end scripts by Ife -->
+
+
+
+
 
 <div class="row">
 	<aside class="span4">
@@ -201,10 +247,10 @@
         '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create', :award_user_id => current_user.id}) do |f|%> 
           <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
           <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
-          <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
-          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'stringField' %></br>
-          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'stringField' %></br>
-          <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'stringField' %></br>
+          <b> Provider Name : </b><%= f.text_field :providername %></br>
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'toolArea' %></br>
+          <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'toolArea' %></br>
           <%= f.submit 'Add Award' %>
         <% end %>'
         
@@ -241,9 +287,21 @@
       <%# end %>
       <h1>Internships <div 
         class="label popover-link" 
-        data-content="
+        data-content=
 
-        Internship Form here!"
+        '<%= form_for(:internship, :url => {:controller => 'internships', :action => 'create', :internship_user_id => current_user.id}) do |f|%> 
+
+          <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
+          <b> Student Title : </b><%= f.text_area :stutitle, :class => 'toolArea' %></br>     
+          <b> Source : </b><%= f.text_area :source, :class => 'toolArea' %></br>
+          <b> Award Title : </b><%= f.text_field :internprereqs, :class => 'toolArea' %></br>     
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Internship Begin date : </b><%= f.text_field :internbegin, :class => 'stringField' %></br>
+          <b> Internship End date : </b><%= f.text_field :internend, :class => 'stringField' %></br>
+
+          <%= f.submit 'Add Internship' %>
+        <% end %>'
+
         
         data-original-title="Add Internship">+</div>
       </h1>
@@ -276,7 +334,15 @@
         class="label popover-link" 
         data-content="
 
-        Conference Form here!"
+        '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create', :conference_user_id => current_user.id}) do |f|%> 
+          <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
+          <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Conference Begin date : </b><%= f.text_field :conbegin, :class => 'stringField' %></br>
+          <b> Conference End date : </b><%= f.text_field :conend, :class => 'stringField' %></br>
+
+          <%= f.submit 'Add Conference' %>
+        <% end %>'
         
         data-original-title="Add Conference">+</div>
       </h1>

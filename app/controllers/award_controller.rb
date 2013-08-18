@@ -1,7 +1,7 @@
 class AwardController < ApplicationController
 
 	def  create
-		@user = User.find(params[:award_user_id])
+		@user = current_user
 		@award = Award.new(params[:award])
 		if (@award.save)
 			flash[:success] = "New Award created!"
@@ -20,8 +20,7 @@ class AwardController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:id])
-		@award = Award.find(params[:award][:id])
+		@user = current_user
 		if (@award.update_attributes(params[:award]))
 			flash[:success] = "Award Update was a success"
 			respond_to do |format|

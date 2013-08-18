@@ -121,7 +121,7 @@ class UsersController < ApplicationController
     else
       respond_to do |format|
         format.html {render 'edit'}
-        format.json {respond_with_bip(@user)}
+        format.json { render :json => {:errors => @errors, :status => 422} }
       end
     end
   end

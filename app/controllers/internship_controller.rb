@@ -2,7 +2,8 @@ class InternshipController < ApplicationController
 
 
 	def  create
-		@user = User.find(params[:id])
+		#@user = User.find(params[:id])
+		@user = current_user
 		@internship = Internship.new(params[:internship])
 		if (@internship.save)
 			flash[:success] = "New Internship created!"
@@ -21,7 +22,7 @@ class InternshipController < ApplicationController
 	end
 
 	def update
-		@user = User.find(params[:id])
+		@user = current_user
 		@internship = Internship.find(params[:internship][:id])
 		if (@internship.update_attributes(params[:internship]))
 			flash[:success] = "Internship Update was a success"
