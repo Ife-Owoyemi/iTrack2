@@ -153,7 +153,7 @@
   }
 
   .stringField{
-    width: 200px;
+    width: 150px;
   }
 
 </style>
@@ -202,9 +202,9 @@
           <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
           <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
           <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
-          <b> Tips for the Application  : </b><%= f.text_field :tipsforapp, :class => 'stringField' %></br>
-          <b> Award Perks : </b><%= f.text_field :awardperks, :class => 'stringField' %></br>
-          <b> Award Prereqs : </b><%= f.text_field :awardprereqs, :class => 'stringField' %></br>
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'stringField' %></br>
+          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'stringField' %></br>
+          <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'stringField' %></br>
           <%= f.submit 'Add Award' %>
         <% end %>'
         
@@ -426,8 +426,7 @@
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
-                                         data-content="
-                                         <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
+                                         data-content'                                         <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
 
                                          <b> Prof Quality: </b> <%= best_in_place course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
 
@@ -445,7 +444,7 @@
 
                                          <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => "numField" %><br/>
 
-                                         <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" 
+                                         <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>' 
                                          >
                                          <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
