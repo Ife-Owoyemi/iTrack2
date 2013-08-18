@@ -6,10 +6,10 @@
 <% @diii = 0 %>
 <% @ucatalog = Hash.new %>
 <% @catalog.each do |catalog| %>
-<% @ucatalog["di"] = Hash.new %>
-<% @ucatalog["dii"] = Hash.new %>
-<% @ucatalog["diii"] = Hash.new %>
-<% @colleges = catalog.coleges.all %>
+  <% @ucatalog["di"] = Hash.new %>
+  <% @ucatalog["dii"] = Hash.new %>
+  <% @ucatalog["diii"] = Hash.new %>
+  <% @colleges = catalog.coleges.all %>
   <% @colleges.each do |college| %>
     <% college.colegename %>
     <% @departments = college.departments.all %>
@@ -19,19 +19,13 @@
         <% if num.number != nil %>
           <% if num.di %>
             <% @ucatalog["di"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
           <% if num.dii %>
-
             <% @ucatalog["dii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
           <% if num.diii %>
-
             <% @ucatalog["diii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-    
           <% end %>
-          
         <% end %>
       <% end %>
     <% end %>
@@ -193,7 +187,8 @@
     <section>
       <%#= render 'shared/stats' %>
     
-      <h1>Awards  <div 
+      <h1>Awards  <% if @user == current_user %>
+      <div 
         class="label popover-link" 
         data-original-title="Add Award"
         data-content=
@@ -208,7 +203,7 @@
           <%= f.submit 'Add Award' %>
         <% end %>'
         
-        >+</div>
+        >+</div><% end %>
       </h1>
 
       <% @awardscounter = 0 %>
@@ -441,7 +436,7 @@
 
                                          <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => "numField" %><br/>
 
-                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => "stringField" %><br/>
+                                         <b>Focus: </b> <%#= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => "stringField" %><br/>
 
                                          <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => "numField" %><br/>
 
