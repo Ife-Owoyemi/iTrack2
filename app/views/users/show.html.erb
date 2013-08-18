@@ -4,12 +4,19 @@
 <% @di = 0 %>
 <% @dii = 0 %>
 <% @diii = 0 %>
-<% @ucatalog = Hash.new %>
+<%# @ucatalog = Hash.new %>
 <% @catalog.each do |catalog| %>
+<<<<<<< HEAD
   <% @ucatalog["di"] = Hash.new %>
   <% @ucatalog["dii"] = Hash.new %>
   <% @ucatalog["diii"] = Hash.new %>
   <% @colleges = catalog.coleges.all %>
+=======
+<%# @ucatalog["di"] = Hash.new %>
+<%# @ucatalog["dii"] = Hash.new %>
+<%# @ucatalog["diii"] = Hash.new %>
+<% @colleges = catalog.coleges.all %>
+>>>>>>> 523989832339ad7d89895bfcab83c74127e2a003
   <% @colleges.each do |college| %>
     <% college.colegename %>
     <% @departments = college.departments.all %>
@@ -147,12 +154,34 @@
   }
 
   .stringField{
-    width: 200px;
+    width: 150px;
+  }
+
+  #award_providername{
+    width: 125px;
+  }
+
+  .toolArea{
+    width: 217px;
+    height: 43px;
   }
 
 </style>
 
 <!-- end style by Ife -->
+
+<!-- scripts by Ife -->
+
+
+ <script type="text/javascript">
+    $("#internship_internbegin").datepicker();
+</script>
+
+<!-- end scripts by Ife -->
+
+
+
+
 
 <div class="row">
 	<aside class="span4">
@@ -193,13 +222,13 @@
         data-original-title="Add Award"
         data-content=
 
-        '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create', :award_user_id => current_user.id}) do |f|%> 
+        '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create'}) do |f|%> 
           <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
           <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
-          <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
-          <b> Tips for the Application  : </b><%= f.text_field :tipsforapp, :class => 'stringField' %></br>
-          <b> Award Perks : </b><%= f.text_field :awardperks, :class => 'stringField' %></br>
-          <b> Award Prereqs : </b><%= f.text_field :awardprereqs, :class => 'stringField' %></br>
+          <b> Provider Name : </b><%= f.text_field :providername %></br>
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'toolArea' %></br>
+          <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'toolArea' %></br>
           <%= f.submit 'Add Award' %>
         <% end %>'
         
@@ -212,7 +241,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
-                <%= award.providername %><%= award.year %> 
+                <%= award.providername %> <%= award.year %> 
               </a>
             </div>
             <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
@@ -224,7 +253,7 @@
               </div>
             </div>
           </div>
-          <% @awardscount += 1 %>
+          <% @awardscount =+ 1 %>
         </div>
       <% end %>
 
@@ -236,9 +265,21 @@
       <%# end %>
       <h1>Internships <div 
         class="label popover-link" 
-        data-content="
+        data-content=
 
-        Internship Form here!"
+        '<%= form_for(:internship, :url => {:controller => 'internships', :action => 'create'}) do |f|%> 
+
+          <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
+          <b> Student Title : </b><%= f.text_area :stutitle, :class => 'toolArea' %></br>     
+          <b> Source : </b><%= f.text_area :source, :class => 'toolArea' %></br>
+          <b> Award Title : </b><%= f.text_field :internprereqs, :class => 'toolArea' %></br>     
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Internship Begin date : </b><%= f.text_field :internbegin, :class => 'stringField' %></br>
+          <b> Internship End date : </b><%= f.text_field :internend, :class => 'stringField' %></br>
+
+          <%= f.submit 'Add Internship' %>
+        <% end %>'
+
         
         data-original-title="Add Internship">+</div>
       </h1>
@@ -249,19 +290,19 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
-                <%= ship.providername %> <%= ship.internbegin %>-<%= ship.internend %> 
+                <%= ship.providername %> <%= ship.internbegin.to_date.to_formatted_s(:long) %> - <%= ship.internend.to_date.to_formatted_s(:long) %> 
               </a>
             </div>
             <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
               <div class="accordion-inner">
                 <p><b>Title: </b><%= ship.stutitle %></p>
                 <p><b>Application Found: </b><%= ship.source %></p>
-                <p><b>Prereqs: </b><%= ship.internrereqs %></p>
+                <p><b>Prereqs: </b><%= ship.internprereqs %></p>
                 <p><b>Tips for Applying: </b><%= ship.tipsforapp %></p>
               </div>
             </div>
           </div>
-          <% @interncount += 1 %>
+          <% @interncount =+ 1 %>
         </div>
       <% end %>
       <%# if @user == current_user %>
@@ -269,9 +310,17 @@
 
       <h1>Conferences <div 
         class="label popover-link" 
-        data-content="
+        data-content=
 
-        Conference Form here!"
+        '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create'}) do |f|%> 
+          <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
+          <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          <b> Conference Begin date : </b><%= f.text_field :conbegin, :class => 'stringField' %></br>
+          <b> Conference End date : </b><%= f.text_field :conend, :class => 'stringField' %></br>
+
+          <%= f.submit 'Add Conference' %>
+        <% end %>'
         
         data-original-title="Add Conference">+</div>
       </h1>
@@ -282,7 +331,7 @@
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#conferenceaccordion" href="#conferencecollapse<%= @conferencecounter %>">
-                <%= conf.conferencename %> <%= conf.conbegin %>-<%= conf.conend %> 
+                <%= conf.conferencename %> <%= conf.conbegin.to_date.to_formatted_s(:long) %> - <%= conf.conend.to_date.to_formatted_s(:long) %> 
               </a>
             </div>
             <div id="conferencecollapse<%= @conferencecounter %>" class="accordion-body collapse">
@@ -292,7 +341,7 @@
               </div>
             </div>
           </div>
-          <% @conferencecount += 1 %>
+          <% @conferencecount =+ 1 %>
         </div>
       <% end %>
     </section>
@@ -421,8 +470,7 @@
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
-                                         data-content="
-                                         <b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => "stringField" %> </br> 
+                                         data-content=                                         "<b>Prof: </b><%= best_in_place course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
 
                                          <b> Prof Quality: </b> <%= best_in_place course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
 
@@ -430,15 +478,17 @@
 
                                          <b>Group Projects: </b> <%= best_in_place course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
 
-                                         <b>Essays: </b> <%= best_in_place course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Essays: </b> <%= best_in_place course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Midterms: </b> <%= best_in_place course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Midterms: </b> <%= best_in_place course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Final: </b> <%= best_in_place course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
 
-                                         <b>Focus: </b> <%#= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => "stringField" %><br/>
 
-                                         <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => "numField" %><br/>
+                                         <b>Focus: </b> <%= best_in_place_if (current_user?(@user) ), course, :follows, :nil => 'Click here to add class book/lecture focus ', :type => :select, :collection => [ ["0/100","0/100"], ["25/75","25/75"], ["50/50","50/50"], ["75/25","75/25"], ["100/0","100/0"]  ], :inner_class => 'stringField' %><br/>
+
+
+                                         <b>HPW: </b> <%= best_in_place course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
 
                                          <b>Suggestions: </b> <%= best_in_place course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" 
                                          >

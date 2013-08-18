@@ -1,8 +1,8 @@
-class ConferenceController < ApplicationController
+class ConferencesController < ApplicationController
 
 	def  create
 		@user = current_user
-		@conference = Conference.new(params[:conference])
+		@conference = @user.conferences.build(params[:conference])	
 		if (@conference.save)
 			flash[:success] = "New conference created!"
 			respond_to do |format|

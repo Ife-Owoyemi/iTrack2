@@ -8,6 +8,10 @@ class UsersController < ApplicationController
   end
 
   def show
+    @ucatalog = Hash.new
+    @ucatalog["di"] = Hash.new
+    @ucatalog["dii"] = Hash.new
+    @ucatalog["diii"] = Hash.new
     @courses = Catalog.all
     if (params[:id] != nil)
       @user = User.find(params[:id])
@@ -121,7 +125,7 @@ class UsersController < ApplicationController
     else
       respond_to do |format|
         format.html {render 'edit'}
-        format.json {respond_with_bip(@user)}
+        format.json { render :json => {:errors => @errors, :status => 422} }
       end
     end
   end
