@@ -1,3 +1,4 @@
+include UsersHelper
 class UsersController < ApplicationController
   respond_to :json, :html, :xml, :js
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]

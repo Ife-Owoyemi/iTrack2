@@ -1,0 +1,1 @@
+Date::DATE_FORMATS[:custom_standard] = '%m/%d/%Y'
