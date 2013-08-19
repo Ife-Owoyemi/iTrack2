@@ -23,7 +23,7 @@ class UsercoursesController < ApplicationController
 
 	def update
 		@usercourse = Usercourse.find(params[:id])
-		if (@usercourse.update_attributes(params[:usercourse]))
+		if (@usercourse.update_attributes!(params[:usercourse]))
 			flash[:success] = "Course Update was a success"
 			respond_to do |format|
 				format.html { redirect_to current_user }
