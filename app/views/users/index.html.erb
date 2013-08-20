@@ -55,7 +55,7 @@
 
 
 	function setUserAutoComp(){
-		if(isEmailSearch()){		
+		/*if(isEmailSearch()){		
 			jQuery("#user_search_q").autocomplete({
 				source: emails
 			});	
@@ -72,9 +72,10 @@
 		}
 		else{
 			jQuery("#user_search_q").autocomplete({
-				source: names
+				source: names,
+				position: { my: "left top", at: "left+431 bottom", of: "#user_search_q", collision: "flip" }
 			});			
-		}
+		}*/
 	}
 
 	//auto complete 
@@ -101,6 +102,19 @@
 	select {
 		width: 250px;
 		height: 40px;
+	}
+
+	.ui-autocomplete {
+
+		width: 250px;
+		max-height: 100px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
+	}
+
+	.ui-corner-all{
+		left: 0px;
 	}
 
 </style>
