@@ -24,7 +24,7 @@
   <% @takingt = ((@specialtyhourstaking) * 100) / @totalc %>
   <% @wtaket = ((@specialtyhourswtaket) * 100) / @totalc %>
   
-  <% @need = @totalc - @core_c_1 - @op_c %>
+  <% @need = @totalc - @specialtyhourstaken - @specialtyhourstaking - @specialtyhourswtaket %>
 <% else %>
   <% @specialtyhourstaken =  0 %>
   <% @specialtyhourstaking =  0 %>
