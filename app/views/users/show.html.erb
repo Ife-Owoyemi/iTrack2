@@ -4,12 +4,8 @@
 <% @di = 0 %>
 <% @dii = 0 %>
 <% @diii = 0 %>
-<%# @ucatalog = Hash.new %>
-<% @catalog.each do |catalog| %>
 
-<%# @ucatalog["di"] = Hash.new %>
-<%# @ucatalog["dii"] = Hash.new %>
-<%# @ucatalog["diii"] = Hash.new %>
+<% @catalog.each do |catalog| %>
 <% @colleges = catalog.coleges.all %>
 
   <% @colleges.each do |college| %>
@@ -382,6 +378,9 @@
           <% end %>
         <% end %>
       </div>
+      <% if current_user == @user %>
+        <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+      <% end %>
     </section>
     <section>
       <h4>Transcript</h4>
@@ -398,6 +397,7 @@
           <div id="apcollapse" class="accordion-body collapse">
             <div class="accordion-inner">
               <% aphours = 0 %>
+              <% apcount = 0 %>
               <% @aps.each do |ap| %>
                 <% ap.usercourses.all.each do |course| %>
                   <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
@@ -490,10 +490,12 @@
                   <% if course.credits != 0 or course.credits != nil %>
                     <% aphours += course.credits %>
                   <% end %>
+                  <% apcount += 1 %>
                 <% end %>
                 
               <% end %>
               <% if aphours != 0 %>
+                <p><b>AP Courses: </b><%= apcount %></p>
                 <p><b>AP Hours: </b><%= aphours %></p>
               <% end %>
             </div>
@@ -726,7 +728,7 @@
 
                                          <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
 
-                                         <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+                                         <font color = "white"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
                                       </h4>​
                                     
@@ -762,14 +764,14 @@
 
                                          <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>"
 
-                                       data-original-title="Course Overview"><font color="<%= color %>"><%= course.department%> <%= course.num.to_s %></font>
+                                       data-original-title="Course Overview"><font color="white"><%= course.department%> <%= course.num.to_s %></font>
                                     </h4>​
                                   <% end %>
                                 </td>
                                 <% if course.institution == "Rice" %>
+
                                   <% if course.credits != nil %>
                                     <% hours += course.credits %>
-                                    
                                   <% end %>
                                   
                                   <% if gpascore.include?(course.grade) %>
@@ -786,17 +788,22 @@
                             </tr>
                           <% end %>
                           </table>
+
                           <% if aphours != 0 %>
                             <p><b>AP Hours: </b><%= aphours %></p>
                           <% end %>
+
                           <p><b>Semester Hours: </b><%= hours %></p>
+                          
                           <% if hours >= 12 %>
                             <% fullSemesterAtInstitution += 1 %>
                           <% end %>
+                          
                           <% if current_user?(year.user) and sgpah != 0 %>
                             <% finalsgpa = (sgpa.to_f / (sgpah)).to_s[0..4] %>
                             <p><b>Semester GPA: </b><%= finalsgpa %></p>
                           <% end %>
+                        
                         </div>
                       </div>
                     </div>
@@ -1035,7 +1042,7 @@
         </div>
       </div>
       <% if @user == current_user %>
-          <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+         <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit User', users_edituser_path(@user) %>                   
       <% end %>
       <%= link_to 'Back', users_path %>
     </section>
