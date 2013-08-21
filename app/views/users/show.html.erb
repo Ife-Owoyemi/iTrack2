@@ -30,7 +30,7 @@
   <% end %>
   <% i += 1 %>
 <% end %>
-
+<%= @ucatalog %>
 <% cuser_courses = Array.new %>
 <% current_user.years.all.each do |year| %>
   <% year.semesters.all.each do |semester| %>
@@ -629,7 +629,7 @@
         <% @fwis = 0 %>
         
         <% @aphours = 0 %>
-        <% fullSemesterAtInstitution = 0 %>
+        <% @fullSemesterAtInstitution = 0 %>
         <% gpah = 0 %>
         <% @lpap = 0 %>
         <% transhours = 0 %>
@@ -685,12 +685,6 @@
                                 <% @lpap += 1 %>
                               <% end %>
                               <% @ricehours += course.credits.to_i %>
-                            <% elsif course.institution == "AP" %>
-                              <% color = "green" %>
-                              <% @aphours += course.credits.to_i %>
-                            <% else %>
-                              <% color = "gray" %>
-                              <% transhours += course.credits.to_i %>
                             <% end %>
                             <tr>
                               <div style = "color: green;" >
@@ -796,7 +790,7 @@
                           <p><b>Semester Hours: </b><%= hours %></p>
                           
                           <% if hours >= 12 %>
-                            <% fullSemesterAtInstitution += 1 %>
+                            <% @fullSemesterAtInstitution += 1 %>
                           <% end %>
                           
                           <% if current_user?(year.user) and sgpah != 0 %>
@@ -895,10 +889,10 @@
           <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
               <p>Semesters Completed: 
-                <% if fullSemesterAtInstitution >= 4 %>
-                  <font color = "green"><%= fullSemesterAtInstitution.to_s %>/4 Completed</p></font>
+                <% if @fullSemesterAtInstitution >= 4 %>
+                  <font color = "green"><%= @fullSemesterAtInstitution.to_s %>/4 Completed</p></font>
                 <% else %>
-                  <%= fullSemesterAtInstitution.to_s %>/4</p>
+                  <%= @fullSemesterAtInstitution.to_s %>/4</p>
                 <% end %>
               <p>Hours at Rice Completed: 
                 <% if @ricehours >= 60 %>
