@@ -43,7 +43,7 @@
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-	                	<% @dep_c_2 += 1 %>
+	                	<% @dep_c_m_2 += 1 %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -56,7 +56,7 @@
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
-	                	<% @dep_c_3 += 1 %>
+	                	<% @dep_c_m_3 += 1 %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -104,7 +104,6 @@
 	        <% for num in gg %>
 	          <% taken[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
 	              <% end %>
@@ -117,7 +116,7 @@
 	          <% taking[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_2 += taking[dep.department][number] %>
+	                <% @dep_c_m_2 += taking[dep.department][number] %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -128,7 +127,7 @@
 	          <% wtake[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_3 += wtake[dep.department][number] %>
+	                <% @dep_c_m_3 += wtake[dep.department][number] %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -189,7 +188,7 @@
 	          <% taking[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_2 += 1 %>
+	                <% @dep_c_m_2 += 1 %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -200,7 +199,7 @@
 	          <% wtake[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_3 += 1 %>
+	                <% @dep_c_m_3 += 1 %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -259,7 +258,7 @@
 	          <% taking[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_2 += taking[dep.department][number] %>
+	                <% @dep_c_m_2 += taking[dep.department][number] %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -270,7 +269,7 @@
 	          <% wtake[dep.department].each_key do |number| %>
 	            <% if !excepsarray.include?(dep.department + number.to_s) %>
 	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
-	                <% @dep_c_3 += wtake[dep.department][number] %>
+	                <% @dep_c_m_3 += wtake[dep.department][number] %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
