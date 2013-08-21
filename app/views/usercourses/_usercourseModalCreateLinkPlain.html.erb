@@ -6,7 +6,10 @@
 	</div>
 
 	<div class="modal-body">
-		<%# form_for () %>
+		<%= form_for :usercourse, :url => {:controller => "usercourses", :action => "createFromModal", :institution => institution, :department => department, :num => num} do |f| %> <!-- variables passed from link that opens modal -->
+
+		<%= f.label (:manual )%>
+		<%= f.text_field (:manual) %>
 
 		<% end %>
 	</div>

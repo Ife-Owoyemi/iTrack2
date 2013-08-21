@@ -32,6 +32,10 @@ class UsercoursesController < ApplicationController
 		}
 	end
 
+	def createFromModal
+
+	end
+
 	def update
 		@usercourse = Usercourse.find(params[:id])
 		if (@usercourse.update_attributes!(params[:usercourse]))
