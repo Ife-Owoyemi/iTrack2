@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130817153945) do
+ActiveRecord::Schema.define(:version => 20130821001454) do
 
   create_table "achievementnames", :force => true do |t|
     t.integer  "college_id"
@@ -26,6 +26,12 @@ ActiveRecord::Schema.define(:version => 20130817153945) do
     t.string   "achievementtype"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+  end
+
+  create_table "aps", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "awards", :force => true do |t|
@@ -262,6 +268,12 @@ ActiveRecord::Schema.define(:version => 20130817153945) do
     t.string   "advisor"
   end
 
+  create_table "transfers", :force => true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "userachievementtypes", :force => true do |t|
     t.integer  "user_id"
     t.string   "achievementtype"
@@ -292,6 +304,8 @@ ActiveRecord::Schema.define(:version => 20130817153945) do
     t.integer  "nogprojects"
     t.text     "suggest"
     t.integer  "nofinals"
+    t.integer  "transfer_id"
+    t.integer  "ap_id"
   end
 
   create_table "users", :force => true do |t|
@@ -310,6 +324,8 @@ ActiveRecord::Schema.define(:version => 20130817153945) do
     t.text     "notesToMym"
     t.integer  "matricuYear"
     t.string   "postGradPlans"
+    t.boolean  "hideemail"
+    t.boolean  "hideprofile"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
