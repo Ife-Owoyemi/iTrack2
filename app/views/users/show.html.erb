@@ -660,32 +660,37 @@
                         <div class="accordion-inner">
                           <table border="0" padding="1">
                           <% @courses = semester.usercourses.all %>
-                          <% @courses.each do |course| %>
-                            <% @color = "label-default"%>
-                            <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @di += course.credits %>
-                              <% @diArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-warning" %>
-                            <% end %>
-                            <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @dii += course.credits %>
-                              <% @diiArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-info"%>
-                            <% end %>
-                            <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @diii += course.credits %>
-                              <% @diiiArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-success"%>
-                            <% end %>
-
-
-                            <% if course.institution == "Rice" %>
-                              <% color = "" %>
-                              <% if course.department == "LPAP" %>
-                                <% @lpap += 1 %>
+                          
+                            <% @courses.each do |course| %>
+                            <% if course.credits != nil and course.credits != 0 %>
+                              <% @color = "label-default"%>
+                              <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @di += course.credits %>
+                                <% @diArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-warning" %>
                               <% end %>
-                              <% @ricehours += course.credits.to_i %>
+                              <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @dii += course.credits %>
+                                <% @diiArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-info"%>
+                              <% end %>
+                              <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @diii += course.credits %>
+                                <% @diiiArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-success"%>
+                              <% end %>
+                              <% if course.institution == "Rice" %>
+                                <% color = "" %>
+                                <% if course.department == "LPAP" %>
+                                  <% @lpap += 1 %>
+                                <% end %>
+                                <% @ricehours += course.credits.to_i %>
+                              <% end %>
+
                             <% end %>
+
+
+                            
                             <tr>
                               <div style = "color: green;" >
                                 <td>
