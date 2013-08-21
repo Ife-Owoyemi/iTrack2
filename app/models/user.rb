@@ -10,7 +10,7 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans
+  attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans, :hideemail, :hideprofile
   has_many :userachievementtypes
   has_many :years
   has_many :internships
@@ -108,6 +108,9 @@ class User < ActiveRecord::Base
 
     elsif (search_type == "Dream Job")    
       results = User.where(['dreamJob LIKE ?', "%#{q}%"])
+
+    elsif (search_type == "Post Grad Plans")
+      results = User.where(['postGradPlans Like ?', "%#{q}%"])
 
     else    
       results = User.where(['name LIKE ?', "%#{q}%"])
