@@ -3,23 +3,10 @@
     = f.input :department, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:placeholder => "ANTH",:class => "input-small"}
     = f.input :num, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:style => '',:placeholder => "101", :class => "input-small"}
     = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float input-mini pull-left" }, :input_html => {:style => '',:placeholder => "3", :class => "special input-mini"}
-    - if @inst == "Rice"
-      = f.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"}
-    - else
-      = f.input :status, :label => false, :as => :hidden,  :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :value => "Taken", :class => "input-small"}
-    - if @inst == "AP"
-      - @gradearray = ["3", "4", "5"]
-      = f.input :grade, :as => :select, :collection => @gradearray, :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:style => '', :class => "input-small"}
-    - elsif @inst == "Rice"
-      - @gradearray = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs"]
-      = f.input :grade, :as => :select, :collection => @gradearray, :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:style => '', :class => "input-small"}
-    - else @inst == "Transfer"
-      = f.input :grade, :as => :hidden, :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:style => '', :class => "input-small"}
+    = f.input :grade, :as => :select, :collection => ["AP 3", "AP 4", "AP 5"], :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:style => '', :class => "input-small"} 
 
-     
-
-
-    = f.input :institution, :label => false, :as => :hidden, :wrapper_html => {:class => "float form_header_style pull-left" },  :input_html => {:placeholder => @inst,:class => "input-small"}
+    = f.input :status, :as => :hidden, :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :value => "Taken", :class => "input-small"}
+    = f.input :institution, :as => :hidden, :wrapper_html => {:class => "float form_header_style pull-left" },  :input_html => {:placeholder => "AP",:class => "input-small"}
     = f.input :prof, :as => :hidden, :wrapper_html => {:class => "" }, :input_html => {:value => "Click to enter Professor", :style => "", :class => ""}
     = f.input :profquality, :as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5, :class => "special"}
     = f.input :hpweek, :as => :hidden, :min => 0, :max => 40, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5,:class => "special"}      

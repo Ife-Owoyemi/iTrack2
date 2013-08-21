@@ -18,6 +18,8 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
+      @aps = @user.aps.all
+      @transfers = @user.transfers.all
       @achievementtypes = @user.userachievementtypes.all
       @institution = Institution.where(:name => "Rice University")  
       @awards = @user.awards.all
@@ -29,6 +31,8 @@ class UsersController < ApplicationController
       @user = current_user
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
+      @aps = @user.aps.all
+      @transfers = @user.transfers.all
       @achievementtypes = @user.userachievementtypes.all
       @institution = Institution.where(:name => "Rice University")
       @awards = @user.awards.all

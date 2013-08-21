@@ -12,9 +12,10 @@
             - @iaf = 0
             .accordion-body.collapse{:id => "collapsef#{@iag}#{@iah}"}
               -@iag += 1
+              -@inst = "Rice"
               .accordion-inner
                 #accordian2.accordion
                   %h5 Courses
                   = f.semantic_fields_for :usercourses do |course|
-                    = render 'usercourse_fields', :f => course, :@iaf => @iaf, :@iag => @iag, :@iah => @iah
+                    = render 'usercourse_fields', :f => course, :@iaf => @iaf, :@iag => @iag, :@iah => @iah, :@inst => @inst
                   = link_to_add_association "add course", f, :usercourses, :class => "btn"

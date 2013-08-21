@@ -1,0 +1,10 @@
+.nested-fields
+  = f.inputs  do
+    %h3 AP Courses
+    = link_to_remove_association "remove ap courses", f, :class => "btn"
+    #semester
+      #accordian3.accordion
+        = f.semantic_fields_for :usercourses do |course|
+          = render 'usercourse_fields1', :f => course
+        = link_to_add_association "add course", f, :usercourses, :class => "btn"
+        %hr

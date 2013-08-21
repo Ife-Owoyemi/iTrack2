@@ -7,6 +7,17 @@
           %li= msg
   
   = f.inputs :college do
+    #ap
+      =f.semantic_fields_for :aps do |ap|
+        = render 'ap_fields', :f => ap
+    .links
+      = link_to_add_association 'add ap courses', f, :aps, :class => "btn"
+    #tranfer
+      =f.semantic_fields_for :transfers do |transfer|
+        = render 'transfer_fields', :f => transfer
+    .links
+      = link_to_add_association 'add transfer courses', f, :transfers, :class => "btn"
+
     #year
       - @iah = 0
       = f.semantic_fields_for :years do |year|

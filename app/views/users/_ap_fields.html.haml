@@ -1,0 +1,16 @@
+.nested-fields
+  = f.inputs do
+    .accordio-group
+      .accordion-heading
+        %a.accordion-toggle{"data-parent" => "#apaccordion", "data-toggle" => "collapse", :href => "#apcollapse"}
+          %h3 AP Courses
+          = link_to_remove_association "remove ap courses", f, :class => "btn"
+          #ap
+            .accordion-body.collapse{:id => "apcollapse"}
+              .accordion-inner
+                #apaccordian.accordion
+                  -@inst = "AP"
+                  = f.semantic_fields_for :usercourses do |course|
+                    = render 'usercourse_fields', :f => course
+                  = link_to_add_association "add course", f, :usercourses, :class => "btn"
+                  %hr
