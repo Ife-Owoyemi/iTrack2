@@ -133,6 +133,8 @@ Dir::foreach('db/institutions/rice'){|achievementtype|
     }
   end
 }
+
+
 count1 = 0
 dI = 0
 dII = 0
@@ -198,8 +200,8 @@ Dir::foreach('db/course_catalog_rice'){|field|
 }
 
 
-
 =begin
+
 count1 = 7
 Dir::foreach('db/institutions/users'){|username|
   count1 += 1
