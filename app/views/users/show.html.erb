@@ -30,7 +30,7 @@
   <% end %>
   <% i += 1 %>
 <% end %>
-<%= @ucatalog %>
+
 <% cuser_courses = Array.new %>
 <% current_user.years.all.each do |year| %>
   <% year.semesters.all.each do |semester| %>
@@ -700,7 +700,8 @@
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
-                                         data-content=                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+                                         data-content=                                         
+                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
 
                                          <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
 

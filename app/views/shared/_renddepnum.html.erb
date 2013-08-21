@@ -70,6 +70,7 @@
                   </div>
                 <% end %>
               </li></ul>   
+              Courses Counted:
               <% if taken.has_key?(dep.department) %>
                 <% for num in gg %>
                   <% taken[dep.department].each_key do |number| %>
@@ -78,6 +79,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_m_1 += 1 %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
@@ -92,6 +94,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_2 += 1 %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
@@ -106,6 +109,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_3 += 1 %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
@@ -185,7 +189,7 @@
                   </div>
                 <% end %>
               </li></ul>
-              
+              Courses counted: 
               <% if taken.has_key?(dep.department) %>
                 <% for num in gg %>
                   <% taken[dep.department].each_key do |number| %>
@@ -194,6 +198,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_m_1 += taken[dep.department][number] %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
@@ -208,6 +213,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_2 += taking[dep.department][number] %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
@@ -222,6 +228,7 @@
                         <% if number.to_i >= num.min and number.to_i <= num.max %>
                           <% @used_courses << dep.department + " " + number.to_s %>
                           <% @dep_c_3 += wtake[dep.department][number] %>
+                          <%= dep.department + " " + number.to_s %>, 
                         <% end %>
                       <% end %>
                     <% end %>
