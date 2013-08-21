@@ -487,7 +487,7 @@
                       </td>
                     </div>
                   </tr>
-                  <% if course.credits != 0 or course.credits != nil %>
+                  <% if course.credits != 0 and course.credits != nil %>
                     <% @aphours += course.credits %>
                   <% end %>
                   <% @apcount += 1 %>
@@ -604,7 +604,7 @@
                       </td>
                     </div>
                   </tr>
-                  <% if course.credits != 0 or course.credits != nil %>
+                  <% if course.credits != 0 and course.credits != nil %>
                     <% transferhours += course.credits %>
                   <% end %>
                 <% end %>
