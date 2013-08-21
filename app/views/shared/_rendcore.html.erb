@@ -17,8 +17,10 @@
 
           <ul><li>
           <% for course in e %>
+
             <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
-              <%= course.department + " " + course.num.to_s %>
+            <!-- link to call ajax for usercourse creation modal -->
+            <%= render "usercourseModalCreateLinkPlain" :locals => {:course => course} %>
               <% count += 1 %>
               <% coun += 1 %>
               <% if coun != e.length %>
@@ -26,7 +28,8 @@
               <% end %>
             <% else %>
               <div style = "text-decoration: line-through;display:inline-block;" >
-                <%= course.department + " " + course.num.to_s %>
+                <!-- link to call ajax for usercourse creation modal -->
+            <%= render "usercourseModalCreateLinkPlain" :locals => {:course => course} %>
                 <% coun += 1 %>
                 <% if coun != e.length %>
                 ,

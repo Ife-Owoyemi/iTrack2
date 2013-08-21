@@ -1,0 +1,8 @@
+<!-- Ife code here for rendering course dialog-->
+<script type="text/javascript">
+
+</script>
+<!-- end Ife code here for rendering course dialog-->
+
+<% @link = course.department + " " + course.num.to_s %>
+<%= link_to @link, :url=> {:controller => "usercourse", :action => "createCourseModalJson", :institution => course.corereq.specialty.achievementname.college.achievementtype.institution.name, :department => course.department, :num =>course.num}, id => course.department + course.num.to_s + "link" %> <!-- link id to open modal is {department}{num}link -->

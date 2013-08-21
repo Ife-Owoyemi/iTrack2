@@ -19,6 +19,19 @@ class UsercoursesController < ApplicationController
 		end
 	end
 
+	def createCourseModalJson
+		@institution = params[:institution]
+		@department = params[:department]
+		@num = params[:num]
+		render :json =>{
+			:html => render_to_string({
+				:partial => "usercourseModal",
+				:local => {:institution => @institution, :department => @department, :num => @num}
+
+				})
+		}
+	end
+
 	def update
 		@usercourse = Usercourse.find(params[:id])
 		if (@usercourse.update_attributes!(params[:usercourse]))
