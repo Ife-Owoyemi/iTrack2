@@ -26,7 +26,7 @@ class UsercoursesController < ApplicationController
 		render :json =>{
 			:html => render_to_string({
 				:partial => "usercourseModal",
-				:local => {:institution => @institution, :department => @department, :num => @num}
+				:locals => {:institution => @institution, :department => @department, :num => @num}
 
 				})
 		}

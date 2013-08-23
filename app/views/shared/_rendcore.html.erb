@@ -20,7 +20,7 @@
 
             <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
             <!-- link to call ajax for usercourse creation modal -->
-            <%= render "usercourseModalCreateLinkPlain" :locals => {:course => course} %>
+            <%= render "usercourses/usercourseModalCreateLink", :course => course %>
               <% count += 1 %>
               <% coun += 1 %>
               <% if coun != e.length %>
@@ -29,7 +29,7 @@
             <% else %>
               <div style = "text-decoration: line-through;display:inline-block;" >
                 <!-- link to call ajax for usercourse creation modal -->
-            <%= render "usercourseModalCreateLinkPlain" :locals => {:course => course} %>
+            <%= render "usercourses/usercourseModalCreateLink", :course => course %>
                 <% coun += 1 %>
                 <% if coun != e.length %>
                 ,

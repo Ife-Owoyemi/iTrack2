@@ -1,5 +1,5 @@
 class Achievementtype < ActiveRecord::Base
-  belongs_to :instituition
+  belongs_to :institution
   attr_accessible :institution_id, :achievementtype,  :colleges_attributes
   has_many :colleges, dependent: :destroy
 

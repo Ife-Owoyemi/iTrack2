@@ -1,3 +1,18 @@
+<!-- Ife code here for rendering course dialog-->
+<script type="text/javascript">
+  $.ajax("/createCourseModalJson",
+    {params: params},
+    function(data){
+      //$('#myModal').modal('show');
+      alert("Something is happening!");
+      //$(data.html).insertAfter("body");
+      //$(data.html).insertAfter(".BACourseModalLink:first")
+    });
+</script>
+<!-- end Ife code here for rendering course dialog-->
+
+
+
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
