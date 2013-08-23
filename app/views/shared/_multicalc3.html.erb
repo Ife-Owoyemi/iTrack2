@@ -41,10 +41,12 @@
   <% @op_c_3 += @op_c_big_3 %>
 <% end %>
 
+<% @specialtyHash[:op][opreq.opreqname] = Hash.new %>
+
 <% @totalc += @op_add  %>
-<% @specialtyHash[:op][opReq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s %>
+<% @specialtyHash[:op][opreq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s %>
 <% if @op_c == @totalc %>
-  <% @specialtyHash[:op][opReq.opreqname][:complete] = true %>
+  <% @specialtyHash[:op][opreq.opreqname][:complete] = true %>
 <% else %>
-  <% @specialtyHash[:op][opReq.opreqname][:complete] = false %>
+  <% @specialtyHash[:op][opreq.opreqname][:complete] = false %>
 <% end %>

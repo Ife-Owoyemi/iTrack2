@@ -8,6 +8,7 @@
 <% @core_c_1 = 0 %>
 <% @core_c_2 = 0 %>
 <% @core_c_3 = 0 %>
+<% @specialtyHash = Hash.new %>
 <% @specialtyHash[:core] = Hash.new %>
 <%= render "shared/corecalc", :@specialtyHash => @specialtyHash, :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
 <%# ------------------------------------------------------%>
