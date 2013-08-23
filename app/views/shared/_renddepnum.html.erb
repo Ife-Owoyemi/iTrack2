@@ -12,6 +12,12 @@
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
           <%= depnumcalc.depnumreqname %>
+          
+              <% if @specialtyHash[:depnum][depNumReq.depnumreqname][:complete]  %>
+                Completes
+              <% else %>
+                <%= @specialtyHash[:depnum][depNumReq.depnumreqname][:progress] %>
+              <% end %>
         </a>
 
       </div>
