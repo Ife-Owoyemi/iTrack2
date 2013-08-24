@@ -23,13 +23,9 @@ class UsercoursesController < ApplicationController
 		@institution = params[:institution]
 		@department = params[:department]
 		@num = params[:num]
-		render :json =>{
-			:html => render_to_string({
-				:partial => "usercourseModal",
-				:locals => {:institution => @institution, :department => @department, :num => @num}
-
-				})
-		}
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def createFromModal

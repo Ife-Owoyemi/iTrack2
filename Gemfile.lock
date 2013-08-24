@@ -191,6 +191,7 @@ DEPENDENCIES
   jquery-rails (= 2.0.2)
   nested_form
   newrelic_rpm
+  pg
   rails (= 3.2.13)
   rake (= 10.1.0)
   sass-rails (~> 3.2.3)
