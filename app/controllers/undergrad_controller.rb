@@ -28,7 +28,7 @@ class UndergradController < ApplicationController
 
   def majorsbas
     @years = current_user.years.all
-    @institution = Institution.where(:name => "Rice University")
+    @institution = Institution.find(:first, :conditions => ["name=?", 'Rice University'])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|
