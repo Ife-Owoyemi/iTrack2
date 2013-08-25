@@ -1,3 +1,5 @@
+
+
 <% taken = Hash.new %>
 <% taking = Hash.new %>
 <% wtake = Hash.new %>
@@ -10,19 +12,40 @@
   <%= render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
   <ul class="nav nav-tabs">
     <% i = 0 %>
-    <% b = @majorsba.colleges.all %>
+    <% b = @majorsba.colleges.all %>   
     <% for college in b %> 
       <li><a href="#<%= i %>" data-toggle="tab"><%= college.college %></a></li>
       <% i += 1 %>
     <% end %>
   </ul>
+
+
+
+
+
+
   <div class="tab-content">
     <% i = 0 %>
-    <% for college in b %>
-      <%= render "shared/calculation", :college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray %>
+    <%# for college in b %>
+      <%= render "shared/calculation", :college => b[0], :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray %>
       <% i += 1 %>
-    <% end %>
+    <%# end %>
   </div>
+
+<!-- Ife code here for rendering course dialog-->
+<script type="text/javascript">
+  //$(".BACourseModalLink").on("click", function(){ 
+  /*$.get("/createCourseModalJson",
+    //{params: params},
+    function(data){
+      $('#myModal').modal('show');
+      alert("Something is happening!");
+      $(data.html).insertAfter(".BACourseModalLink:first")
+    });*/
+//});
+</script>
+<!-- end Ife code here for rendering course dialog-->
+
 <% else %>
   <%= render 'shared/signup' %>
 <% end %> 

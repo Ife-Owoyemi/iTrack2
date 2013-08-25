@@ -789,6 +789,7 @@
                           <% end %>
                           </table>
 
+
                           <% if aphours != 0 %>
                             <p><b>AP Hours: </b><%= aphours %></p>
                           <% end %>
@@ -800,6 +801,7 @@
                           <% end %>
                           
                           <% if current_user?(year.user) and sgpah != 0 %>
+
                             <% finalsgpa = (sgpa.to_f / (sgpah)).to_s[0..4] %>
                             <p><b>Semester GPA: </b><%= finalsgpa %></p>
                           <% end %>

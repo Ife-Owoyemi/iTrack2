@@ -16,10 +16,12 @@ class UndergradController < ApplicationController
   end
 
   def majorsba
-    @years = current_user.years.all
+    #@years = current_user.years.all
+    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id], :include => [ {:semesters => :usercourses}, :user ])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
-    @institution = Institution.where(:name => "Rice University")
+    #@institution = Institution.where(:name => "Rice University")    
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|
@@ -32,9 +34,10 @@ class UndergradController < ApplicationController
 
   def majorsbas
     @years = current_user.years.all
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
-    @institution = Institution.where(:name => "Rice University")
+    #@institution = Institution.where(:name => "Rice University")
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|

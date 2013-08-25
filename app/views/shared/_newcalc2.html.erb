@@ -9,6 +9,7 @@
 <% @core_c_3 = 0 %>
 <% @specialtyHash = Hash.new %>
 <% @specialtyHash[:core] = Hash.new %>
+
 <% @specialtyHash[:op] = Hash.new %>
 <% @specialtyHash[:depnum] = Hash.new %>
 <%= render "shared/corecalc", :@specialtyHash => @specialtyHash,  :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
@@ -24,7 +25,6 @@
 <%= render "shared/groupcalc1", :f => ff, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses %>
 <%# ------------------------------------------------------%>
 <% fg = specialty.depnumreqs.all %>
-
 <%= render "shared/depnumcalc1", :@specialtyHash => @specialtyHash, :fg => fg, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses %>
 <%# ------------------------------------------------------%>
 <% need = 0 %>

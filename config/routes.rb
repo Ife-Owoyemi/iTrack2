@@ -29,6 +29,10 @@ ISwitched1::Application.routes.draw do
   match '/majorsbs', :to => 'undergrad#majorsbs'
   match '/minors', :to => 'undergrad#minors' 
   match '/premed', :to => 'gradprep#premed'
+
+  match '/createCourseModalJson', :to => 'usercourses#createCourseModalJson'
+  match '/createFromModal', :to => 'usercourses#createFromModal'
+
   resources :users do
     member do
       get :following, :followers
