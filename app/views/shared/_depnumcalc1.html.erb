@@ -1,36 +1,42 @@
-<% @dep_c_m_1 = 0 %>
-<% @dep_c_m_2 = 0 %>
-<% @dep_c_m_3 = 0 %>
-<% @dep_c_1 = 0 %>
-<% @dep_c_2 = 0 %>
-<% @dep_c_3 = 0 %>
-<% @depnumgoal = 0 %>
+
 <% for depnumcalc in fg %>
+	<% @dep_c_m_1 = 0 %>
+	<% @dep_c_m_2 = 0 %>
+	<% @dep_c_m_3 = 0 %>
+	<% @dep_c_1 = 0 %>
+	<% @dep_c_2 = 0 %>
+	<% @dep_c_3 = 0 %>
+	<% @depnumgoal = 0 %>
+	<% @depnumusedcourses = Array.new %>
+
   	<% g = depnumcalc.deps.all %>
   	<% if depnumcalc.doublecount == "N" %>
 	  <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
 	    <% for dep in g %>
 
 	      <% exceps = dep.cexceptions.all %>
-	      <% excepsarray = Array.new %>
+	      <% @excepsarray = Array.new %>
 	      <% for excep in exceps %>
-	        <% excepsarray << excep.department + excep.num.to_s %>
+	        <% @excepsarray << excep.department + excep.num.to_s %>
 	      <% end %>
 
 	      <% clists = dep.clists.all %>
-	      <% clistsarray = Array.new %>
+	      <% @clistsarray = Array.new %>
 	      <% for clist in clists %>
-	        <% clistsarray << clist.department + clist.num.to_s %>
+	        <% @clistsarray << clist.department + clist.num.to_s %>
 	      <% end %>
 
 	      <% gg = dep.bounds.all %>
 	      <% if taken.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taken[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s) %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s) %>
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_1 += 1 %>
+	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -39,11 +45,14 @@
 	      <% end %>
 	      <% if taking.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taking[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_2 += 1 %>
+	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -52,11 +61,14 @@
 	      <% end %>
 	      <% if wtake.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% wtake[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_3 += 1 %>
+	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -88,24 +100,27 @@
 	    <% for dep in g %>
 	    	<%# duplicate %>
 	      <% exceps = dep.cexceptions.all %>
-	      <% excepsarray = Array.new %>
+	      <% @excepsarray = Array.new %>
 	      <% for excep in exceps %>
-	        <% excepsarray << excep.department + excep.num.to_s %>
+	        <% @excepsarray << excep.department + excep.num.to_s %>
 	      <% end %>
 	      <%# duplicate %>
 	      <% clists = dep.clists.all %>
-	      <% clistsarray = Array.new %>
+	      <% @clistsarray = Array.new %>
 	      <% for clist in clists %>
-	        <% clistsarray << clist.department + clist.num.to_s %>
+	        <% @clistsarray << clist.department + clist.num.to_s %>
 	      <% end %>
 
 	      <% gg = dep.bounds.all %>
 	      <% if taken.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taken[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -113,10 +128,13 @@
 	      <% end %>
 	      <% if taking.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taking[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += taking[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -124,10 +142,13 @@
 	      <% end %>
 	      <% if wtake.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% wtake[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += wtake[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -160,24 +181,27 @@
 	    <% for dep in g %>
 
 	      <% exceps = dep.cexceptions.all %>
-	      <% excepsarray = Array.new %>
+	      <% @excepsarray = Array.new %>
 	      <% for excep in exceps %>
-	        <% excepsarray << excep.department + excep.num.to_s %>
+	        <% @excepsarray << excep.department + excep.num.to_s %>
 	      <% end %>
 
 	      <% clists = dep.clists.all %>
-	      <% clistsarray = Array.new %>
+	      <% @clistsarray = Array.new %>
 	      <% for clist in clists %>
-	        <% clistsarray << clist.department + clist.num.to_s %>
+	        <% @clistsarray << clist.department + clist.num.to_s %>
 	      <% end %>
 
 	      <% gg = dep.bounds.all %>
 	      <% if taken.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taken[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s) %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s) %>
 	                <% @dep_c_m_1 += 1 %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -185,10 +209,13 @@
 	      <% end %>
 	      <% if taking.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taking[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += 1 %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -196,10 +223,13 @@
 	      <% end %>
 	      <% if wtake.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% wtake[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += 1 %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -230,24 +260,27 @@
 	    <% for dep in g %>
 
 	      <% exceps = dep.cexceptions.all %>
-	      <% excepsarray = Array.new %>
+	      <% @excepsarray = Array.new %>
 	      <% for excep in exceps %>
-	        <% excepsarray << excep.department + excep.num.to_s %>
+	        <% @excepsarray << excep.department + excep.num.to_s %>
 	      <% end %>
 
 	      <% clists = dep.clists.all %>
-	      <% clistsarray = Array.new %>
+	      <% @clistsarray = Array.new %>
 	      <% for clist in clists %>
-	        <% clistsarray << clist.department + clist.num.to_s %>
+	        <% @clistsarray << clist.department + clist.num.to_s %>
 	      <% end %>
 
 	      <% gg = dep.bounds.all %>
 	      <% if taken.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taken[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -255,10 +288,13 @@
 	      <% end %>
 	      <% if taking.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% taking[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += taking[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -266,10 +302,13 @@
 	      <% end %>
 	      <% if wtake.has_key?(dep.department) %>
 	        <% for num in gg %>
+	          <% min = num.min.to_f %>
+	          <% max = num.max.to_f %>
 	          <% wtake[dep.department].each_key do |number| %>
-	            <% if !excepsarray.include?(dep.department + number.to_s) %>
-	              <% if (number.to_i >= num.min and number.to_i <= num.max) or !clistsarray.include?(dep.department + number.to_s)  %>
+	            <% if !@excepsarray.include?(dep.department + number.to_s) %>
+	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += wtake[dep.department][number] %>
+	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -300,6 +339,9 @@
 	<% end %>
 	<% @specialtyHash[:depnum][depnumcalc.depnumreqname] = Hash.new %>
    	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] = (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3).to_s + "/" + depnumcalc.cgoal.to_s %>
+   	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:clist] = @clistsarray %>
+   	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:exceps] = @excepsarray %>
+   	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses] = @depnumusedcourses %>
    	<% if depnumcalc.cgoal == (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3)  %>
    		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = true %>
    	<% else %>
