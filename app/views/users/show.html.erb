@@ -4,12 +4,8 @@
 <% @di = 0 %>
 <% @dii = 0 %>
 <% @diii = 0 %>
-<%# @ucatalog = Hash.new %>
-<% @catalog.each do |catalog| %>
 
-<%# @ucatalog["di"] = Hash.new %>
-<%# @ucatalog["dii"] = Hash.new %>
-<%# @ucatalog["diii"] = Hash.new %>
+<% @catalog.each do |catalog| %>
 <% @colleges = catalog.coleges.all %>
 
   <% @colleges.each do |college| %>
@@ -129,7 +125,7 @@
 <% end %>
 
 <% @peep = "yes" %>
-<%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
+<%= render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
 
@@ -183,7 +179,7 @@
 
 
 <div class="row">
-	<aside class="span4">
+	<aside class="span3">
 		<section>
 			<h1><%= provide(:title, @user) %>
 				<%= @user.name %>
@@ -258,13 +254,7 @@
         </div>
       <% end %>
 
-
-
-
-
-      
-      
-      <h1>Internships <% if @user == current_user %><div 
+      <h1>Internships/Research <% if @user == current_user %><div 
         class="label popover-link" 
         data-content=
 
@@ -354,9 +344,12 @@
 
 <p id="notice"><%= notice %></p>
 
-  <aside class="span8">
+  <aside class="span9">
     <section>
       <h4>Tracks</h4>
+      <% @diArray = Array.new %>
+      <% @diiArray = Array.new %>
+      <% @diiiArray = Array.new %>
       <ul class="nav nav-tabs">
         <% i = 0 %>
         <% for achievementtype in @achievement %> 
@@ -385,19 +378,258 @@
           <% end %>
         <% end %>
       </div>
+      <% if current_user == @user %>
+        <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+      <% end %>
     </section>
     <section>
       <h4>Transcript</h4>
+
+      <!-- AP Courses  -->
+      <% if @aps != nil %>
+      <div class="accordion" id="apaccordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#apaccordion" href="#apcollapse">
+              <b>AP Courses</b>
+            </a>
+          </div>
+          <div id="apcollapse" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <% @aphours = 0 %>
+              <% @apcount = 0 %>
+              <% @aps.each do |ap| %>
+                <% ap.usercourses.all.each do |course| %>
+                  <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @di += course.credits %>
+                    <% @diArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-warning" %>
+                  <% end %>
+                  <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @dii += course.credits %>
+                    <% @diiArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-info"%>
+                  <% end %>
+                  <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @diii += course.credits %>
+                    <% @diiiArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-success"%>
+                  <% end %>
+
+                  <tr>
+                    <div style = "color: green;" >
+                      <td>
+                        <% if current_user?(ap.user) %>
+                            <h4 
+                               class="label <%= @color %> popover-link" 
+                               data-original-title="Course Overview"
+                               data-content=                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+                               <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+                               <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :type => :input, :nil => 'Click here to add number of essays',  :inner_class => 'numField' %><br/>
+
+                               <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+                               <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :input %><br/>
+
+
+                               <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
+
+                               <font color = ""><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+
+                            </h4>​
+                          
+                        <% else %>
+                          <% strike = "" %>
+                          <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                            <% strike = "*" %>
+                          <% end %>
+
+                          <h4
+                             class="label  <%= @color %> popover-link"
+                             data-content=
+
+                             "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+                               <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+                               <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+                               <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :select, :collection => [ ['0/100','0/100'], ['25/75','25/75'], ['50/50','50/50'], ['75/25','75/25'], ['100/0','100/0']  ] %><br/>
+
+
+                               <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>"
+
+                             data-original-title="Course Overview"><font color=""><%= course.department%> <%= course.num.to_s %></font>
+                          </h4>​
+                        <% end %>
+                      </td>
+                    </div>
+                  </tr>
+                  <% if course.credits != 0 and course.credits != nil %>
+                    <% @aphours += course.credits %>
+                  <% end %>
+                  <% @apcount += 1 %>
+                <% end %>
+                
+              <% end %>
+              <% if @aphours != 0 %>
+                <p><b>AP Courses: </b><%= @apcount %></p>
+                <p><b>AP Hours: </b><%= @aphours %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <% end %>
+      <!-- Transfer Courses -->
+      <% if @transfers == nil %>
+      <div class="accordion" id="transferaccordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#transferaccordion" href="#transfercollapse">
+              <b>Transfer Courses</b>
+            </a>
+          </div>
+          <div id="transfercollapse" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <% transferhours = 0 %>
+              <% @transfers.each do |transfer| %>
+                <% transfer.each do |course| %>
+                  <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @di += course.credits %>
+                    <% @diArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-warning" %>
+                  <% end %>
+                  <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @dii += course.credits %>
+                    <% @diiArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-info"%>
+                  <% end %>
+                  <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+                    <% @diii += course.credits %>
+                    <% @diiiArray << course.department + " " + course.num.to_s %>
+                    <% @color = "label-success"%>
+                  <% end %>
+                  <tr>
+                    <div style = "color: green;" >
+                      <td>
+                        <% if current_user?(transfer.user) %>
+                            <h4 
+                               class="label <%= @color %> popover-link" 
+                               data-original-title="Course Overview"
+                               data-content=                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+                               <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+                               <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :type => :input, :nil => 'Click here to add number of essays',  :inner_class => 'numField' %><br/>
+
+                               <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+                               <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :input %><br/>
+
+
+                               <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
+
+                               <font color = ""><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+
+                            </h4>​
+                          
+                        <% else %>
+                          <% strike = "" %>
+                          <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                            <% strike = "*" %>
+                          <% end %>
+
+                          <h4
+                             class="label  <%= @color %> popover-link"
+                             data-content=
+
+                             "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+                               <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+                               <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+                               <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+                               <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :select, :collection => [ ['0/100','0/100'], ['25/75','25/75'], ['50/50','50/50'], ['75/25','75/25'], ['100/0','100/0']  ] %><br/>
+
+
+                               <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+
+                               <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>"
+
+                             data-original-title="Course Overview"><font color=""><%= course.department%> <%= course.num.to_s %></font>
+                          </h4>​
+                        <% end %>
+                      </td>
+                    </div>
+                  </tr>
+                  <% if course.credits != 0 and course.credits != nil %>
+                    <% transferhours += course.credits %>
+                  <% end %>
+                <% end %>
+              <% end %>
+              <% if transferhours != 0 %>
+                <p><b>Transfer Hours: </b><%= transferhours %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+
+
+      <!-- Rice Courses -->
+
+
       <div class="accordion" id="accordion">
         <% ia = 0 %>
         <% @ricehours = 0 %>
 
         <% @fwis = 0 %>
-        <% @diArray = Array.new %>
-        <% @diiArray = Array.new %>
-        <% @diiiArray = Array.new %>
+        
         <% @aphours = 0 %>
-        <% fullSemesterAtInstitution = 0 %>
+        <% @fullSemesterAtInstitution = 0 %>
         <% gpah = 0 %>
         <% @lpap = 0 %>
         <% transhours = 0 %>
@@ -428,38 +660,37 @@
                         <div class="accordion-inner">
                           <table border="0" padding="1">
                           <% @courses = semester.usercourses.all %>
-                          <% @courses.each do |course| %>
-                            <% @color = "label-default"%>
-                            <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @di += course.credits %>
-                              <% @diArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-warning" %>
-                            <% end %>
-                            <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @dii += course.credits %>
-                              <% @diiArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-info"%>
-                            <% end %>
-                            <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
-                              <% @diii += course.credits %>
-                              <% @diiiArray << course.department + " " + course.num.to_s %>
-                              <% @color = "label-success"%>
-                            <% end %>
-
-
-                            <% if course.institution == "Rice" %>
-                              <% color = "" %>
-                              <% if course.department == "LPAP" %>
-                                <% @lpap += 1 %>
+                          
+                            <% @courses.each do |course| %>
+                            <% if course.credits != nil and course.credits != 0 %>
+                              <% @color = "label-default"%>
+                              <% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @di += course.credits %>
+                                <% @diArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-warning" %>
                               <% end %>
-                              <% @ricehours += course.credits.to_i %>
-                            <% elsif course.institution == "AP" %>
-                              <% color = "green" %>
-                              <% @aphours += course.credits.to_i %>
-                            <% else %>
-                              <% color = "gray" %>
-                              <% transhours += course.credits.to_i %>
+                              <% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @dii += course.credits %>
+                                <% @diiArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-info"%>
+                              <% end %>
+                              <% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+                                <% @diii += course.credits %>
+                                <% @diiiArray << course.department + " " + course.num.to_s %>
+                                <% @color = "label-success"%>
+                              <% end %>
+                              <% if course.institution == "Rice" %>
+                                <% color = "" %>
+                                <% if course.department == "LPAP" %>
+                                  <% @lpap += 1 %>
+                                <% end %>
+                                <% @ricehours += course.credits.to_i %>
+                              <% end %>
+
                             <% end %>
+
+
+                            
                             <tr>
                               <div style = "color: green;" >
                                 <td>
@@ -474,7 +705,8 @@
                                       <h4 
                                          class="label <%= @color %> popover-link" 
                                          data-original-title="Course Overview"
-                                         data-content=                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+                                         data-content=                                         
+                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
 
                                          <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
 
@@ -496,7 +728,7 @@
 
                                          <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
 
-                                         <font color = "<%= color %>"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+                                         <font color = "white"><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
                                       </h4>​
                                     
@@ -532,14 +764,14 @@
 
                                          <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>"
 
-                                       data-original-title="Course Overview"><font color="<%= color %>"><%= course.department%> <%= course.num.to_s %></font>
+                                       data-original-title="Course Overview"><font color="white"><%= course.department%> <%= course.num.to_s %></font>
                                     </h4>​
                                   <% end %>
                                 </td>
                                 <% if course.institution == "Rice" %>
+
                                   <% if course.credits != nil %>
                                     <% hours += course.credits %>
-                                    
                                   <% end %>
                                   
                                   <% if gpascore.include?(course.grade) %>
@@ -556,15 +788,24 @@
                             </tr>
                           <% end %>
                           </table>
-                          
-                          <p><b>Semester Hours: </b><%= hours %></p>
-                          <% if hours >= 12 %>
-                            <% fullSemesterAtInstitution += 1 %>
+
+
+                          <% if aphours != 0 %>
+                            <p><b>AP Hours: </b><%= aphours %></p>
                           <% end %>
-                          <% if current_user?(@user) and sgpah != 0 %>
+
+                          <p><b>Semester Hours: </b><%= hours %></p>
+                          
+                          <% if hours >= 12 %>
+                            <% @fullSemesterAtInstitution += 1 %>
+                          <% end %>
+                          
+                          <% if current_user?(year.user) and sgpah != 0 %>
+
                             <% finalsgpa = (sgpa.to_f / (sgpah)).to_s[0..4] %>
                             <p><b>Semester GPA: </b><%= finalsgpa %></p>
                           <% end %>
+                        
                         </div>
                       </div>
                     </div>
@@ -656,10 +897,10 @@
           <div id="collapseOne" class="accordion-body collapse">
             <div class="accordion-inner">
               <p>Semesters Completed: 
-                <% if fullSemesterAtInstitution >= 4 %>
-                  <font color = "green"><%= fullSemesterAtInstitution.to_s %>/4 Completed</p></font>
+                <% if @fullSemesterAtInstitution >= 4 %>
+                  <font color = "green"><%= @fullSemesterAtInstitution.to_s %>/4 Completed</p></font>
                 <% else %>
-                  <%= fullSemesterAtInstitution.to_s %>/4</p>
+                  <%= @fullSemesterAtInstitution.to_s %>/4</p>
                 <% end %>
               <p>Hours at Rice Completed: 
                 <% if @ricehours >= 60 %>
@@ -803,7 +1044,7 @@
         </div>
       </div>
       <% if @user == current_user %>
-          <%= link_to 'Edit User', users_edituser_path(@user) %> | <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
+         <%= link_to 'Edit Transcipt', edit_user_path(@user) %> | <%= link_to 'Edit User', users_edituser_path(@user) %>                   
       <% end %>
       <%= link_to 'Back', users_path %>
     </section>

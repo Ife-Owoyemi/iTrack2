@@ -1,7 +1,8 @@
-
+<% option.cgoal.to_i %>
 <% if option.cgoal.to_i != 0 %>
-  <% if (@op_c_m * 100)/ option.cgoal.to_i >= @op_c_biggest %> 
-    <% if option.cgoal.to_i < @op_c_m %>
+
+  <% if ((@op_c_m * 100)/ option.cgoal.to_i) >= @op_c_biggest %> 
+    <% if option.cgoal.to_i <= @op_c_m %>
       <% @op_c_big = option.cgoal.to_i %>
       <% if option.cgoal.to_i < @op_c_m_1 %>
         <% @op_c_big_1 = option.cgoal.to_i %>
@@ -27,7 +28,7 @@
   <% end %>
 <% end %>
 
-<% @op_c += @op_c_big %>
+
 
 <% if @op_c_big_1 != nil %>
   <% @op_c_1 += @op_c_big_1 %>
@@ -41,12 +42,3 @@
   <% @op_c_3 += @op_c_big_3 %>
 <% end %>
 
-<% @specialtyHash[:op][opreq.opreqname] = Hash.new %>
-
-<% @totalc += @op_add  %>
-<% @specialtyHash[:op][opreq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s %>
-<% if @op_c == @totalc %>
-  <% @specialtyHash[:op][opreq.opreqname][:complete] = true %>
-<% else %>
-  <% @specialtyHash[:op][opreq.opreqname][:complete] = false %>
-<% end %>
