@@ -34,7 +34,7 @@ class UndergradController < ApplicationController
 
   def majorsbas
     @years = current_user.years.all
-    @institution = Institution.find(:first, :conditions => ["name=?", 'Rice University'])
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
     #@institution = Institution.where(:name => "Rice University")
