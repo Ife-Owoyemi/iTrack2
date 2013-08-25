@@ -125,7 +125,7 @@
 <% end %>
 
 <% @peep = "yes" %>
-<%= render :partial => "shared/coursesort", :locals => {:years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
+<%= render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
 

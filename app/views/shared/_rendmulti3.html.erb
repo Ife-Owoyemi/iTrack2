@@ -6,7 +6,7 @@
 
         <%= opreq.opreqname %>: 
         <% if @specialtyHash[:op][opreq.opreqname][:complete] %>
-          Complete
+          <font color="green">Complete</font>
         <% else %>
            <%= @specialtyHash[:op][opreq.opreqname][:progress] %>
         <% end %>

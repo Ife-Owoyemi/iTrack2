@@ -2,6 +2,8 @@ class UndergradController < ApplicationController
   respond_to :html, :json
   def minors
     @years = current_user.years.all
+    @aps = current_user.aps.all
+    @transfers = current_user.transfers.all
     @institution = Institution.where(:name => "Rice University")
     @institution.each do |type| 
       a = type.achievementtypes.all
@@ -15,6 +17,8 @@ class UndergradController < ApplicationController
 
   def majorsba
     @years = current_user.years.all
+    @aps = current_user.aps.all
+    @transfers = current_user.transfers.all
     @institution = Institution.where(:name => "Rice University")
     @institution.each do |type| 
       a = type.achievementtypes.all
@@ -28,6 +32,8 @@ class UndergradController < ApplicationController
 
   def majorsbas
     @years = current_user.years.all
+    @aps = current_user.aps.all
+    @transfers = current_user.transfers.all
     @institution = Institution.where(:name => "Rice University")
     @institution.each do |type| 
       a = type.achievementtypes.all
@@ -41,6 +47,8 @@ class UndergradController < ApplicationController
 
   def majorsbs
     @years = current_user.years.all
+    @aps = current_user.aps.all
+    @transfers = current_user.transfers.all
     @institution = Institution.where(:name => "Rice University")
     @institution.each do |type| 
       a = type.achievementtypes.all

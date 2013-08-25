@@ -7,7 +7,7 @@
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian1<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mm %>">
           <%= corereq.corereqname %> 
           <% if @specialtyHash[:core][corereq.corereqname] == corereq.cgoal.to_i %>
-              Complete 
+              <font color="green">Complete</font>
           <% else %>
               <%= @specialtyHash[:core][corereq.corereqname] %>/<%= corereq.cgoal.to_i %>
           <% end %>

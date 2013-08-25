@@ -7,13 +7,13 @@
 <% @depnumgoal = 0 %>
 <% mo = 0 %>
 <% for depnumcalc in fg %>
-  <div class="accordion span6 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
+  <div class="accordion span5 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
     <div class="accordion-group">
       <div class="accordion-heading">
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
           <%= depnumcalc.depnumreqname %> 
           <% if @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete]  %>
-            Complete
+            <font color="green">Complete</font>
           <% else %>
             <%= @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] %>
           <% end %>
