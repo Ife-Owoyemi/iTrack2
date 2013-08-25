@@ -8,6 +8,7 @@
     <% if taken.has_key?(course.department) %>
       <% if taken[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>
+
         <% @core_c_1 += 1 %>
         <% corereqcount += 1 %>
       <% end %>
