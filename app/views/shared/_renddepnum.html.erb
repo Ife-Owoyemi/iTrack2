@@ -22,7 +22,7 @@
       </div>
       <div id="collapse4<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
         <div class="accordion-inner" >
-          <%= @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses] %>
+          
           <% g = depnumcalc.deps.all %>
           <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
 
@@ -44,38 +44,47 @@
               .
               <h6>Exceptions</h6>
               <% exceps = dep.cexceptions.all %>
-              <% excepsarray = Array.new %>
-              <% coun = 0 %>
-              <ul><li>
-                <% for excep in exceps %>
-                  <div style = "display:inline-block;" >
-                    <% excepsarray << excep.department + excep.num.to_s %>
-                    <% coun += 1 %>
-                    <%= excep.department + " " + excep.num.to_s %>
-                    <% if coun != exceps.length %>
-                    ,
-                    <% end %>
-                  </div>
-                <% end %>
-              </li></ul> 
+              <% if exceps != [] %>
+                <% coun = 0 %>
+                <ul><li>
+                  <% for excep in exceps %>
+                    <div style = "display:inline-block;" >
+                      
+                      <% coun += 1 %>
+                      <%= excep.department + " " + excep.num.to_s %>
+                      <% if coun != exceps.length %>
+                      ,
+                      <% end %>
+                    </div>
+                  <% end %>
+                </li></ul>
+              <% else %>
+               No exceptions listed
+              <% end %>
 
               <h6>Other Options</h6>
               <% clists = dep.clists.all %>
-              <% clistsarray = Array.new %>
-              <% coun = 0 %>
-              <ul><li>
-                <% for clist in clists %>
-                  <div style = "display:inline-block;" >
-                    <% clistsarray << clist.department + clist.num.to_s %>
-                    <% coun += 1 %>
-                    <%= clist.department + " " + clist.num.to_s %>
-                    <% if coun != clists.length %>
-                    ,
-                    <% end %>
-                  </div>
-                <% end %>
-              </li></ul>   
-              Courses Counted:
+              <% if clists != [] %>
+                <% coun = 0 %>
+                <ul><li>
+                  <% for clist in clists %>
+                    <div style = "display:inline-block;" >
+                      
+                      <% coun += 1 %>
+                      <%= clist.department + " " + clist.num.to_s %>
+                      <% if coun != clists.length %>
+                      ,
+                      <% end %>
+                    </div>
+                  <% end %>
+                </li></ul>   
+              <% else %>
+                No Other Options listed<br/>
+              <% end %>
+              <b>Courses Counted: </b>
+              <% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
+                <%= course %>
+              <% end %>
             <% end %>
             <%#Used to be calcing algorithm here%>
           <% elsif depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
@@ -99,39 +108,47 @@
               .
               <h6>Exceptions</h6>
               <% exceps = dep.cexceptions.all %>
-              <% excepsarray = Array.new %>
-              <% coun = 0 %>
-              <ul><li>
-                <% for excep in exceps %>
-                  <div style = "display:inline-block;" >
-                    <% excepsarray << excep.department + excep.num.to_s %>
-                    <% coun += 1 %>
-                    <%= excep.department + " " + excep.num.to_s %>
-                    <% if coun != exceps.length %>
-                    ,
-                    <% end %>
-                  </div>
-                <% end %>
-              </li></ul>
+              <% if exceps != [] %>
+                <% coun = 0 %>
+                <ul><li>
+                  <% for excep in exceps %>
+                    <div style = "display:inline-block;" >
+                      
+                      <% coun += 1 %>
+                      <%= excep.department + " " + excep.num.to_s %>
+                      <% if coun != exceps.length %>
+                      ,
+                      <% end %>
+                    </div>
+                  <% end %>
+                </li></ul>
+              <% else %>
+               No exceptions listed
+              <% end %>  
 
               <h6>Other Options</h6>
               <% clists = dep.clists.all %>
-              <% clistsarray = Array.new %>
-              <% coun = 0 %>
-              <ul><li>
-                <% for clist in clists %>
-                  <div style = "display:inline-block;" >
-                    <% clistsarray << clist.department + clist.num.to_s %>
-                    <% coun += 1 %>
-                    <%= clist.department + " " + clist.num.to_s %>
-                    <% if coun != clists.length %>
-                    ,
-                    <% end %>
-                  </div>
-                <% end %>
-              </li></ul>
-              Courses counted: 
-              
+              <% if clists != [] %>
+                <% coun = 0 %>
+                <ul><li>
+                  <% for clist in clists %>
+                    <div style = "display:inline-block;" >
+                      
+                      <% coun += 1 %>
+                      <%= clist.department + " " + clist.num.to_s %>
+                      <% if coun != clists.length %>
+                      ,
+                      <% end %>
+                    </div>
+                  <% end %>
+                </li></ul>
+              <% else %>
+                No Other Options listed<br/>
+              <% end %>  
+              <b>Courses counted: </b> 
+              <% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
+                <%= course %>
+              <% end %>
             <% end %>
             <%#used to be an algorithm %>
           <% end %>

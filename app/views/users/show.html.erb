@@ -681,12 +681,12 @@
                               <% end %>
                               <% if course.institution == "Rice" %>
                                 <% color = "" %>
-                                <% if course.department == "LPAP" %>
-                                  <% @lpap += 1 %>
-                                <% end %>
+                                
                                 <% @ricehours += course.credits.to_i %>
                               <% end %>
-
+                              <% if course.department == "LPAP" %>
+                                <% @lpap += 1 %>
+                              <% end %>
                             <% end %>
 
 

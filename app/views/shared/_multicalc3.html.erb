@@ -4,15 +4,15 @@
   <% if ((@op_c_m * 100)/ option.cgoal.to_i) >= @op_c_biggest %> 
     <% if option.cgoal.to_i <= @op_c_m %>
       <% @op_c_big = option.cgoal.to_i %>
-      <% if option.cgoal.to_i < @op_c_m_1 %>
+      <% if option.cgoal.to_i <= @op_c_m_1 %>
         <% @op_c_big_1 = option.cgoal.to_i %>
         <% @op_c_big_2 = 0 %>
         <% @op_c_big_3 = 0 %>
-      <% elsif option.cgoal.to_i < @op_c_m_1 + @op_c_m_2 %>
+      <% elsif option.cgoal.to_i <= @op_c_m_1 + @op_c_m_2 %>
         <% @op_c_big_1 = @op_c_m_1 %>
         <% @op_c_big_2 = option.cgoal.to_i - @op_c_m_1 %>
         <% @op_c_big_3 = 0 %>
-      <% elsif option.cgoal.to_i < @op_c_m_1 + @op_c_m_2 + @op_c_m_3 %>
+      <% elsif option.cgoal.to_i <= @op_c_m_1 + @op_c_m_2 + @op_c_m_3 %>
         <% @op_c_big_1 = @op_c_m_1 %>
         <% @op_c_big_2 = @op_c_m_2 %>
         <% @op_c_big_3 = option.cgoal.to_i - @op_c_m_1 - @op_c_m_2 %>
@@ -30,15 +30,5 @@
 
 
 
-<% if @op_c_big_1 != nil %>
-  <% @op_c_1 += @op_c_big_1 %>
-<% end %>
 
-<% if @op_c_big_2 != nil %>
-  <% @op_c_2 += @op_c_big_2 %>
-<% end %>
-
-<% if @op_c_big_3 != nil %>
-  <% @op_c_3 += @op_c_big_3 %>
-<% end %>
 
