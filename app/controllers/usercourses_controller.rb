@@ -20,7 +20,7 @@ class UsercoursesController < ApplicationController
 	end
 
 	def createCourseModalJson
-		@institution = params[:institution].nickname
+		@institution = params[:institution].first
 		@department = params[:department]
 		@num = params[:num]
 		respond_to do |format|

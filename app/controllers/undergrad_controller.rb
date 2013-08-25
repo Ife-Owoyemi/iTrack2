@@ -14,8 +14,9 @@ class UndergradController < ApplicationController
   end
 
   def majorsba
-    @years = current_user.years.all
-    @institution = Institution.where(:name => "Rice University")
+    #@years = current_user.years.all
+    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id], :include => [ {:semesters => :usercourses}, :user ])
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => { :corereqs => :ccourses } }   } } } ])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|
