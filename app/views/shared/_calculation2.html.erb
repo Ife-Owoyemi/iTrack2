@@ -5,7 +5,7 @@
     <% b.each do |h| %>
       <% c = [h] %>                                              
       <% for achievementname in c %>
-        <div class="accordion span7 pull-left" id="accordian<%= i %>">      
+        <div class="accordion span8 pull-left" id="accordian<%= i %>">      
           <div class="accordion-group">
             <div class="accordion-heading">
               <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %>" href="#collapser<%= i %><%= k %>">
@@ -27,7 +27,8 @@
                   <% alpha.each do |beta| %>
                     <% ex = [beta] %>
                     <%# ------------------------------------------------------%>
-                    <% for specialty in ex %>                   
+                    <% for specialty in ex %>  
+
                       <%= render "shared/newcalc2", :taken => taken, :taking => taking, :wtake => wtake, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :specialty => specialty, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
                       <% m += 1 %>
                     <% end %>

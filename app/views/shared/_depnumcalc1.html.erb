@@ -298,4 +298,11 @@
 	    <% @totalc += depnumcalc.hgoal / 3 %>
 	  <% end %>
 	<% end %>
+	<% @specialtyHash[:depnum][depnumcalc.depnumreqname] = Hash.new %>
+   	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] = (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3).to_s + "/" + depnumcalc.cgoal.to_s %>
+   	<% if depnumcalc.cgoal == (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3)  %>
+   		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = true %>
+   	<% else %>
+  		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = false %>
+   	<% end %> 
 <% end %>
