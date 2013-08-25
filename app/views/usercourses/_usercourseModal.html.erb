@@ -1,3 +1,24 @@
+<style type="text/css">
+	
+	input {
+		width: 250px;
+	}
+	select {
+		width: 250px;
+		height: 40px;
+	}
+
+ 	.numField{
+		width: 50px;
+	}
+
+	.stringField{
+		width: 150px;
+	}
+
+
+</style>
+
 <div id="<%= institution %>-<%= department %>-<%= num %>" class="modal show fade">
 	
 	<div class="modal-header">
@@ -6,12 +27,43 @@
 	</div>
 
 	<div class="modal-body">
-		<%# form_for :usercourse, :url => {:controller => "usercourses", :action => "createFromModal", :institution => institution, :department => department, :num => num} do |f| %> <!-- variables passed from link that opens modal -->
+		<%= form_for :usercourse, :url => {:controller => "usercourses", :action => "createFromModal"}, :remote => true do |f| %> <!-- variables passed from link that opens modal -->
 
-		<%# f.label (:manual )%>
-		<%# f.text_field (:manual) %>
+		<%= f.label :year %>
+		<%= f.text_field :year, :class => "numField", :placeholder => "2013" %>
 
-		<%# end %>
+		<%= f.label :semester %>
+		<%= f.select :semester, :collection => ["Fall", "Spring", "Summer"] %>
+
+		<%= f.label :credits %>
+		<%= f.text_field :credits, :class => "numField" %>
+
+		<% @statuses = ["Taken", "Taking", "Will Take"] %>
+		<%= f.label :status %>
+		<%= f.select :status, :collection => @statuses, :placeholder => 'Taken' %>
+
+		<% @gradearray = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs"] %>
+		<%= f.label :grade %>
+		<%= f.select :grade, :collection => @gradearray , :placeholder => ' ' %>
+
+		<%= f.hidden_field :institution, :value => institution %>
+		<%= f.hidden_field :department, :value => department %>
+		<%= f.hidden_field :num, :value => num %>
+
+		<%= f.hidden_field :prof, :value => "Click to enter Professor" %>
+		<%= f.hidden_field :profquality, :value => 5 %>
+		<%= f.hidden_field :hpweek, :min => 0, :max => 10, :value => 5 %>
+		<%= f.hidden_field :follows, :min => 0, :max => 40, :value => "50/50" %>
+		<%= f.hidden_field :nopprojects, :min => 0, :max => 10, :value => 0 %>
+		<%= f.hidden_field :nogprojects, :min => 0, :max => 10, :value => 0 %>
+		<%= f.hidden_field :noessays, :min => 0, :max => 10, :value => 0 %>
+		<%= f.hidden_field :nomidterms, :min => 0, :max => 16, :value => 0 %>
+		<%= f.hidden_field :nofinals, :min => 0, :max => 1, :value => 0 %>
+		<%= f.hidden_field :suggest, :value => "Add tips, or location of useful outside resources to suceed in this class" %>
+
+		<% f.submit "Add Class to Transcript" %> 
+
+		<% end %>
 	</div>
 
 	<div class="modal-footer">

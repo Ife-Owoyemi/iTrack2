@@ -21,7 +21,7 @@ class UndergradController < ApplicationController
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
     #@institution = Institution.where(:name => "Rice University")    
-    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => { :corereqs => :ccourses } }   } } } ])
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|

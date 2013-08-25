@@ -1,8 +1,8 @@
 class UsercoursesController < ApplicationController
 
 	def  create
-		@user = current_user.id
-		@usercouse = Usercourse.new(params[:usercouse])
+		@user = current_user
+		@usercouse = Usercourse.new(params[:usercourse])
 		if (@usercouse.save)
 			flash[:success] = "New Course Added!"
 			respond_to do |format|
@@ -29,7 +29,20 @@ class UsercoursesController < ApplicationController
 	end
 
 	def createFromModal
-
+		@user = current_user
+		@usercouse = Usercourse.new(params[:usercourse])
+		if (@usercouse.save)
+			flash[:success] = "New Course Added!"
+			respond_to do |format| 
+				format.js 
+			end
+		else
+			@errors = @usercourse.errors.full_messages
+			flash[:alert] = @errors
+			respond_to do |format|
+				format.js {render :js => "alert('Check the form for errors and then submit form.')"}
+			end
+		end
 	end
 
 	def update
