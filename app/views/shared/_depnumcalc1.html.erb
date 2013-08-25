@@ -340,15 +340,22 @@
 	<% @specialtyHash[:depnum][depnumcalc.depnumreqname] = Hash.new %>
 	<% if depnumcalc.cgoal == nil or depnumcalc.cgoal == 0 %>
    		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] = (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3).to_s + "/" + depnumcalc.hgoal.to_s %>
+   		<% if depnumcalc.hgoal <= (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3)  %>
+	   		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = true %>
+	   	<% else %>
+	  		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = false %>
+	   	<% end %>
    	<% else %>
    		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] = (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3).to_s + "/" + depnumcalc.cgoal.to_s %>
+		<% if depnumcalc.cgoal <= (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3)  %>
+	   		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = true %>
+	   	<% else %>
+	  		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = false %>
+	   	<% end %>
+
    	<% end %>
    	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:clist] = @clistsarray %>
    	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:exceps] = @excepsarray %>
    	<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses] = @depnumusedcourses %>
-   	<% if depnumcalc.cgoal == (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3)  %>
-   		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = true %>
-   	<% else %>
-  		<% @specialtyHash[:depnum][depnumcalc.depnumreqname][:complete] = false %>
-   	<% end %> 
+   	 
 <% end %>
