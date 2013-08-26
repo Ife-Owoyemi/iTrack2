@@ -13,6 +13,7 @@
   <% @op_c_big_2 = 0 %>
   <% @op_c_big_3 = 0 %>
   <% @op_c_big = 0 %>
+  <% @tempusedcourses2 = [] %>
 
 
   <%# ------------------------------------------------------%>
@@ -22,11 +23,12 @@
     <% @op_c_m_2 = 0 %>
     <% @op_c_m_3 = 0 %>
     <% @op_c_m = 0 %>
+    <% @tempusedcourses = [] %>
     <% h = option.ocourses.all %>
     <%# ------------------------------------------------------%>
-    <%= render "shared/multicalc2", :h => h, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses, :@op_c_m => @op_c_m, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3 %> 
+    <%= render "shared/multicalc2", :@tempusedcourses => @tempusedcourses, :h => h, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses, :@op_c_m => @op_c_m, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3 %> 
     <%# ------------------------------------------------------%>
-    <%= render "shared/multicalc3", :opreq => opreq, :@specialtyHash => @specialtyHash, :option => option, :@used_courses => @used_courses, :@totalc => @totalc, :@op_add => @op_add, :@op_c => @op_c, :@op_c_big => @op_c_big, :@op_c_biggest => @op_c_biggest, :@op_c_m => @op_c_m, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3, :@op_c_big_1 => @op_c_big_1, :@op_c_big_2 => @op_c_big_2, :@op_c_big_3 => @op_c_big_3 %>   
+    <%= render "shared/multicalc3", :@specialtycoursesarray => @specialtycoursesarray,:@tempusedcourses => @tempusedcourses, :@tempusedcourses2 => @tempusedcourses2, :opreq => opreq, :@specialtyHash => @specialtyHash, :option => option, :@used_courses => @used_courses, :@totalc => @totalc, :@op_add => @op_add, :@op_c => @op_c, :@op_c_big => @op_c_big, :@op_c_biggest => @op_c_biggest, :@op_c_m => @op_c_m, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@op_c_m_1 => @op_c_m_1, :@op_c_m_2 => @op_c_m_2, :@op_c_m_3 => @op_c_m_3, :@op_c_big_1 => @op_c_big_1, :@op_c_big_2 => @op_c_big_2, :@op_c_big_3 => @op_c_big_3 %>   
     <%# ------------------------------------------------------%>
   
 
@@ -35,7 +37,13 @@
 
 
   <% end %>
-
+  <% counter = 0 %>
+  <% tempusedcourses2.each do |course| %>
+    <% if counter < @op_add %>
+      <% @specialtycoursesarray << course %>
+    <% end %>
+    <% counter += 1 %>
+  <% end %>
   <% @specialtyHash[:op][opreq.opreqname] = Hash.new %>
 
   <% @specialtyHash[:op][opreq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s %>
