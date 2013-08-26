@@ -37,7 +37,7 @@
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_1 += 1 %>
 	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                	<% @used_courses << course.department + " " + course.num.to_s %>
+	                	<% @used_courses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -54,7 +54,7 @@
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_2 += 1 %>
 	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                	<% @used_courses << course.department + " " + course.num.to_s %>
+	                	<% @used_courses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -71,7 +71,7 @@
 	              	<% if !@used_courses.include?(dep.department + " " + number.to_s) %>
 	                	<% @dep_c_m_3 += 1 %>
 	                	<% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                	<% @used_courses << course.department + " " + course.num.to_s %>
+	                	<% @used_courses << dep.department + " " + number.to_s %>
 	                <% end %>
 	              <% end %>
 	            <% end %>
@@ -124,7 +124,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -139,7 +139,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += taking[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -154,7 +154,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += wtake[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -208,7 +208,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s) %>
 	                <% @dep_c_m_1 += 1 %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -223,7 +223,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += 1 %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -238,7 +238,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += 1 %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -290,7 +290,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_1 += taken[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -305,7 +305,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_2 += taking[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>
@@ -320,7 +320,7 @@
 	              <% if (number.to_f >= min and number.to_f <= max) or @clistsarray.include?(dep.department + number.to_s)  %>
 	                <% @dep_c_m_3 += wtake[dep.department][number] %>
 	                <% @depnumusedcourses << dep.department + " " + number.to_s %>
-	                <% @used_courses << course.department + " " + course.num.to_s %>
+	                <% @used_courses << dep.department + " " + number.to_s %>
 	              <% end %>
 	            <% end %>
 	          <% end %>

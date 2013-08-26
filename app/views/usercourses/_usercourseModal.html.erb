@@ -28,17 +28,17 @@
 
 	<div class="modal-body">
 		<%= semantic_form_for @user do |f| %>
-		  <% if @user.errors.any? %>
-		      <%= "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:" %>
+		  	<% if @user.errors.any? %>
+		    	<%= "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:" %>
 		      
-		        <% @user.errors.full_messages.each do |msg| %>
-		          <%= msg %>
-		        <% end %>
-		    <% end %>     
+	        	<% @user.errors.full_messages.each do |msg| %>
+	          	<%= msg %>
+	        	<% end %>
+	    	<% end %>     
 		  
-		  <%= f.inputs  do %>
+		    <%= f.inputs  do %>
 		     
-		      <%= f.semantic_fields_for :years do |year| %>
+		        <%= f.semantic_fields_for :years do |year| %>
 		        
 		          <%= year.inputs :number do %>
 		            Year 
@@ -77,11 +77,12 @@
 		                  <% end %>
 		             <% end %>
 		          <% end %>
-		      <% end %>
+		        <% end %>
+		    <% end %>
 		    <%= f.actions do %> 
 		      <%= f.action :submit, :as => :button %>
 		    <% end %>
-		  <% end %>
+		  
 		<% end %>
 	</div>
 
