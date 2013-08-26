@@ -20,6 +20,7 @@ class UsercoursesController < ApplicationController
 	end
 
 	def createCourseModalJson
+		@user = current_user
 		@institution = params[:institution].first
 		@department = params[:department]
 		@num = params[:num]
