@@ -1,4 +1,7 @@
 <% for course in h %>
+  <% if @optimize %>
+      <% @userspecialtiesarray << course.department + " " + course.num.to_s %>
+    <% end %>
   <% if taken.has_key?(course.department) %>
     <% if taken[course.department].has_key?(course.num.to_s) %>
       <% @tempusedcourses << course.department + " " + course.num.to_s %>

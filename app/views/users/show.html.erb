@@ -1,51 +1,21 @@
 <% if signed_in? %>
-<% @catalog = @courses %>
-<% i = 0 %>
+
+
+<% taken = @variable[0] %>
+<% taking = @variable[1] %>
+<% wtake = @variable[2] %>
+<% user_courses = @variable[3] %>
+<% coursearray = @variable[4] %>
+
+
+
+
 <% @di = 0 %>
 <% @dii = 0 %>
 <% @diii = 0 %>
 
-<% @catalog.each do |catalog| %>
-<% @colleges = catalog.coleges.all %>
-
-  <% @colleges.each do |college| %>
-    <% college.colegename %>
-    <% @departments = college.departments.all %>
-    <% @departments.each do |department| %>
-      <% @nums = department.nums.all %>
-      <% @nums.each do |num| %>
-        <% if num.number != nil %>
-          <% if num.di %>
-            <% @ucatalog["di"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-          <% end %>
-          <% if num.dii %>
-            <% @ucatalog["dii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-          <% end %>
-          <% if num.diii %>
-            <% @ucatalog["diii"][department.departmentabbr + " " + num.number.to_s] = num.credit %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-  <% i += 1 %>
-<% end %>
-
-<% cuser_courses = Array.new %>
-<% current_user.years.all.each do |year| %>
-  <% year.semesters.all.each do |semester| %>
-    <% semester.usercourses.all.each do |course| %>
-      <% cuser_courses << course.department + " " + course.num.to_s %>
-    <% end %>
-  <% end %>
-<% end %>
 
 
-<% taken = Hash.new %>
-<% taking = Hash.new %>
-<% wtake = Hash.new %>
-<% user_courses = Hash.new %>
-<% coursearray = Array.new %>
 <% achievements = Array.new %>
 <% provide(:title, @user.name) %>
 <% achievementhash = Hash.new %>
@@ -124,8 +94,6 @@
   <% end %>
 <% end %>
 
-<% @peep = "yes" %>
-<%= render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
 
@@ -347,9 +315,7 @@
   <aside class="span9">
     <section>
       <h4>Tracks</h4>
-      <% @diArray = Array.new %>
-      <% @diiArray = Array.new %>
-      <% @diiiArray = Array.new %>
+      
       <ul class="nav nav-tabs">
         <% i = 0 %>
         <% for achievementtype in @achievement %> 
@@ -365,18 +331,47 @@
       </ul>
       <div class="tab-content">
         <% i = 0 %>
+        <% @userspecialties = Hash.new %> 
         <% for achievementtype in @achievement %> 
+          <% if !@userspecialties.has_key?(achievementtype.achievementtype) %>
+            <% @userspecialties[achievementtype.achievementtype] = Hash.new %>
+          <% end %>
+          
           <% achievementhash[achievementtype.achievementtype].each_key do |key| %>
             <% b = achievementtype.colleges.where(:college => key ) %>
             <% b.each do |h| %>
               <% college = h %>
-
-              <%= render :partial => "shared/calculation2", :locals => {:college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray, :collegehash => achievementhash[achievementtype.achievementtype][college.college]} %>
+              <% @optimize = true %>
+               <% if !@userspecialties[achievementtype.achievementtype].has_key?(college.college) %>
+                <% @userspecialties[achievementtype.achievementtype][college.college] = Hash.new %>
+               <% end %>
+              <!-- Here -->
+              <%= render :partial => "shared/calculation2",   :locals => {:@optimize => @optimize,  :@userspecialtiescollege => @userspecialties[achievementtype.achievementtype][college.college], :college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray, :collegehash => achievementhash[achievementtype.achievementtype][college.college]} %>
 
               <% i += 1 %>
             <% end %>
           <% end %>
         <% end %>
+        <!-- Prelimiary Course predicting code -->
+        <% @allcoursehash = Hash.new %>
+        <% @userspecialties.each_key do |a| %> <!-- achievementtype -->
+          <% @userspecialties[a].each_key do |b| %> <!-- college -->
+            <% @userspecialties[a][b].each_key do |c| %> <!-- achievementname -->
+              <% @userspecialties[a][b][c].each_key do |d| %> <!-- specialties -->
+                <% @userspecialties[a][b][c][d].each do |course| %>
+                  <% if !@allcoursehash.has_key?(course) %>
+                    <% @allcoursehash[course] =  1 %>
+                  <% else %>
+                    <% @allcoursehash[course] += 1 %>
+                    <%= course %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <% @allcoursehash %>
+        <!-- End Preliminary Course predicting code -->
       </div>
       <% if current_user == @user %>
         <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                
@@ -384,7 +379,9 @@
     </section>
     <section>
       <h4>Transcript</h4>
-
+      <% @diArray = Array.new %>
+      <% @diiArray = Array.new %>
+      <% @diiiArray = Array.new %>
       <!-- AP Courses  -->
       <% if @aps != nil %>
       <div class="accordion" id="apaccordion">
@@ -788,11 +785,6 @@
                             </tr>
                           <% end %>
                           </table>
-
-
-                          <% if aphours != 0 %>
-                            <p><b>AP Hours: </b><%= aphours %></p>
-                          <% end %>
 
                           <p><b>Semester Hours: </b><%= hours %></p>
                           

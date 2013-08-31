@@ -14,8 +14,11 @@ class UsersController < ApplicationController
     @ucatalog["dii"] = Hash.new
     @ucatalog["diii"] = Hash.new
     @courses = Catalog.all
+    @ucatalog = Catalog.distributionbuilder(@courses)
+    cuser_courses = User.usercourses(current_user)
     if (params[:id] != nil)
       @user = User.find(params[:id])
+      @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
@@ -29,6 +32,7 @@ class UsersController < ApplicationController
         redirect_to signin_path
     else
       @user = current_user
+      @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all

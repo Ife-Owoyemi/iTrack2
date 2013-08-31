@@ -5,6 +5,9 @@
   <% corereqcount = 0 %>
   <%# ------------------------------------------------------%>
   <% for course in e %>
+    <% if @optimize %>
+      <% @userspecialtiesarray << course.department + " " + course.num.to_s %>
+    <% end %>
     <% if taken.has_key?(course.department) %>
       <% if taken[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>

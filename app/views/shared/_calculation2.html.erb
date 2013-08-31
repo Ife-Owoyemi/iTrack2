@@ -14,7 +14,9 @@
             </div>
             <div id="collapser<%= i %><%= k %>"  class="accordion-body collapse">
               <div class="accordion-inner" >
-
+                <% if !@userspecialtiescollege.has_key?(achievementname.achievementname) %>
+                  <% @userspecialtiescollege[achievementname.achievementname] = Hash.new %>
+                <% end %>
                 <% m = 0 %> 
                 <%# ------------------------------------------------------%>
                 <% @takent = 0 %>
@@ -27,9 +29,12 @@
                   <% alpha.each do |beta| %>
                     <% ex = [beta] %>
                     <%# ------------------------------------------------------%>
-                    <% for specialty in ex %>  
+                    <% for specialty in ex %>
+                      <% if !@userspecialtiescollege[achievementname.achievementname].has_key?(specialty.specialty) %>
+                        <% @userspecialtiescollege[achievementname.achievementname][specialty.specialty] = Array.new %>
+                      <% end %>  
 
-                      <%= render "shared/newcalc2", :taken => taken, :taking => taking, :wtake => wtake, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :specialty => specialty, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
+                      <%= render "shared/newcalc2", :@optimize => @optimize, :@userspecialtiesarray => @userspecialtiescollege[achievementname.achievementname][specialty.specialty], :taken => taken, :taking => taking, :wtake => wtake, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :specialty => specialty, :coursearray => coursearray, :user_courses => user_courses, :i => i, :k => k, :m => m %>
                       <% m += 1 %>
                     <% end %>
                   <% end %>
