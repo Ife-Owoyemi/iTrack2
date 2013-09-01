@@ -1,3 +1,5 @@
+
+
 <% @totalc = 0 %>
 <% totalh = 0 %>
 <% core_h = 0 %>
@@ -7,25 +9,39 @@
 <% @core_c_1 = 0 %>
 <% @core_c_2 = 0 %>
 <% @core_c_3 = 0 %>
+<% @specialtycoursesarray = [] %>
 <% @specialtyHash = Hash.new %>
 <% @specialtyHash[:core] = Hash.new %>
 
 <% @specialtyHash[:op] = Hash.new %>
 <% @specialtyHash[:depnum] = Hash.new %>
-<%= render "shared/corecalc", :@specialtyHash => @specialtyHash,  :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
+<% if @optimize %>
+  <%= render "shared/corecalc", :@optimize => @optimize, :@userspecialtiesarray => @userspecialtiesarray, :@specialtycoursesarray => @specialtycoursesarray, :@specialtyHash => @specialtyHash,  :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
+<% else %>
+  <%= render "shared/corecalc", :@optimize => @optimize, :@specialtycoursesarray => @specialtycoursesarray, :@specialtyHash => @specialtyHash,  :d => d, :@totalc => @totalc, :@used_courses => @used_courses, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3 %>
+<% end %>
+
+
 <%# ------------------------------------------------------%>
 <% f = specialty.opreqs.all %>
 <% @op_c = 0 %>
 <% @op_c_1 = 0 %>
 <% @op_c_2 = 0 %>
 <% @op_c_3 = 0 %>
-<%= render "shared/multicalc1", :@specialtyHash => @specialtyHash, :f => f, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3 %>
+
+<% if @optimize %>
+  <%= render "shared/multicalc1",:@optimize => @optimize, :@userspecialtiesarray => @userspecialtiesarray,:@specialtycoursesarray => @specialtycoursesarray, :@specialtyHash => @specialtyHash, :f => f, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3 %>
+<% else %>
+  <%= render "shared/multicalc1",:@optimize => @optimize, :@specialtycoursesarray => @specialtycoursesarray, :@specialtyHash => @specialtyHash, :f => f, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3 %>
+<% end %>
+
+
 <%# ------------------------------------------------------%>
 <% ff = specialty.groupopreqs.all %>
 <%= render "shared/groupcalc1", :f => ff, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@totalc => @totalc, :@used_courses => @used_courses %>
 <%# ------------------------------------------------------%>
 <% fg = specialty.depnumreqs.all %>
-<%= render "shared/depnumcalc1", :@specialtyHash => @specialtyHash, :fg => fg, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses %>
+<%= render "shared/depnumcalc1",:@specialtycoursesarray => @specialtycoursesarray, :@specialtyHash => @specialtyHash, :fg => fg, :@totalc => @totalc, :totalh => totalh, :taken => taken, :taking => taking, :wtake => wtake, :@used_courses => @used_courses %>
 <%# ------------------------------------------------------%>
 <% need = 0 %>
 <%= render "shared/finalcalc", :@totalc => @totalc, :@core_c_1 => @core_c_1, :@core_c_2 => @core_c_2,:@core_c_3 => @core_c_3, :@op_c_1 => @op_c_1, :@op_c_2 => @op_c_2, :@op_c_3 => @op_c_3, :@dep_c_1 => @dep_c_1, :@dep_c_2 => @dep_c_2, :@dep_c_3 => @dep_c_3, :@takent => @takent, :@takingt => @takingt, :@wtaket => @wtaket, :@need => @need, :@op_c => @op_c %>

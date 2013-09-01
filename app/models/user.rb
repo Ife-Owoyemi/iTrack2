@@ -50,6 +50,120 @@ class User < ActiveRecord::Base
   #validates :password, presence: true, length: { minimum: 6 }
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
+  
+  def self.sampleFunction1(model)
+    taken = Hash.new
+    taking = Hash.new
+    wtake = Hash.new
+    coursearray = Array.new
+    user_courses = Hash.new
+    aps = model.aps.all
+    aps.each do |ap|
+      courses = ap.usercourses.all
+      courses.each do |c|
+        coursearray << c.department + " " + c.num.to_s
+        if !user_courses.has_key?(c.department)
+          user_courses[c.department] = Hash.new
+          user_courses[c.department][c.num] = Hash.new
+          user_courses[c.department][c.num] = c.credits
+        else
+          user_courses[c.department][c.num] = Hash.new
+          user_courses[c.department][c.num] = c.credits
+        end 
+        if !taken.has_key?(c.department)
+          taken[c.department] = Hash.new 
+          taken[c.department][c.num] = Hash.new 
+          taken[c.department][c.num] = c.credits 
+        else
+          taken[c.department][c.num] = Hash.new 
+          taken[c.department][c.num] = c.credits
+        end 
+      end 
+    end 
+    transfers = model.transfers.all
+    transfers.each do |transfer|
+      courses = transfer.usercourses.all
+      courses.each do |c|
+        coursearray << c.department + " " + c.num.to_s
+        if !user_courses.has_key?(c.department)
+          user_courses[c.department] = Hash.new
+          user_courses[c.department][c.num] = Hash.new
+          user_courses[c.department][c.num] = c.credits
+        else
+          user_courses[c.department][c.num] = Hash.new
+          user_courses[c.department][c.num] = c.credits
+        end 
+        if !taken.has_key?(c.department)
+          taken[c.department] = Hash.new
+          taken[c.department][c.num] = Hash.new
+          taken[c.department][c.num] = c.credits
+        else
+          taken[c.department][c.num] = Hash.new
+          taken[c.department][c.num] = c.credits 
+        end 
+      end
+    end
+    years = model.years.all
+    years.each do |year|
+      @semesters = year.semesters.all
+      @semesters.each do |semester|
+        @courses = semester.usercourses.all
+        @courses.each do |c|
+          coursearray << c.department + " " + c.num.to_s
+          if !user_courses.has_key?(c.department)
+            user_courses[c.department] = Hash.new
+            user_courses[c.department][c.num] = Hash.new
+            user_courses[c.department][c.num] = c.credits
+          else 
+            user_courses[c.department][c.num] = Hash.new 
+            user_courses[c.department][c.num] = c.credits
+          end 
+          if c.status == "Taken"
+            if !taken.has_key?(c.department)
+              taken[c.department] = Hash.new 
+              taken[c.department][c.num] = Hash.new
+              taken[c.department][c.num] = c.credits
+            else
+              taken[c.department][c.num] = Hash.new
+              taken[c.department][c.num] = c.credits
+            end
+          elsif c.status == "Taking"
+            if !taking.has_key?(c.department)
+              taking[c.department] = Hash.new
+              taking[c.department][c.num] = Hash.new
+              taking[c.department][c.num] = c.credits
+            else
+              taking[c.department][c.num] = Hash.new
+              taking[c.department][c.num] = c.credits
+            end
+          elsif c.status == "Will Take"
+            if !wtake.has_key?(c.department)
+              wtake[c.department] = Hash.new
+              wtake[c.department][c.num] = Hash.new
+              wtake[c.department][c.num] = c.credits
+            else
+              wtake[c.department][c.num] = Hash.new
+              wtake[c.department][c.num] = c.credits
+            end
+          end
+        end
+      end
+    end
+    return taken, taking, wtake, user_courses, coursearray
+  end
+
+  def self.usercourses(model)
+    cuser_courses = Array.new
+    model.years.all.each do |year| 
+      year.semesters.all.each do |semester| 
+        semester.usercourses.all.each do |course| 
+        cuser_courses << course.department + " " + course.num.to_s 
+        end 
+      end 
+    end 
+    return cuser_courses
+  end
+
 
 =begin  
   # Solr search setup

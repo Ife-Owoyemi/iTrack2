@@ -5,10 +5,13 @@
   <% corereqcount = 0 %>
   <%# ------------------------------------------------------%>
   <% for course in e %>
+    <% if @optimize %>
+      <% @userspecialtiesarray << course.department + " " + course.num.to_s %>
+    <% end %>
     <% if taken.has_key?(course.department) %>
       <% if taken[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>
-
+        <% @specialtycoursesarray << course.department + " " + course.num.to_s %>
         <% @core_c_1 += 1 %>
         <% corereqcount += 1 %>
       <% end %>
@@ -16,6 +19,7 @@
     <% if taking.has_key?(course.department) %>
       <% if taking[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>
+        <% @specialtycoursesarray << course.department + " " + course.num.to_s %>
         <% @core_c_2 += 1 %>
         <% corereqcount += 1 %>
       <% end %>
@@ -23,6 +27,7 @@
     <% if wtake.has_key?(course.department) %>
       <% if wtake[course.department].has_key?(course.num.to_s) %>
         <% @used_courses << course.department + " " + course.num.to_s %>
+        <% @specialtycoursesarray << course.department + " " + course.num.to_s %>
         <% @core_c_3 += 1 %>
         <% corereqcount += 1 %>
       <% end %>
