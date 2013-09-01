@@ -17,6 +17,13 @@ class UndergradController < ApplicationController
 
   def majorsba
     #@years = current_user.years.all
+    @tabNum = 0
+    @taken = Hash.new
+    @taking = Hash.new
+    @wTake = Hash.new
+    @user_courses = Hash.new
+    @coursearray = Array.new
+
     @years = Year.find(:all, :conditions => ["user_id=?", current_user.id], :include => [ {:semesters => :usercourses}, :user ])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
@@ -30,6 +37,7 @@ class UndergradController < ApplicationController
         end
       end 
     end
+    @b = @majorsba.colleges.all
   end
 
   def majorsbas
@@ -60,6 +68,14 @@ class UndergradController < ApplicationController
           @majorsbs = t
         end
       end 
+    end
+  end
+
+  def switchTabMajorsBa
+    @tabNum = params[:tabNum]
+    respond_to do |format|
+      format.html {redirect_to root_path}
+      format.js { render :locals => {:tabNum => @tabNum} }
     end
   end
 

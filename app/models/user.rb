@@ -11,6 +11,14 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :aps_attributes, :transfers_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans, :hideemail, :hideprofile
+  
+  # serialize arrays and hash attributes used when loading 
+  serialize :coursearray, Array
+  serialize :usercoursesHash, Hash  
+  serialize :takenHash, Hash
+  serialize :takingHash, Hash
+  serialize :wtakeHash, Hash
+
   has_many :userachievementtypes
   has_many :years
   has_many :internships
@@ -193,6 +201,118 @@ class User < ActiveRecord::Base
 
 #  end
 
+
+# code that works with the new user_course_hash attributes
+  def serializedCourseDataInit
+    aps = self.aps.all
+    transfers = self.transfers.all
+    years = self.years.all
+
+    aps.each do |ap|
+      courses = ap.usercourse.all
+      courses.each do |c|
+        :coursearray << c.department + " " + c.num.to_s
+        if !:usercoursesHash.has_key?(c.department)
+          :usercoursesHash[c.department] = Hash.new
+          :usercoursesHash[c.department][c.num] = Hash.new
+          :usercoursesHash[c.department][c.num] = c.credits
+        else
+          :usercoursesHash[c.department][c.num] = Hash.new
+          :usercoursesHash[c.department][c.num] = c.credits
+        end
+        if !:takenHash.has_key?(c.department)
+          :takenHash[c.department] = Hash.new 
+          :takenHash[c.department][c.num] = Hash.new
+          :takenHash[c.department][c.num] = c.credits
+        else
+          :takenHash[c.department][c.num] = Hash.new
+          :takenHash[c.department][c.num] = c.credits
+        end
+      end
+    end
+
+    transfers.each do |transfer|
+      courses = transfer.usercourses.all
+      courses.each do |c|
+        :coursearray << c.department + " " + c.num.to_s
+        if !:usercoursesHash.has_key?(c.department)
+          :usercoursesHash[c.department] = Hash.new
+          :usercoursesHash[c.department][c.num] = Hash.new
+          :usercoursesHash[c.department][c.num] = c.credits
+        else
+          :usercoursesHash[c.department][c.num] = Hash.new
+          :usercoursesHash[c.department][c.num] = c.credits
+        end
+        if !:takenHash.has_key?(c.department)
+          :takenHash[c.department] = Hash.new
+          :takenHash[c.department][c.num] = Hash.new
+          :takenHash[c.department][c.num] = c.credits
+        else
+          :takenHash[c.department][c.num] = Hash.new
+          :takenHash[c.department][c.num] = c.credits
+        end  
+      end
+    end  
+
+    years.each do |year|
+      semesters = year.semesters.all
+      semesters.each do |semester|
+        courses = semester.usercourses.all
+        courses.each do |c|
+          :coursearray << c.department + " " + c.num.to_s
+          if !:usercoursesHash.has_key?(c.department)
+            :usercoursesHash[c.department] = Hash.new
+            :usercoursesHash[c.department][c.num] = Hash.new
+            :usercoursesHash[c.department][c.num] = c.credits
+          else  
+            :usercoursesHash[c.department][c.num] = Hash.new
+            :usercoursesHash[c.department][c.num] = c.credits
+          end  
+          if c.status == "Taken"
+            if !:takenHash.has_key?(c.department)
+              :takenHash[c.department] = Hash.new
+              :takenHash[c.department][c.num] = Hash.new
+              :takenHash[c.department][c.num] = c.credits
+            else  
+              :takenHash[c.department][c.num] = Hash.new
+              :takenHash[c.department][c.num] = c.credits
+            end  
+          elsif c.status == "Taking"
+            if !:takingHash.has_key?(c.department)
+              :takingHash[c.department] = Hash.new
+              :takingHash[c.department][c.num] = Hash.new
+              :takingHash[c.department][c.num] = c.credits
+            else  
+              :takingHash[c.department][c.num] = Hash.new
+              :takingHash[c.department][c.num] = c.credits
+            end
+          elsif c.status == "Will Take"
+            if !:wtakeHash.has_key?(c.department)
+              :wtakeHash[c.department] = Hash.new
+              :wtakeHash[c.department][c.num] = Hash.new
+              :wtakeHash[c.department][c.num] = c.credits
+            else
+              :wtakeHash[c.department][c.num] = Hash.new
+              :wtakeHash[c.department][c.num] = c.credits
+            end
+          end
+        end
+      end
+    end    
+
+    self.save      
+
+  end
+
+  def transferUserCoursesHash
+    transfers = self.transfers.all
+    courses = ap.usercourse.all
+  end
+
+  def semesterUserCoursesHash
+    aps = self.aps.all
+    courses = ap.usercourse.all
+  end  
 
   def feed
     # this is preliminary. See "Following users" for the full implementation.
