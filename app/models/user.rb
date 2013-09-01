@@ -318,6 +318,13 @@ class User < ActiveRecord::Base
 
 # code that works with the new user_course_hash attributes
   def serializedCourseDataInit
+    
+    :coursearray = Array.new
+    :usercoursesHash = Hash.new   
+    :takenHash = Hash.new 
+    :takingHash = Hash.new 
+    :wtakeHash = Hash.new  
+
     aps = self.aps.all
     transfers = self.transfers.all
     years = self.years.all
@@ -418,14 +425,106 @@ class User < ActiveRecord::Base
 
   end
 
-  def transferUserCoursesHash
-    transfers = self.transfers.all
-    courses = ap.usercourse.all
+  # call after user adds new ap course
+  def apCourseHashAdd(usercourse)
+    c = usercourse
+    :coursearray << c.department + " " + c.num.to_s
+    if !:usercoursesHash.has_key?(c.department)
+      :usercoursesHash[c.department] = Hash.new
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    else
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    end
+    if !:takenHash.has_key?(c.department)
+      :takenHash[c.department] = Hash.new 
+      :takenHash[c.department][c.num] = Hash.new
+      :takenHash[c.department][c.num] = c.credits
+    else
+      :takenHash[c.department][c.num] = Hash.new
+      :takenHash[c.department][c.num] = c.credits
+    end    
   end
 
-  def semesterUserCoursesHash
-    aps = self.aps.all
-    courses = ap.usercourse.all
+  # call after user adds new transfer course
+  def transferCourseHashAdd(usercourse)
+
+    c = usercourse
+    :coursearray << c.department + " " + c.num.to_s
+    if !:usercoursesHash.has_key?(c.department)
+      :usercoursesHash[c.department] = Hash.new
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    else
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    end
+    if !:takenHash.has_key?(c.department)
+      :takenHash[c.department] = Hash.new
+      :takenHash[c.department][c.num] = Hash.new
+      :takenHash[c.department][c.num] = c.credits
+    else
+      :takenHash[c.department][c.num] = Hash.new
+      :takenHash[c.department][c.num] = c.credits
+    end  
+
+  end
+
+  # call after user adds new semester course
+  def semesterCourseHashAdd(usercourse)
+
+    c = usercourse
+    :coursearray << c.department + " " + c.num.to_s
+    if !:usercoursesHash.has_key?(c.department)
+      :usercoursesHash[c.department] = Hash.new
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    else  
+      :usercoursesHash[c.department][c.num] = Hash.new
+      :usercoursesHash[c.department][c.num] = c.credits
+    end  
+    if c.status == "Taken"
+      if !:takenHash.has_key?(c.department)
+        :takenHash[c.department] = Hash.new
+        :takenHash[c.department][c.num] = Hash.new
+        :takenHash[c.department][c.num] = c.credits
+      else  
+        :takenHash[c.department][c.num] = Hash.new
+        :takenHash[c.department][c.num] = c.credits
+      end  
+    elsif c.status == "Taking"
+      if !:takingHash.has_key?(c.department)
+        :takingHash[c.department] = Hash.new
+        :takingHash[c.department][c.num] = Hash.new
+        :takingHash[c.department][c.num] = c.credits
+      else  
+        :takingHash[c.department][c.num] = Hash.new
+        :takingHash[c.department][c.num] = c.credits
+      end
+    elsif c.status == "Will Take"
+      if !:wtakeHash.has_key?(c.department)
+        :wtakeHash[c.department] = Hash.new
+        :wtakeHash[c.department][c.num] = Hash.new
+        :wtakeHash[c.department][c.num] = c.credits
+      else
+        :wtakeHash[c.department][c.num] = Hash.new
+        :wtakeHash[c.department][c.num] = c.credits
+      end
+    end   
+
+  end  
+
+  # initiate the serilized Hash for certain users (array of users)
+  def self.initSerialHashesForUsers(users)
+    users.each do |user|
+      user.serializedCourseDataInit
+    end
+  end
+
+  # initiate the serilized Hash for a certain user 
+  def self.initSerialHashForUser(user)
+    user.serializedCourseDataInit
   end  
 
   def feed

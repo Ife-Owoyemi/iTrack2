@@ -9,13 +9,14 @@
 <% if signed_in? %>
   <h1>BA</h1><p>Bachelor of Arts Degrees</p>
   <hr width="100%">
-  <%= render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => @taken, :taking => @taking, :wtake => @wtake, :user_courses => @user_courses, :coursearray => @coursearray} %>
+  <%# render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => @taken, :taking => @taking, :wtake => @wtake, :user_courses => @user_courses, :coursearray => @coursearray} %> <!-- may not need this partial once the new serialization methods are up and running -->
   <ul class="nav nav-tabs">
     <% i = 0 %>
     <%# b = @majorsba.colleges.all %>  
     <% for college in @b %> 
       <li>
-        <a href="/undergrad/switchTabMajorsBa?tabNum=<%= i %>" data-toggle="tab" data-remote="true">
+        <!--a href="/undergrad/switchTabMajorsBa?tabNum=<%= i %>" data-toggle="tab" data-remote="true"-->
+        <a href="#<%= i %>" data-toggle="tab" data-remote="true">
         <%# link_to '', :url => {:controller => "undergrad", :action => "switchTabMajorsBa", :tabNum => i}, :class => "collegeTab", :remote => true, :data => {toggle: "tab"} do %>
 
           <%= college.college %>
