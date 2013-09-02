@@ -11,6 +11,17 @@
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :aps_attributes, :transfers_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans, :hideemail, :hideprofile
+  
+  # serialize arrays and hash attributes used when loading 
+  serialize :coursearray, Array
+  serialize :usercoursesHash, Hash  
+  serialize :takenHash, Hash
+  serialize :takingHash, Hash
+  serialize :wtakeHash, Hash
+  
+  #attr_accessible :coursearray, :usercoursesHash, :takenHash, :takingHash, :wtakeHash    
+
+
   has_many :userachievementtypes
   has_many :years
   has_many :internships
@@ -144,9 +155,9 @@ class User < ActiveRecord::Base
     return taken, taking, wtake, user_courses, coursearray
   end
 
-  def self.usercourses(model)
+  def self.usercourses(user)
     cuser_courses = Array.new
-    model.years.all.each do |year| 
+    user.years.all.each do |year| 
       year.semesters.all.each do |semester| 
         semester.usercourses.all.each do |course| 
         cuser_courses << course.department + " " + course.num.to_s 
@@ -155,6 +166,7 @@ class User < ActiveRecord::Base
     end 
     return cuser_courses
   end
+
 
   def self.studentachievementhashgenerator(achievementmodelsarray, achievementhash, taken, taking, wtake)
     @studentachievementhash = Hash.new
@@ -192,6 +204,169 @@ class User < ActiveRecord::Base
     end
     return @studentachievementhash
   end
+
+  require "csv"
+  #require 'iconv'
+
+
+  def transcriptReader(transcriptFile)
+    @transcript = Hash.new # => @user
+    #delete all usercourses currently made up.
+    @years = Array.new # => an array used to prevent multiple instances of the same year being made
+
+    file_string = transcriptFile.read.encode!("utf-8", "utf-8", :invalid => :replace)
+ 
+    #Begin running through all of the rows in the cell
+    CSV.foreach(file_string) do |cell|
+      # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
+      if cell[0][0..4] == "Term:"
+        # so here we construct the year as a 4 digit number given they are listed as two digits on the transcript
+        @year = cell[0][11..12].to_i + 2000
+        # Now we take a sample of the letters following the segment "Term:"
+        semesterpartial = cell[0][6..9]
+        # Here is a loop that finds what semester is referenced
+ 
+        #  Fall
+        if semesterpartial == "Fall"
+          @semester = "Fall"
+          @year = cell[0][11..12].to_i + 2000
+        # Summer
+        elsif semesterpartial == "Summ"
+          @semester = "Summer"
+          @year = cell[0][13..14].to_i + 2000
+        # Spring
+        elsif semesterpartial == "Spri"
+          @semester = "Spring"
+          @year = cell[0][13..14].to_i + 2000
+        end
+ 
+        # Here we determine if the instance of the loop has been created
+ 
+        # If it is not included
+        if !@years.include?((@year).to_s)
+          # Create a new year instance
+          @transcript[@year.to_s] = Hash.new
+          # We add it to the years that have been made
+          @years << (@year).to_s
+        end
+ 
+        # Create a new semester instance within the current year
+        @transcript[@year.to_s][@semester] = Hash.new
+ 
+        # Here we define a variable that will allow courses after this to be made into instances
+        @algkey = "Rice"
+        # Before courses are listed in a transcript a title line is defined.
+        # I used the existence of this line to define a variable that allows for following lines to fall into else and turn into created courses.  
+      elsif cell[0] == "Subject"
+        @countcourse = true
+        # Defines the end of a series of courses  nil is the ap stop and Term  is the end of others
+     
+        # These were two key phrases that are found after course listings have ended and I used them to define the end of where lines are allowed to be created into courses
+ 
+      elsif cell[0][0..4] == "Term " or cell[1] == nil
+        @countcourse = false
+        # I found that AP Courses for my transcript were prefaced with "Fall" so I used it to define the begining of AP course listings
+      elsif cell[0][0..3] == "Fall"
+          @algkey = "AP"
+          # Create an AP instance
+          @transcript["AP"] = Hash.new
+      else
+        # Given @countcourse is true then lines that fall through this avenue are courses that are about to be created.
+        if @countcourse
+          # if they are ap they follow this route
+          if @algkey == "AP"
+            depabbr = cell[0]
+            # Corrects for COMC num of TST
+            if cell[1] == "TST"
+              num = 000
+            else
+              num = cell[1]
+            end
+            credits = cell[8]
+ 
+            @transcript["AP"][depabbr + " " + num.to_s] = Hash.new
+            @transcript["AP"][depabbr + " " + num.to_s][:credits] = credits
+            # Here is where transfers would fall but I dont know yet.
+          elsif @algkey == "Transfer"
+             
+            # Here is where regular rice courses are defined
+          elsif @algkey == "Rice"
+            depabbr = cell[0]
+            if cell[1] == "TST"
+              num = 100
+            else
+              num = cell[1]
+            end
+            if @year == 2013 and @semester == "Fall"
+              grade = cell[9]
+              credits = cell[10]
+            else
+              grade = cell[9]
+              credits = cell[10]
+            end
+            @transcript[@year.to_s][@semester][depabbr + " " + num.to_s] = Hash.new
+            @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:grade] = grade
+            @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:credits] = credits
+          end
+        end
+      end
+      #algorithmkey
+    end
+    User.createCoursesFromTranscript(@transcript)
+  end
+
+  def self.createCoursesFromTranscript(transcriptHash)
+
+    transcriptHash.each_key do |year|
+
+      if year == "AP" # if the class is an AP course do the following
+        transcriptHash["AP"].each_key do |course|
+        
+        end
+
+
+      elsif year == "Transfer" # if the course is a Transfer course do the following 
+        # transfer code here
+
+    
+      else # if the course if a course from the university do the following
+        yearInteger = year.to_i
+      
+        if ( Year.userYearExists?(self.id, yearInteger) == true) # check if the year already exist for this user
+          courseYear = Year.findYear(self.id,yearInteger) # if year set the course to the year
+        else # if year does not exist set courseYear to a new year
+          courseYear = self.years.create!(:year => yearInteger) 
+        end
+
+        transcriptHash[year].each_key do |semester| # go through each semester for this year
+        
+          if (Semester.userSemesterExists?(courseYear.id,semester)) # if the semester for the year exists set the semester to that semester  
+            courseSemester = findSemester(courseYear.id,semester)
+          else
+            courseSemester = courseYear.semesters.create!(:semester => semester)# will also need to create the appropriate semesters for this year
+          end
+
+          # this sections looks through the semester's course to create the usercourses
+          transcriptHash[year][semester].each_key do |courseInfo|
+            courseInfoArray = courseInfo.split(' ') 
+            dep = courseInfoArray[0]
+            num = courseInfoArray[1].to_i
+            # create the course if it doesn't already exist
+            if ( Usercourse.semesterCourseExists?(courseSemester.id,dep,num) == false )
+              credits = transcriptHash[semester][courseInfo][:credits]
+              grade = transcriptHash[semester][courseInfo][:grade]
+              Usercourse.createSemesterCourseWithTranscript(courseSemester,dep,num,credits,grade) # create usercourse with info from hash for the hash
+            end
+
+          end
+        end
+      end
+    end
+
+  end # end of this method
+
+
+
 =begin  
   # Solr search setup
   searchable do 
@@ -342,6 +517,217 @@ class User < ActiveRecord::Base
 
 #  end
 
+
+# code that works with the new user_course_hash attributes
+  def serializedCourseDataInit
+    
+    #self.coursearray = Array.new
+    #self.usercoursesHash = Hash.new   
+    #self.takenHash = Hash.new 
+    #self.takingHash = Hash.new 
+    #self.wtakeHash = Hash.new  
+
+    aps = self.aps.all
+    transfers = self.transfers.all
+    years = self.years.all
+
+    aps.each do |ap|
+      courses = ap.usercourse.all
+      courses.each do |c|
+        self.coursearray << c.department + " " + c.num.to_s
+        if !self.usercoursesHash.has_key?(c.department)
+          self.usercoursesHash[c.department] = Hash.new
+          self.usercoursesHash[c.department][c.num] = Hash.new
+          self.usercoursesHash[c.department][c.num] = c.credits
+        else
+          self.usercoursesHash[c.department][c.num] = Hash.new
+          self.usercoursesHash[c.department][c.num] = c.credits
+        end
+        if !self.takenHash.has_key?(c.department)
+          self.takenHash[c.department] = Hash.new 
+          self.takenHash[c.department][c.num] = Hash.new
+          self.takenHash[c.department][c.num] = c.credits
+        else
+          self.takenHash[c.department][c.num] = Hash.new
+          self.takenHash[c.department][c.num] = c.credits
+        end
+      end
+    end
+
+    transfers.each do |transfer|
+      courses = transfer.usercourses.all
+      courses.each do |c|
+        self.coursearray << c.department + " " + c.num.to_s
+        if !self.usercoursesHash.has_key?(c.department)
+          self.usercoursesHash[c.department] = Hash.new
+          self.usercoursesHash[c.department][c.num] = Hash.new
+          self.usercoursesHash[c.department][c.num] = c.credits
+        else
+          self.usercoursesHash[c.department][c.num] = Hash.new
+          self.usercoursesHash[c.department][c.num] = c.credits
+        end
+        if !self.takenHash.has_key?(c.department)
+          self.takenHash[c.department] = Hash.new
+          self.takenHash[c.department][c.num] = Hash.new
+          self.takenHash[c.department][c.num] = c.credits
+        else
+          self.takenHash[c.department][c.num] = Hash.new
+          self.takenHash[c.department][c.num] = c.credits
+        end  
+      end
+    end  
+
+    years.each do |year|
+      semesters = year.semesters.all
+      semesters.each do |semester|
+        courses = semester.usercourses.all
+        courses.each do |c|
+          self.coursearray << c.department + " " + c.num.to_s
+          if !self.usercoursesHash.has_key?(c.department)
+            self.usercoursesHash[c.department] = Hash.new
+            self.usercoursesHash[c.department][c.num] = Hash.new
+            self.usercoursesHash[c.department][c.num] = c.credits
+          else  
+            self.usercoursesHash[c.department][c.num] = Hash.new
+            self.usercoursesHash[c.department][c.num] = c.credits
+          end  
+          if c.status == "Taken"
+            if !self.takenHash.has_key?(c.department)
+              self.takenHash[c.department] = Hash.new
+              self.takenHash[c.department][c.num] = Hash.new
+              self.takenHash[c.department][c.num] = c.credits
+            else  
+              self.takenHash[c.department][c.num] = Hash.new
+              self.takenHash[c.department][c.num] = c.credits
+            end  
+          elsif c.status == "Taking"
+            if !self.takingHash.has_key?(c.department)
+              self.takingHash[c.department] = Hash.new
+              self.takingHash[c.department][c.num] = Hash.new
+              self.takingHash[c.department][c.num] = c.credits
+            else  
+              self.takingHash[c.department][c.num] = Hash.new
+              self.takingHash[c.department][c.num] = c.credits
+            end
+          elsif c.status == "Will Take"
+            if !self.wtakeHash.has_key?(c.department)
+              self.wtakeHash[c.department] = Hash.new
+              self.wtakeHash[c.department][c.num] = Hash.new
+              self.wtakeHash[c.department][c.num] = c.credits
+            else
+              self.wtakeHash[c.department][c.num] = Hash.new
+              self.wtakeHash[c.department][c.num] = c.credits
+            end
+          end
+        end
+      end
+    end    
+
+    self.save      
+
+  end
+
+  # call after user adds new ap course
+  def apCourseHashAdd(usercourse)
+    c = usercourse
+    self.coursearray << c.department + " " + c.num.to_s
+    if !self.usercoursesHash.has_key?(c.department)
+      self.usercoursesHash[c.department] = Hash.new
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    else
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    end
+    if !self.takenHash.has_key?(c.department)
+      self.takenHash[c.department] = Hash.new 
+      self.takenHash[c.department][c.num] = Hash.new
+      self.takenHash[c.department][c.num] = c.credits
+    else
+      self.takenHash[c.department][c.num] = Hash.new
+      self.takenHash[c.department][c.num] = c.credits
+    end    
+  end
+
+  # call after user adds new transfer course
+  def transferCourseHashAdd(usercourse)
+
+    c = usercourse
+    self.coursearray << c.department + " " + c.num.to_s
+    if !self.usercoursesHash.has_key?(c.department)
+      self.usercoursesHash[c.department] = Hash.new
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    else
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    end
+    if !self.takenHash.has_key?(c.department)
+      self.takenHash[c.department] = Hash.new
+      self.takenHash[c.department][c.num] = Hash.new
+      self.takenHash[c.department][c.num] = c.credits
+    else
+      self.takenHash[c.department][c.num] = Hash.new
+      self.takenHash[c.department][c.num] = c.credits
+    end  
+
+  end
+
+  # call after user adds new semester course
+  def semesterCourseHashAdd(usercourse)
+
+    c = usercourse
+    self.coursearray << c.department + " " + c.num.to_s
+    if !self.usercoursesHash.has_key?(c.department)
+      self.usercoursesHash[c.department] = Hash.new
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    else  
+      self.usercoursesHash[c.department][c.num] = Hash.new
+      self.usercoursesHash[c.department][c.num] = c.credits
+    end  
+    if c.status == "Taken"
+      if !self.takenHash.has_key?(c.department)
+        self.takenHash[c.department] = Hash.new
+        self.takenHash[c.department][c.num] = Hash.new
+        self.takenHash[c.department][c.num] = c.credits
+      else  
+        self.takenHash[c.department][c.num] = Hash.new
+        self.takenHash[c.department][c.num] = c.credits
+      end  
+    elsif c.status == "Taking"
+      if !self.takingHash.has_key?(c.department)
+        self.takingHash[c.department] = Hash.new
+        self.takingHash[c.department][c.num] = Hash.new
+        self.takingHash[c.department][c.num] = c.credits
+      else  
+        self.takingHash[c.department][c.num] = Hash.new
+        self.takingHash[c.department][c.num] = c.credits
+      end
+    elsif c.status == "Will Take"
+      if !self.wtakeHash.has_key?(c.department)
+        self.wtakeHash[c.department] = Hash.new
+        self.wtakeHash[c.department][c.num] = Hash.new
+        self.wtakeHash[c.department][c.num] = c.credits
+      else
+        self.wtakeHash[c.department][c.num] = Hash.new
+        self.wtakeHash[c.department][c.num] = c.credits
+      end
+    end   
+
+  end  
+
+  # initiate the serilized Hash for certain users (array of users)
+  def self.initSerialHashesForUsers(users)
+    users.each do |user|
+      user.serializedCourseDataInit
+    end
+  end
+
+  # initiate the serilized Hash for a certain user 
+  def self.initSerialHashForUser(user)
+    user.serializedCourseDataInit
+  end  
 
   def feed
     # this is preliminary. See "Following users" for the full implementation.

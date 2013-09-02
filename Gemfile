@@ -20,6 +20,7 @@ gem 'rake', '10.1.0'
 gem 'best_in_place'
 #gem 'jquery_datepicker'
 gem 'bootstrap-datepicker-rails'
+gem 'roo'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

@@ -1,4 +1,5 @@
 include UsersHelper
+include SessionsHelper
 class UsersController < ApplicationController
   respond_to :json, :html, :xml, :js
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
@@ -15,27 +16,46 @@ class UsersController < ApplicationController
     @ucatalog["diii"] = Hash.new
     @courses = Catalog.all
     @ucatalog = Catalog.distributionbuilder(@courses)
-    cuser_courses = User.usercourses(current_user)
-    if (params[:id] != nil)
+    
+    if signed_in? == false
+      redirect_to signin_path
+    elsif (params[:id] != nil)
       @user = User.find(params[:id])
+
       @institution = Institution.where(:name => "Rice University")  
       @awards = @user.awards.all
       @internships = @user.internships.all
       @conferences = @user.conferences.all
+
+      @cuser_courses = User.usercourses(@user) 
+
       @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
       @transfers = @user.transfers.all
 
+
       
 
 
     elsif current_user == nil
         redirect_to signin_path
-    else
+
+      
+    elsif (params[:id] == nil && signed_in? == true) 
       @user = current_user
       @taken, @taking, @wtake, @user_courses, @coursearray = User.courseHashArrayGenerator(@user)
+
+      @achievementtypes = @user.userachievementtypes.all
+      @institution = Institution.where(:name => "Rice University")  
+      @awards = @user.awards.all
+      @internships = @user.internships.all
+      @conferences = @user.conferences.all 
+      @user = current_user
+      @cuser_courses = User.usercourses(@user)
+      @variable = User.sampleFunction1(@user)
+
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
@@ -189,6 +209,13 @@ class UsersController < ApplicationController
       @users = @qusers.paginate(:page => 1, :per_page => 10)
     end        
   end
+
+  def uploadTranscript
+    current_user.transcriptReader(params[:transcript][:file])
+    redirect_to root_path
+  end
+
+
 
   private
     def signed_in_user

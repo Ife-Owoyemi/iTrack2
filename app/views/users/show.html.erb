@@ -306,6 +306,14 @@
     </section>
     <section>
       <h4>Transcript</h4>
+
+      <%= form_for :transcript, :url => {:controller => "users", :action => "uploadTranscript"}, multipart: true do |f| %>
+        <%= f.file_field :file %>
+        <%= f.submit "Import Transcript" %>
+      <% end %>
+
+
+
       <% @diArray = Array.new %>
       <% @diiArray = Array.new %>
       <% @diiiArray = Array.new %>
@@ -375,7 +383,7 @@
                           
                         <% else %>
                           <% strike = "" %>
-                          <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                          <% if @cuser_courses.include?(course.department + " " + course.num.to_s) %>
                             <% strike = "*" %>
                           <% end %>
 
@@ -492,7 +500,7 @@
                           
                         <% else %>
                           <% strike = "" %>
-                          <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                          <% if @cuser_courses.include?(course.department + " " + course.num.to_s) %>
                             <% strike = "*" %>
                           <% end %>
 
@@ -658,7 +666,7 @@
                                     
                                   <% else %>
                                     <% strike = "" %>
-                                    <% if cuser_courses.include?(course.department + " " + course.num.to_s) %>
+                                    <% if @cuser_courses.include?(course.department + " " + course.num.to_s) %>
                                       <% strike = "*" %>
                                     <% end %>
 

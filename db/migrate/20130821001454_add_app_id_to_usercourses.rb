@@ -5,7 +5,7 @@ class AddAppIdToUsercourses < ActiveRecord::Migration
 	end
 
 	def down 
-		rmeove_column :usercourses, :ap_id
+		remove_column :usercourses, :ap_id
 	end
 
 

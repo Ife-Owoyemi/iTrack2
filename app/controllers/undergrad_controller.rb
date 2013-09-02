@@ -17,11 +17,19 @@ class UndergradController < ApplicationController
 
   def majorsba
     #@years = current_user.years.all
-    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id], :include => [ {:semesters => :usercourses}, :user ])
+    #@tabNum = 0
+    @user = current_user
+    @taken = @user.takenHash
+    @taking = @user.takingHash
+    @wTake = @user.wtakeHash
+    @user_courses = @user.usercoursesHash
+    @coursearray = @user.coursearray
+
+    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
     #@institution = Institution.where(:name => "Rice University")    
-    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])#, :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|
@@ -30,6 +38,7 @@ class UndergradController < ApplicationController
         end
       end 
     end
+    @b = @majorsba.colleges.all
   end
 
   def majorsbas
@@ -60,6 +69,14 @@ class UndergradController < ApplicationController
           @majorsbs = t
         end
       end 
+    end
+  end
+
+  def switchTabMajorsBa
+    @tabNum = params[:tabNum]
+    respond_to do |format|
+      format.html {redirect_to root_path}
+      format.js { render :locals => {:tabNum => @tabNum} }
     end
   end
 

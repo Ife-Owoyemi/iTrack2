@@ -3,4 +3,15 @@ class Year < ActiveRecord::Base
   belongs_to :user
   has_many :semesters
   accepts_nested_attributes_for :semesters, :allow_destroy => true
+
+  def self.userYearExists?(user_id,year)
+  	bol = Year.exists?(:user_id => user_id, :year => year)
+  	return bol
+  end
+
+  def self.findYear(user_id,year)
+  	year = Year.find(:first, :condition => ["user_id=? and year=?",user_id,year])
+  	return year
+  end
+
 end

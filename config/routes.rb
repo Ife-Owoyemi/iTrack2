@@ -32,6 +32,9 @@ ISwitched1::Application.routes.draw do
 
   match '/createCourseModalJson', :to => 'usercourses#createCourseModalJson'
   match '/createFromModal', :to => 'usercourses#createFromModal'
+  match '/undergrad/switchTabMajorsBa', :to => 'undergrad#switchTabMajorsBa'
+
+  match '/uploadTranscript', :to => 'users#uploadTranscript'
 
   resources :users do
     member do
