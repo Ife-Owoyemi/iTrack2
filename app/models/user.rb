@@ -168,14 +168,18 @@ class User < ActiveRecord::Base
   end
 
   require "csv"
+  #require 'iconv'
+
 
   def transcriptReader(transcriptFile)
     @transcript = Hash.new # => @user
     #delete all usercourses currently made up.
     @years = Array.new # => an array used to prevent multiple instances of the same year being made
+
+    file_string = transcriptFile.read.encode!("utf-8", "utf-8", :invalid => :replace)
  
     #Begin running through all of the rows in the cell
-    CSV.foreach("./fernandoTranscript.csv") do |cell|   
+    CSV.foreach(file_string) do |cell|
       # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
       if cell[0][0..4] == "Term:"
         # so here we construct the year as a 4 digit number given they are listed as two digits on the transcript
@@ -270,52 +274,53 @@ class User < ActiveRecord::Base
       end
       #algorithmkey
     end
-    createCoursesFromTranscript(@transcript)
+    User.createCoursesFromTranscript(@transcript)
   end
 
-  def createCoursesFromTranscript(transcriptHash)
+  def self.createCoursesFromTranscript(transcriptHash)
 
     transcriptHash.each_key do |year|
 
-    if year == "AP" # if the class is an AP course do the following
-      transcriptHash["AP"].each_key do |course|
+      if year == "AP" # if the class is an AP course do the following
+        transcriptHash["AP"].each_key do |course|
         
-      end
-
-
-    elsif year == "Transfer" # if the course is a Transfer course do the following 
-      # transfer code here
-
-    
-    else # if the course if a course from the university do the following
-      yearInteger = year.to_i
-      
-      if ( Year.userYearExists?(self.id, yearInteger) == true) # check if the year already exist for this user
-        courseYear = Year.findYear(self.id,yearInteger) # if year set the course to the year
-      else # if year does not exist set courseYear to a new year
-        courseYear = self.years.create!(:year => yearInteger) 
-      end
-
-      transcriptHash[year].each_key do |semester| # go through each semester for this year
-        
-        if (Semester.userSemesterExists?(courseYear.id,semester)) # if the semester for the year exists set the semester to that semester  
-          courseSemester = findSemester(courseYear.id,semester)
-        else
-          courseSemester = courseYear.semesters.create!(:semester => semester)# will also need to create the appropriate semesters for this year
         end
 
-        # this sections looks through the semester's course to create the usercourses
-        transcriptHash[semester].each_key do |courseInfo|
-          courseInfoArray = courseInfo.split(' ') 
-          dep = courseInfoArray[0]
-          num = courseInfoArray[1].to_i
-          # create the course if it doesn't already exist
-          if ( Usercourse.semesterCourseExists?(courseSemester.id,dep,num) == false )
-            credits = transcriptHash[semester][courseInfo][:credits]
-            grade = transcriptHash[semester][courseInfo][:grade]
-            Usercourse.createSemesterCourseWithTranscript(courseSemester,dep,num,credits,grade) # create usercourse with info from hash for the hash
+
+      elsif year == "Transfer" # if the course is a Transfer course do the following 
+        # transfer code here
+
+    
+      else # if the course if a course from the university do the following
+        yearInteger = year.to_i
+      
+        if ( Year.userYearExists?(self.id, yearInteger) == true) # check if the year already exist for this user
+          courseYear = Year.findYear(self.id,yearInteger) # if year set the course to the year
+        else # if year does not exist set courseYear to a new year
+          courseYear = self.years.create!(:year => yearInteger) 
+        end
+
+        transcriptHash[year].each_key do |semester| # go through each semester for this year
+        
+          if (Semester.userSemesterExists?(courseYear.id,semester)) # if the semester for the year exists set the semester to that semester  
+            courseSemester = findSemester(courseYear.id,semester)
+          else
+            courseSemester = courseYear.semesters.create!(:semester => semester)# will also need to create the appropriate semesters for this year
           end
-                   
+
+          # this sections looks through the semester's course to create the usercourses
+          transcriptHash[year][semester].each_key do |courseInfo|
+            courseInfoArray = courseInfo.split(' ') 
+            dep = courseInfoArray[0]
+            num = courseInfoArray[1].to_i
+            # create the course if it doesn't already exist
+            if ( Usercourse.semesterCourseExists?(courseSemester.id,dep,num) == false )
+              credits = transcriptHash[semester][courseInfo][:credits]
+              grade = transcriptHash[semester][courseInfo][:grade]
+              Usercourse.createSemesterCourseWithTranscript(courseSemester,dep,num,credits,grade) # create usercourse with info from hash for the hash
+            end
+
+          end
         end
       end
     end

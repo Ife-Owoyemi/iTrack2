@@ -31,8 +31,25 @@ class UsercoursesController < ApplicationController
 
 	def createFromModal
 		@user = current_user
-		@usercouse = Usercourse.new(params[:usercourse])
-		if (@usercouse.save)
+
+		pyear = params[:usercourse][:year].to_i
+		if ( Year.userYearExists?(current_user.id,pyear) == true )
+			year = Year.findYear(current_user.id,pyear)
+		else
+			year = current_user.create!(:year => pyear)
+		end
+
+
+		semester = params[:usercourse][:semester]
+
+
+		department = params[:usercourse][:department]
+		num = params[:usercourse][:num]
+		grade = params[:usercourse][:grade]
+		credits = params[:usercourse][:credits].to_i
+
+		@usercourse = createSemesterCourseFromTracks(semester,department,num,credits,grade)
+		if (@usercourse.save)
 			flash[:success] = "New Course Added!"
 			respond_to do |format| 
 				format.js 

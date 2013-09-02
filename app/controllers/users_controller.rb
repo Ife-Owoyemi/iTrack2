@@ -20,8 +20,8 @@ class UsersController < ApplicationController
     if signed_in? == false
       redirect_to signin_path
     elsif (params[:id] != nil)
-      cuser_courses = User.usercourses(current_user) 
       @user = User.find(params[:id])
+      @cuser_courses = User.usercourses(@user) 
       @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
@@ -33,8 +33,8 @@ class UsersController < ApplicationController
       @internships = @user.internships.all
       @conferences = @user.conferences.all 
     elsif (params[:id] == nil && signed_in? == true) 
-      cuser_courses = User.usercourses(current_user)
       @user = current_user
+      @cuser_courses = User.usercourses(@user)
       @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
@@ -180,6 +180,7 @@ class UsersController < ApplicationController
 
   def uploadTranscript
     current_user.transcriptReader(params[:transcript][:file])
+    redirect_to root_path
   end
 
 
