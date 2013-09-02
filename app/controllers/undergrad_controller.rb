@@ -17,18 +17,19 @@ class UndergradController < ApplicationController
 
   def majorsba
     #@years = current_user.years.all
-    @tabNum = 0
-    @taken = Hash.new
-    @taking = Hash.new
-    @wTake = Hash.new
-    @user_courses = Hash.new
-    @coursearray = Array.new
+    #@tabNum = 0
+    @user = current_user
+    @taken = @user.takenHash
+    @taking = @user.takingHash
+    @wTake = @user.wtakeHash
+    @user_courses = @user.usercoursesHash
+    @coursearray = @user.coursearray
 
-    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id], :include => [ {:semesters => :usercourses}, :user ])
+    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
     #@institution = Institution.where(:name => "Rice University")    
-    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'], :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
+    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])#, :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
     @institution.each do |type| 
       a = type.achievementtypes.all
       a.each do |t|

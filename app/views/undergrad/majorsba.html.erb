@@ -32,13 +32,13 @@
 
 
 
-  <div class="tab-contentx">
-    <%# i = 0    b[i] %>
-    <%# for college in b %>
+  <div class="tab-content">
+    <% i = 0 %>
+    <% for college in @b %>
     <%# i = 3 %>
-      <%= render "shared/calculation", :college => @b[@tabNum], :taken => @taken, :taking => @taking, :wtake => @wtake, :i => @tabNum, :user_courses => @user_courses, :coursearray => @coursearray %>
-      <%# i += 1 %>
-    <%# end %>
+      <%= render "shared/calculation", :college => @b[i], :taken => @taken, :taking => @taking, :wtake => @wTake, :i => i, :user_courses => @user_courses, :coursearray => @coursearray %>
+      <% i += 1 %>
+    <% end %>
   </div>
 
 <% else %>

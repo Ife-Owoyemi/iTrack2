@@ -5,7 +5,7 @@ class AddTransferIdToUsercourses < ActiveRecord::Migration
 	end
 
 	def down 
-		rmeove_column :usercourses, :transfer_id
+		remove_column :usercourses, :transfer_id
 	end
 
 end

@@ -379,6 +379,14 @@
     </section>
     <section>
       <h4>Transcript</h4>
+
+      <%= form_for :transcript, :url => {:controller => "users", :action => "uploadTranscript"}, multipart: true do |f| %>
+        <%= f.file_field :file %>
+        <%= f.submit "Import Transcript" %>
+      <% end %>
+
+
+
       <% @diArray = Array.new %>
       <% @diiArray = Array.new %>
       <% @diiiArray = Array.new %>

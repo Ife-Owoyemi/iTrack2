@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821001454) do
+ActiveRecord::Schema.define(:version => 20130901184427) do
 
   create_table "achievementnames", :force => true do |t|
     t.integer  "college_id"
@@ -326,6 +326,11 @@ ActiveRecord::Schema.define(:version => 20130821001454) do
     t.string   "postGradPlans"
     t.boolean  "hideemail"
     t.boolean  "hideprofile"
+    t.text     "coursearray"
+    t.text     "usercoursesHash"
+    t.text     "takenHash"
+    t.text     "takingHash"
+    t.text     "wtakeHash"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -1,4 +1,5 @@
 include UsersHelper
+include SessionsHelper
 class UsersController < ApplicationController
   respond_to :json, :html, :xml, :js
   before_filter :signed_in_user, only: [:index, :edit, :update, :destroy, :following, :followers]
@@ -15,8 +16,11 @@ class UsersController < ApplicationController
     @ucatalog["diii"] = Hash.new
     @courses = Catalog.all
     @ucatalog = Catalog.distributionbuilder(@courses)
-    cuser_courses = User.usercourses(current_user)
-    if (params[:id] != nil)
+    
+    if signed_in? == false
+      redirect_to signin_path
+    elsif (params[:id] != nil)
+      cuser_courses = User.usercourses(current_user) 
       @user = User.find(params[:id])
       @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
@@ -27,10 +31,9 @@ class UsersController < ApplicationController
       @institution = Institution.where(:name => "Rice University")  
       @awards = @user.awards.all
       @internships = @user.internships.all
-      @conferences = @user.conferences.all
-    elsif current_user == nil
-        redirect_to signin_path
-    else
+      @conferences = @user.conferences.all 
+    elsif (params[:id] == nil && signed_in? == true) 
+      cuser_courses = User.usercourses(current_user)
       @user = current_user
       @variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
@@ -174,6 +177,12 @@ class UsersController < ApplicationController
       @users = @qusers.paginate(:page => 1, :per_page => 10)
     end        
   end
+
+  def uploadTranscript
+    current_user.transcriptReader(params[:transcript][:file])
+  end
+
+
 
   private
     def signed_in_user
