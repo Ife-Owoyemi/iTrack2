@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
       @cuser_courses = User.usercourses(@user) 
 
-      @variable = User.sampleFunction1(@user)
+      #@variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
       @conferences = @user.conferences.all 
       @user = current_user
       @cuser_courses = User.usercourses(@user)
-      @variable = User.sampleFunction1(@user)
+      #@variable = User.sampleFunction1(@user)
 
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
