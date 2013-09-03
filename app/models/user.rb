@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
   
-  def self.sampleFunction1(model)
+  def self.courseHashArrayGenerator(model)
     taken = Hash.new
     taking = Hash.new
     wtake = Hash.new
@@ -165,6 +165,44 @@ class User < ActiveRecord::Base
       end 
     end 
     return cuser_courses
+  end
+
+
+  def self.studentachievementhashgenerator(achievementmodelsarray, achievementhash, taken, taking, wtake)
+    @studentachievementhash = Hash.new
+    for achievementtype in achievementmodelsarray
+      if !@studentachievementhash.has_key?(achievementtype.achievementtype)
+          @studentachievementhash[achievementtype.achievementtype] = Hash.new
+        end
+      achievementhash[achievementtype.achievementtype].each_key do |collegek|
+        if !@studentachievementhash[achievementtype.achievementtype].has_key?(collegek)
+          @studentachievementhash[achievementtype.achievementtype][collegek] = Hash.new
+        end
+        collegem = achievementtype.colleges.where(:college => collegek )
+        collegem.each do |college|
+          collegehash = achievementhash[achievementtype.achievementtype][college.college]
+          collegehash.each_key do |achievementnamek|
+            if !@studentachievementhash[achievementtype.achievementtype][collegek].has_key?(achievementnamek)
+              @studentachievementhash[achievementtype.achievementtype][collegek][achievementnamek] = Hash.new
+            end
+            achievementnamemarray = college.achievementnames.where(:achievementname => achievementnamek )
+            achievementnamemarray.each do |achievementname|             
+              
+                collegehash[achievementnamek].each_key do |specialtyk|
+                  specialtymarray = achievementname.specialties.where(:specialty => specialtyk)
+                  specialtymarray.each do |specialty|
+                    
+                    @studentachievementhash[achievementtype.achievementtype][collegek][achievementnamek][specialtyk] = Specialty.calculate(specialty, taken, taking, wtake)
+                    
+                  end
+                end
+              
+            end
+          end
+        end
+      end
+    end
+    return @studentachievementhash
   end
 
   require "csv"
@@ -351,6 +389,7 @@ class User < ActiveRecord::Base
     end
 
   end # end of this method
+
 
 
 =begin  

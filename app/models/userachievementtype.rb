@@ -1,7 +1,24 @@
 class Userachievementtype < ActiveRecord::Base
   attr_accessible :achievementname, :achievementtype, :college, :specialty
   belongs_to :user
-
+  def self.achievementhashgenerator(modelArray)
+    achievementhash = Hash.new
+    modelArray.each do |type|
+      if !achievementhash.has_key?(type.achievementtype)
+        achievementhash[type.achievementtype] = Hash.new
+      end
+      if !achievementhash[type.achievementtype].has_key?(type.college)
+        achievementhash[type.achievementtype][type.college] = Hash.new
+      end
+      if !achievementhash[type.achievementtype][type.college].has_key?(type.achievementname)
+        achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new
+      end
+      if !achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty)
+        achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new
+      end
+    end 
+    return achievementhash
+  end
 =begin
   searchable do
   	text :achievementname, :achievementtype, :college, :specialty

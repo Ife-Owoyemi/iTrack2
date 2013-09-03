@@ -1,11 +1,7 @@
 <% if signed_in? %>
 
 
-<% taken = @variable[0] %>
-<% taking = @variable[1] %>
-<% wtake = @variable[2] %>
-<% user_courses = @variable[3] %>
-<% coursearray = @variable[4] %>
+
 
 
 
@@ -16,83 +12,12 @@
 
 
 
-<% achievements = Array.new %>
-<% provide(:title, @user.name) %>
-<% achievementhash = Hash.new %>
-<% @achievement = Array.new %>
-<% @achievementtypes.each do |type| %>
-  <% type.achievementtype %>
-  <% achievements << type.achievementtype %>
-  <% if achievementhash.has_key?(type.achievementtype) %>
-    <% if achievementhash[type.achievementtype].has_key?(type.college) %>
-      <% if achievementhash[type.achievementtype][type.college].has_key?(type.achievementname) %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% else %>
-        <% achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% end %>
-    <% else %>
-      <% achievementhash[type.achievementtype][type.college] = Hash.new %>
-      <% if achievementhash[type.achievementtype][type.college].has_key?(type.achievementname) %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% else %>
-        <% achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% else %>
-    <% achievementhash[type.achievementtype] = Hash.new %>
-    <% if achievementhash[type.achievementtype].has_key?(type.college) %>
-      <% if achievementhash[type.achievementtype][type.college].has_key?(type.achievementname) %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% else %>
-        <% achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% end %>
-    <% else %>
-      <% achievementhash[type.achievementtype][type.college] = Hash.new %>
-      <% if achievementhash[type.achievementtype][type.college].has_key?(type.achievementname) %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% else %>
-        <% achievementhash[type.achievementtype][type.college][type.achievementname] = Hash.new %>
-        <% if achievementhash[type.achievementtype][type.college][type.achievementname].has_key?(type.specialty) %>
-        <% else %>
-          <% achievementhash[type.achievementtype][type.college][type.achievementname][type.specialty] = Hash.new %>
-        <% end %>
-      <% end %>
-    <% end %>
-  <% end %>
-<% end %>
 
-<% @institution.each do |type| %>
-  <% a = type.achievementtypes.all %>
-    <% a.each do |t| %>
-    <% if achievements.include?(t.achievementtype) %> 
-      <% @achievement << t %>
-    <% end %>
-  <% end %>
-<% end %>
+<% provide(:title, @user.name) %>
+<!-- Moved to Controller -->
+
+
+
 
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
@@ -315,11 +240,11 @@
   <aside class="span9">
     <section>
       <h4>Tracks</h4>
-      
+      <!-- Code Being renovated to move to models then controllers -->
       <ul class="nav nav-tabs">
         <% i = 0 %>
         <% for achievementtype in @achievement %> 
-          <% achievementhash[achievementtype.achievementtype].each_key do |key| %>
+          <% @achievementhash[achievementtype.achievementtype].each_key do |key| %>
             <% b = achievementtype.colleges.where(:college => key ) %>
             <% b.each do |h| %>
               <% college = h %>
@@ -337,7 +262,7 @@
             <% @userspecialties[achievementtype.achievementtype] = Hash.new %>
           <% end %>
           
-          <% achievementhash[achievementtype.achievementtype].each_key do |key| %>
+          <% @achievementhash[achievementtype.achievementtype].each_key do |key| %>
             <% b = achievementtype.colleges.where(:college => key ) %>
             <% b.each do |h| %>
               <% college = h %>
@@ -346,12 +271,14 @@
                 <% @userspecialties[achievementtype.achievementtype][college.college] = Hash.new %>
                <% end %>
               <!-- Here -->
-              <%= render :partial => "shared/calculation2",   :locals => {:@optimize => @optimize,  :@userspecialtiescollege => @userspecialties[achievementtype.achievementtype][college.college], :college => college, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :user_courses => user_courses, :coursearray => coursearray, :collegehash => achievementhash[achievementtype.achievementtype][college.college]} %>
+              <%= render :partial => "shared/calculation2",   :locals => {:@optimize => @optimize,  :@userspecialtiescollege => @userspecialties[achievementtype.achievementtype][college.college], :college => college, :taken => @taken, :taking => @taking, :wtake => @wtake, :i => i, :user_courses => @user_courses, :coursearray => @coursearray, :collegehash => @achievementhash[achievementtype.achievementtype][college.college]} %>
 
               <% i += 1 %>
             <% end %>
           <% end %>
         <% end %>
+
+        <!-- End of Code renovation -->
         <!-- Prelimiary Course predicting code -->
         <% @allcoursehash = Hash.new %>
         <% @userspecialties.each_key do |a| %> <!-- achievementtype -->
@@ -830,7 +757,7 @@
             <div class="accordion-inner">
               <ul class="nav nav-tabs">
                 <% ia = 25 %>
-                <% user_courses.each_key do |department| %>
+                <% @user_courses.each_key do |department| %>
                   <li><a href="#<%= ia %>" data-toggle="tab"><%= department %></a></li>
                   <% ia += 1 %>
                 <% end %>
@@ -838,26 +765,26 @@
               <div class="tab-content">
                 <% ia = 25 %>
                 
-                <% user_courses.each_key do |department| %>
+                <% @user_courses.each_key do |department| %>
                   <% dephours = 0 %>
                   <% depcourses = 0 %>
                   <% ulhours = 0 %>
                   <% ulcourses = 0 %>
 
                   <div class="tab-pane" id="<%= ia %>">
-                    <% user_courses[department].each_key do |ind| %>
+                    <% @user_courses[department].each_key do |ind| %>
                       
                       <div>
                         <%= department %> <%= ind %>
                       </div>
-                      <% if user_courses[department][ind] != nil %>
-                        <% dephours += user_courses[department][ind] %>
+                      <% if @user_courses[department][ind] != nil %>
+                        <% dephours += @user_courses[department][ind] %>
                       <% end %>
                       <% depcourses += 1 %>
-                      <% if user_courses[department][ind] != nil %>
+                      <% if @user_courses[department][ind] != nil %>
 
                         <% if ind.to_i >= 300 %>
-                          <% ulhours += user_courses[department][ind] %>
+                          <% ulhours += @user_courses[department][ind] %>
                           <% ulcourses += 1 %>
                         <% end %>
                       <% end %>
