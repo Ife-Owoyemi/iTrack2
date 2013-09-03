@@ -1,5 +1,5 @@
 class Year < ActiveRecord::Base
-  attr_accessible :year, :semesters_attributes
+  attr_accessible :year, :semesters_attributes, :user_id
   belongs_to :user
   has_many :semesters
   accepts_nested_attributes_for :semesters, :allow_destroy => true
@@ -10,7 +10,7 @@ class Year < ActiveRecord::Base
   end
 
   def self.findYear(user_id,year)
-  	year = Year.find(:first, :condition => ["user_id=? and year=?",user_id,year])
+  	year = Year.find(:first, :conditions => ["user_id=? and year=?",user_id,year])
   	return year
   end
 

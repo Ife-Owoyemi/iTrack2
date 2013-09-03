@@ -11,7 +11,7 @@ class Semester < ActiveRecord::Base
   end
 
   def self.findSemester(year_id,semester)
-  	semester = Semester.find(:first, :condition => ["year_id=? and semester=?",year_id,semester])
+  	semester = Semester.find(:first, :conditions => ["year_id=? and semester=?",year_id,semester])
   	return semester
   end
 

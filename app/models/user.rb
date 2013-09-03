@@ -176,14 +176,15 @@ class User < ActiveRecord::Base
     #delete all usercourses currently made up.
     @years = Array.new # => an array used to prevent multiple instances of the same year being made
 
-    file_string = transcriptFile.read.encode!("utf-8", "utf-8", :invalid => :replace)
- 
+    #file_string = transcriptFile.read.force_encoding("ISO-8859-1").encode!("utf-8", "utf-8", :invalid => :replace)
+    
     #Begin running through all of the rows in the cell
-    CSV.foreach(file_string) do |cell|
+    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |cell|
       # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
       if cell[0][0..4] == "Term:"
         # so here we construct the year as a 4 digit number given they are listed as two digits on the transcript
         @year = cell[0][11..12].to_i + 2000
+
         # Now we take a sample of the letters following the segment "Term:"
         semesterpartial = cell[0][6..9]
         # Here is a loop that finds what semester is referenced
@@ -217,6 +218,7 @@ class User < ActiveRecord::Base
  
         # Here we define a variable that will allow courses after this to be made into instances
         @algkey = "Rice"
+
         # Before courses are listed in a transcript a title line is defined.
         # I used the existence of this line to define a variable that allows for following lines to fall into else and turn into created courses.  
       elsif cell[0] == "Subject"
@@ -234,6 +236,14 @@ class User < ActiveRecord::Base
           @transcript["AP"] = Hash.new
       else
         # Given @countcourse is true then lines that fall through this avenue are courses that are about to be created.
+
+          # debugging help -Ife
+            for i in 0..300
+              puts "Else Statement"
+            end
+          # end debugging help
+
+
         if @countcourse
           # if they are ap they follow this route
           if @algkey == "AP"
@@ -266,6 +276,13 @@ class User < ActiveRecord::Base
               grade = cell[9]
               credits = cell[10]
             end
+
+          # debugging help -Ife
+            for i in 0..300
+              puts depabbr
+            end
+          # end debugging help
+
             @transcript[@year.to_s][@semester][depabbr + " " + num.to_s] = Hash.new
             @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:grade] = grade
             @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:credits] = credits
@@ -274,10 +291,10 @@ class User < ActiveRecord::Base
       end
       #algorithmkey
     end
-    User.createCoursesFromTranscript(@transcript)
+    createCoursesFromTranscript(@transcript)
   end
 
-  def self.createCoursesFromTranscript(transcriptHash)
+  def createCoursesFromTranscript(transcriptHash)
 
     transcriptHash.each_key do |year|
 
@@ -293,9 +310,9 @@ class User < ActiveRecord::Base
     
       else # if the course if a course from the university do the following
         yearInteger = year.to_i
-      
-        if ( Year.userYearExists?(self.id, yearInteger) == true) # check if the year already exist for this user
-          courseYear = Year.findYear(self.id,yearInteger) # if year set the course to the year
+        user_id = self.id
+        if ( Year.userYearExists?(user_id, yearInteger) == true) # check if the year already exist for this user
+          courseYear = Year.findYear(user_id,yearInteger) # if year set the course to the year
         else # if year does not exist set courseYear to a new year
           courseYear = self.years.create!(:year => yearInteger) 
         end
@@ -303,9 +320,16 @@ class User < ActiveRecord::Base
         transcriptHash[year].each_key do |semester| # go through each semester for this year
         
           if (Semester.userSemesterExists?(courseYear.id,semester)) # if the semester for the year exists set the semester to that semester  
-            courseSemester = findSemester(courseYear.id,semester)
+            courseSemester = Semester.findSemester(courseYear.id,semester)
           else
             courseSemester = courseYear.semesters.create!(:semester => semester)# will also need to create the appropriate semesters for this year
+          end
+
+          # debugging help
+          if (transcriptHash[year][semester].empty?)
+            for i in 0..10
+              puts "EMPTY!!!!!!"
+            end
           end
 
           # this sections looks through the semester's course to create the usercourses
@@ -313,6 +337,7 @@ class User < ActiveRecord::Base
             courseInfoArray = courseInfo.split(' ') 
             dep = courseInfoArray[0]
             num = courseInfoArray[1].to_i
+            puts num
             # create the course if it doesn't already exist
             if ( Usercourse.semesterCourseExists?(courseSemester.id,dep,num) == false )
               credits = transcriptHash[semester][courseInfo][:credits]
