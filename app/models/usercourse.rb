@@ -27,8 +27,9 @@ class Usercourse < ActiveRecord::Base
 
   end
 
-  def self.createApCourseWithTranscript(ap,department,num,credits,grade)
-
+  def self.createApCourseWithTranscript(ap,department,num,numOfcredits)
+    course = ap.usercourses.create!(:department => department, :num => num, :credits => numOfcredits, :status => "Taken", :institution => nil, :grade => "", :prof => 'Click to enter Professor', :profquality => 5, :hpweek => 5, :follows => '50/50', :nomidterms => 0, :noessays => 0, :nopprojects => 0, :nogprojects => 0, :suggest => 'Add tips, or location of useful outside resources to suceed in this class', :nofinals => 0)
+    return course
   end
 
   def self.createTransferCourseWithTranscript(transfer,department,num,credits,grade)

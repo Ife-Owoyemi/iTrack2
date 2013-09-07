@@ -271,7 +271,7 @@ class User < ActiveRecord::Base
      
         # These were two key phrases that are found after course listings have ended and I used them to define the end of where lines are allowed to be created into courses
  
-      elsif cell[0][0..4] == "Term " #or cell[1] == nil
+      elsif cell[0][0..4] == "Term " || cell[0][0..4] == ",,,,A" #or cell[1] == nil
         @countcourse = false
         # I found that AP Courses for my transcript were prefaced with "Fall" so I used it to define the begining of AP course listings
       elsif cell[0][0..3] == "Fall"
@@ -299,17 +299,23 @@ class User < ActiveRecord::Base
 
 
           if @algkey == "AP"
-            depabbr = cell[0]
+            depabbr = cell[0][0..3]
             # Corrects for COMC num of TST
-            if cell[1] == "TST"
+            if cell[0][5..7] == "TST"
               num = 000
             else
-              num = cell[1]
+              num = cell[0][5..7]
             end
-            credits = cell[8]
- 
+            #credits = cell[8]
+            usefulCourseInfo = cell[0].split(",,,")[1]
+            courseInfoS = usefulCourseInfo.split(",")
+            credits = courseInfoS[1]
+            for i in 1...300
+              puts usefulCourseInfo
+            end
+
             @transcript["AP"][depabbr + " " + num.to_s] = Hash.new
-            @transcript["AP"][depabbr + " " + num.to_s][:credits] = credits
+            @transcript["AP"][depabbr + " " + num.to_s][:credits] = credits.to_i
             # Here is where transfers would fall but I dont know yet.
           elsif @algkey == "Transfer"
              
@@ -317,7 +323,8 @@ class User < ActiveRecord::Base
           elsif @algkey == "Rice"
             #depabbr = cell[0]
             depabbr = cell[0][0..3]
-            if cell[1] == "TST"
+            #if cell[1] == "TST"
+            if cell[0][5..7] == "TST"
               num = 100
             else
               #num = cell[1]
@@ -330,7 +337,6 @@ class User < ActiveRecord::Base
             usefulCourseInfo = usefulInfo.split(",")
             grade = usefulCourseInfo[0]
             credits = usefulCourseInfo[1]
-            puts credits
             if @year == 2013 and @semester == "Fall"
               #i grade = cell[0][-7]
               #i credits = cell[0][-5]
@@ -367,7 +373,19 @@ class User < ActiveRecord::Base
 
       if year == "AP" # if the class is an AP course do the following
         transcriptHash["AP"].each_key do |course|
-        
+          if ( Ap.userApExists?(self.id) )
+            ap = Ap.findAp(self.id)
+          else
+            ap = self.aps.create!
+          end  
+          courseInfoA = course.split(" ")
+          department = courseInfoA[0]
+          num = courseInfoA[1]
+          credits = transcriptHash["AP"][course][:credits]
+
+          Usercourse.createApCourseWithTranscript(ap,department,num,credits)  
+
+
         end
 
 
