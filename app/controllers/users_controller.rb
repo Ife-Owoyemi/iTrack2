@@ -212,6 +212,7 @@ class UsersController < ApplicationController
 
   def uploadTranscript
     current_user.transcriptReader(params[:transcript][:file])
+    flash[:notice] = "Transcript updated!"
     redirect_to root_path
   end
 

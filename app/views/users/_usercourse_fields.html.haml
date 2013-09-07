@@ -2,7 +2,7 @@
   = f.inputs :institution, :department, :num, :credits, :status, :prof, :profquality, :hpweek, :follows, :nopprojects, :nogprojects, :noessays, :nomidterms, :nofinals, :suggest do
     = f.input :department, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:placeholder => "ANTH",:class => "input-small"}
     = f.input :num, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:style => '',:placeholder => "101", :class => "input-small"}
-    = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float input-mini pull-left" }, :input_html => {:style => '',:value => "3", :class => "special input-mini"}
+    = f.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float input-mini pull-left" }, :input_html => {:style => '',:placeholder => "3", :class => "special input-mini"}
     - if @inst == "Rice"
       = f.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"}
     - else

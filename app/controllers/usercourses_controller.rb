@@ -68,14 +68,14 @@ class UsercoursesController < ApplicationController
 		if (@usercourse.update_attributes!(params[:usercourse]))
 			flash[:success] = "Course Update was a success"
 			respond_to do |format|
-				format.html { redirect_to current_user }
+				format.html { redirect_to root_path }
 				format.json {respond_with_bip(@usercourse)}
 			end
 		else
 			@errors = @usercourse.errors.full_messages
 			flash[:warning] = @errors
 			respond_to do |format|
-				format.html {redirect_to current_user}
+				format.html {redirect_to root_path}
 				format.json { render :json => {:errors => @errors, :status => 422} }
 			end
 		end

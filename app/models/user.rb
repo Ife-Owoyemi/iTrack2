@@ -219,7 +219,13 @@ class User < ActiveRecord::Base
     #Begin running through all of the rows in the cell
     CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |cell|
       # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
+
+          # debugging help -Ife
+              #puts cell[0][0..6]
+          # end debugging help
+
       if cell[0][0..4] == "Term:"
+        @countcourse = false
         # so here we construct the year as a 4 digit number given they are listed as two digits on the transcript
         @year = cell[0][11..12].to_i + 2000
 
@@ -259,13 +265,13 @@ class User < ActiveRecord::Base
 
         # Before courses are listed in a transcript a title line is defined.
         # I used the existence of this line to define a variable that allows for following lines to fall into else and turn into created courses.  
-      elsif cell[0] == "Subject"
+      elsif cell[0][0..6] == "Subject"
         @countcourse = true
         # Defines the end of a series of courses  nil is the ap stop and Term  is the end of others
      
         # These were two key phrases that are found after course listings have ended and I used them to define the end of where lines are allowed to be created into courses
  
-      elsif cell[0][0..4] == "Term " or cell[1] == nil
+      elsif cell[0][0..4] == "Term " #or cell[1] == nil
         @countcourse = false
         # I found that AP Courses for my transcript were prefaced with "Fall" so I used it to define the begining of AP course listings
       elsif cell[0][0..3] == "Fall"
@@ -276,14 +282,22 @@ class User < ActiveRecord::Base
         # Given @countcourse is true then lines that fall through this avenue are courses that are about to be created.
 
           # debugging help -Ife
-            for i in 0..300
-              puts "Else Statement"
-            end
+            #for i in 0..1
+            #  puts "Else Statement"
+            #end
           # end debugging help
 
 
         if @countcourse
           # if they are ap they follow this route
+
+          # debugging help -Ife
+            #for i in 0..10
+              #puts "Courseeeeeeeee" + cell[0][0..6]
+            #end
+          # end debugging help
+
+
           if @algkey == "AP"
             depabbr = cell[0]
             # Corrects for COMC num of TST
@@ -301,29 +315,44 @@ class User < ActiveRecord::Base
              
             # Here is where regular rice courses are defined
           elsif @algkey == "Rice"
-            depabbr = cell[0]
+            #depabbr = cell[0]
+            depabbr = cell[0][0..3]
             if cell[1] == "TST"
               num = 100
             else
-              num = cell[1]
+              #num = cell[1]
+              num = cell[0][5..7]
             end
+
+            allInfo = cell[0]
+            organizedInfo = cell[0].split(",,,,,")
+            usefulInfo = organizedInfo[1]
+            usefulCourseInfo = usefulInfo.split(",")
+            grade = usefulCourseInfo[0]
+            credits = usefulCourseInfo[1]
+            puts credits
             if @year == 2013 and @semester == "Fall"
-              grade = cell[9]
-              credits = cell[10]
+              #i grade = cell[0][-7]
+              #i credits = cell[0][-5]
+              #grade = cell[9]
+              #credits = cell[10]
             else
-              grade = cell[9]
-              credits = cell[10]
+              #i grade = cell[0][-7]
+              #i credits = cell[0][-5]              
+              #grade = cell[9]
+              #credits = cell[10]
             end
 
           # debugging help -Ife
-            for i in 0..300
-              puts depabbr
-            end
+            #for i in 0..10
+              #puts depabbr
+              #puts num
+            #end
           # end debugging help
 
             @transcript[@year.to_s][@semester][depabbr + " " + num.to_s] = Hash.new
             @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:grade] = grade
-            @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:credits] = credits
+            @transcript[@year.to_s][@semester][depabbr + " " + num.to_s][:credits] = credits.to_i
           end
         end
       end
@@ -375,11 +404,11 @@ class User < ActiveRecord::Base
             courseInfoArray = courseInfo.split(' ') 
             dep = courseInfoArray[0]
             num = courseInfoArray[1].to_i
-            puts num
+            credits = transcriptHash[year][semester][courseInfo][:credits]
+            grade = transcriptHash[year][semester][courseInfo][:grade]
             # create the course if it doesn't already exist
             if ( Usercourse.semesterCourseExists?(courseSemester.id,dep,num) == false )
-              credits = transcriptHash[semester][courseInfo][:credits]
-              grade = transcriptHash[semester][courseInfo][:grade]
+              puts credits
               Usercourse.createSemesterCourseWithTranscript(courseSemester,dep,num,credits,grade) # create usercourse with info from hash for the hash
             end
 
