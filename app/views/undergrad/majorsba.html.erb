@@ -16,7 +16,7 @@
     <% for college in @b %> 
       <li>
         <!--a href="/undergrad/switchTabMajorsBa?tabNum=<%= i %>" data-toggle="tab" data-remote="true"-->
-        <a href="#<%= i %>" data-toggle="tab" data-remote="true">
+        <a href="#<%= i %>" data-toggle="tab">
         <%# link_to '', :url => {:controller => "undergrad", :action => "switchTabMajorsBa", :tabNum => i}, :class => "collegeTab", :remote => true, :data => {toggle: "tab"} do %>
 
           <%= college.college %>
