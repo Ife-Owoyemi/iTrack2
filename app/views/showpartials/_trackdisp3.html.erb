@@ -1,0 +1,103 @@
+<!-- The specialty model within the hash -->
+<!-- define specialty = hashentry -->
+
+
+<!-- Specialty Accordion -->
+<% @achievementname.each_key do |specialtykey| %>
+  <% specialty = @achievementname[specialtykey][:model] %>
+  <% @specialty = @achievementname[specialtykey] %>
+  <% @takent = @specialty[:stats][:takent] %>
+  <% @takingt = @specialty[:stats][:takingt] %>
+  <% @wtaket = @specialty[:stats][:wtaket] %>
+  <% @need = @specialty[:stats][:left] %>
+  <% @coursestaken = @specialty[:stats][:ctaken] %>
+  <% @coursestaking = @specialty[:stats][:ctaking] %>
+  <% @courseswtake = @specialty[:stats][:cwtake] %>
+  <div class="accordion span7 pull-left" id="accordian<%= i %><%= k %>">                        
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %><%= k %>" href="#collapse<%= i %><%= k %><%= m %>">
+          <%= specialty.specialty %>: <%= @takent + @wtaket + @takingt%>%, <%= @need %> Courses Left
+        </a>
+      </div>
+      <div id="collapse<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >
+          <!-- Percentage Completion bar and statement -->
+          <p><b>Prospected Percent Complete: </b><%= @takent + @wtaket + @takingt%>%<%#content goes here position[:reason]%></p>
+          <div class="progress">
+            <div class="bar bar-success" style="width: <%= @takent %>%;"></div>
+            <div class="bar bar-warning" style="width: <%= @takingt %>%;"></div>
+            <div class="bar bar-danger" style="width: <%= @wtaket %>%;"></div>
+          </div>
+          <!-- Course Completion -->
+          <p><b>Courses Taken: <%= @coursestaken %></b></p>
+          <p><b>Courses Taking: <%= @coursestaking %></b></p>
+          <p><b>Courses Will Take: <%= @courseswtaket %></b></p>
+          
+
+
+          <% corereqarray = specialty.corereqs.all %>
+          <!-- Core Req accordion -->
+          <div class="accordion span6 pull-left" id="accordian11<%= i %><%= k %>">                        
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian11<%= i %><%= k %>" href="#collapse11<%= i %><%= k %><%= m %>">
+                <b>Core Requirements</b>
+                  </a>
+              </div>
+              <div id="collapse11<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+                <div class="accordion-inner" >
+                  <%= render "showpartials/trackdispcore", :@specialtyHash => @specialtyHash, :corereqarray => corereqarray, :coursearray => @cuser_courses, :i => i, :k => k, :m => m %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% opreqarray = specialty.opreqs.all %>
+          <!-- Op Req Accordion -->
+          <div class="accordion span6 pull-left" id="accordian12<%= i %><%= k %>">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian12<%= i %><%= k %>" href="#collapse12<%= i %><%= k %><%= m %>">
+                <b>Multi Option Requirements</b>
+                  </a>
+              </div>
+              <div id="collapse12<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+                <div class="accordion-inner" >
+                  <%= render "showpartials/trackdispop",:@specialtyHash => @specialtyHash,  :f => opreqarray, :coursearray => @cuser_courses, :user_courses => user_courses, :i => i, :k => k, :m => m %>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+
+          <% depnumarray = specialty.depnumreqs.all %>
+          <!-- Depnum Req Accordion -->
+          <div class="accordion span6 pull-left" id="accordian13<%= i %><%= k %>">
+            <div class="accordion-group">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian13<%= i %><%= k %>" href="#collapse13<%= i %><%= k %><%= m %>">
+                <b>Free Electives</b>
+                  </a>
+              </div>
+              <div id="collapse13<%= i %><%= k %><%= m %>"  class="accordion-body collapse">
+                <div class="accordion-inner" >
+                  <%= render "showpartials/trackdispdepnum", :@specialtyHash => @specialtyHash, :fg => depnumarray, :@totalc => @totalc, :taken => taken, :taking => taking, :wtake => wtake, :i => i, :k => k, :m => m %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%# --------------------------------------------------%>
+          <h4>Notes</h4>
+          <%= specialty.notes %>
+          <%# --------------------------------------------------%>
+          <h4>Advisor</h4>
+          <%= specialty.advisor %>
+          <%# --------------------------------------------------%>
+          <h4>Link Page</h4>
+          <%= specialty.linkhome %>
+        </div>
+      </div>
+    </div> 
+  </div>
+<% end %>

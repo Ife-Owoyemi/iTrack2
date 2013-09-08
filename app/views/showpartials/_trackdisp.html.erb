@@ -1,0 +1,29 @@
+<%# <% render :partial => 'showpartialstrackdisp2', :locals => {:@userachievementdisphash => @userachievementdisphash} %> 
+<!-- @userachievementdisphash - is a subset of the @userachievementhash, retrieved based on the users track choices -->
+
+<!-- Creating Tab instances -->
+<ul class="nav nav-tabs">
+  <% i = 0 %>
+  <% @userachievementdisphash.each_key do |achievementtype| %> <!-- e.g.  BA, BS, BA-S... --> 
+        <li><a href="#<%= i %>" data-toggle="tab"><%= achievementtype %></a></li>
+        <!-- Increments to distinguish tab id from each other -->
+        <% i += 1 %>
+  <% end %>
+</ul>
+
+<!-- Creating Tab content -->
+<div class="tab-content">
+  <% i = 0 %>
+  <!-- Looping through Achievementtypes entries.  --> 
+  <% @userachievementdisphash.each_key do |achievementtype| %> <!-- e.g.  BA, BS, BA-S... -->
+    <% @achievementtype = @userachievementdisphash[achievementtype] %>
+    <!-- Looping through Colleges -->
+    <% @achievementtype.each_key do |college| %><!-- e.g. School of Engineering, School of Social Sciences, ... -->
+      <% @college = @achievementtype[college] %>
+      <%= render :partial => "showpartials/trackdisp2",   :locals => {:@college => @college, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => @user_courses, :@cuser_courses => @cuser_courses, :i => i} %>
+
+    <% end %>
+    <!-- Increments to distinguish tab id from each other -->
+    <% i += 1 %>
+  <% end %>
+</div>

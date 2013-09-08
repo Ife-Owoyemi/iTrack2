@@ -26,10 +26,7 @@ class UsersController < ApplicationController
       @awards = @user.awards.all
       @internships = @user.internships.all
       @conferences = @user.conferences.all
-
       @cuser_courses = User.usercourses(@user) 
-
-      #@variable = User.sampleFunction1(@user)
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
@@ -54,7 +51,7 @@ class UsersController < ApplicationController
       @conferences = @user.conferences.all 
       @user = current_user
       @cuser_courses = User.usercourses(@user)
-      #@variable = User.sampleFunction1(@user)
+      @taken, @taking, @wtake, user_courses, coursearray = User.courseHashArrayGenerator(@user)
 
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
@@ -75,7 +72,7 @@ class UsersController < ApplicationController
     @achievementhash = Userachievementtype.achievementhashgenerator(@achievementtypes)
     @achievement = Institution.achievementmodelfetcher(@institution, @achievementhash)
     
-    @studentachievementhash = User.studentachievementhashgenerator(@achievement, @achievementhash, @taken, @taking, @wtake)
+    @userachievementdisphash = User.studentachievementhashgenerator(@achievement, @achievementhash, @taken, @taking, @wtake)
     # Prepare @studentspecialty
 
     # Planning to move to User Modelsg

@@ -1,0 +1,15 @@
+<% if @ucatalog["di"].has_key?(course.department + " " + course.num.to_s) %>
+  <% @di += course.credits %>
+  <% @diArray << course.department + " " + course.num.to_s %>
+  <% @color = "label-warning" %>
+<% end %>
+<% if @ucatalog["dii"].has_key?(course.department + " " + course.num.to_s) %>
+  <% @dii += course.credits %>
+  <% @diiArray << course.department + " " + course.num.to_s %>
+  <% @color = "label-info"%>
+<% end %>
+<% if @ucatalog["diii"].has_key?(course.department + " " + course.num.to_s) %>
+  <% @diii += course.credits %>
+  <% @diiiArray << course.department + " " + course.num.to_s %>
+  <% @color = "label-success"%>
+<% end %>

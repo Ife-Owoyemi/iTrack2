@@ -1,0 +1,43 @@
+<h1>Awards  <% if @user == current_user %>
+
+      <div 
+        class="label popover-link" 
+        data-original-title="Add Award"
+        data-content=
+
+        '<%= form_for(:award, :url => {:controller => 'awards', :action => 'create'}) do |f|%> 
+          <b> Award Title : </b><%= f.text_field :awardtitle, :class => 'stringField' %></br>
+          <b> Year : </b><%= f.text_field :year, :class => 'numField' %></br>
+          <b> Provider Name : </b><%= f.text_field :providername %></br>
+          <b> Award Prereqs : </b><%= f.text_area :awardprereqs, :class => 'toolArea' %></br>
+          <b> Award Perks : </b><%= f.text_area :awardperks, :class => 'toolArea' %></br>
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
+          
+          <%= f.submit 'Add Award' %>
+        <% end %>'
+        
+        >+</div><% end %>
+      </h1>
+
+      <% @awardscounter = 0 %>
+      <% @awards.each do |award| %>
+        <div class="accordion" id="awardsaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#awardsaccordion" href="#awardscollapse<%= @awardscounter %>">
+                <b><%= best_in_place_if current_user?(@user), award, :providername, :nil => "Click here to add this award's provider's name", :type => :input, :inner_class => "stringField" %>  -  <%= best_in_place_if current_user?(@user), award, :year, :nil => "Click here to add this award's year", :type => :input, :inner_class => "numField" %></b>  
+              </a>
+            </div>
+            <div id="awardscollapse<%= @awardscounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Title: </b><%= best_in_place_if current_user?(@user), award, :awardtitle, :nil => "Click here to add this award's title", :type => :input %></p>
+                <p><b>Perks: </b><%= best_in_place_if current_user?(@user), award, :awardperks, :nil => "Click here to add this award's perks", :type => :textarea %></p>
+                <p><b>Prereqs: </b><%= best_in_place_if current_user?(@user), award, :awardprereqs, :nil => "Click here to add this award's prerequisites", :type => :textarea %></p>
+                <p><b>Tips: </b><%= best_in_place_if current_user?(@user), award, :tipsforapp, :nil => "Click here to add this tips for this award", :type => :textarea %></p>
+              </div>
+            </div>
+          </div>
+          <% @awardscounter =+ 1 %>
+        </div>
+      <% end %>
