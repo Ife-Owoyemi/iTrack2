@@ -1,0 +1,38 @@
+<h1>Conferences <% if @user == current_user %><div 
+        class="label popover-link" 
+        data-content=
+
+        '<%= form_for(:conference, :url => {:controller => 'conferences', :action => 'create'}) do |f|%> 
+          <b> Conference Name : </b><%= f.text_field :conferencename, :class => 'stringField' %></br>
+          <b> Conference Begin date : </b><%= f.text_field :conbegin, :class => 'stringField' %></br>
+          <b> Conference End date : </b><%= f.text_field :conend, :class => 'stringField' %></br>
+          <b> Conference Take Aways : </b><%= f.text_area :contakeaway, :class => 'toolArea' %></br>         
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
+
+          <%= f.submit 'Add Conference' %>
+        <% end %>'
+        
+        data-original-title="Add Conference">+</div><% end %>
+      </h1>
+      
+      <% @conferencecounter = 0 %>
+      <% @conferences.each do |conf| %>
+        <div class="accordion" id="conferenceaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#conferenceaccordion" href="#conferencecollapse<%= @conferencecounter %>">
+                <b><%= best_in_place_if current_user?(@user), conf, :conferencename, :type => :input %>  :  <%= best_in_place_if current_user?(@user), conf, :conbegin, :type => :date, :display_with => :dateFormat %> - <%= best_in_place_if current_user?(@user), conf, :conend, :type => :date, :display_with => :dateFormat %></b> 
+              </a>
+            </div>
+            <div id="conferencecollapse<%= @conferencecounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Take Away: </b><%= best_in_place_if current_user?(@user), conf, :contakeaway, :type => :textarea %></p>
+                <p><b>Tips for Applying: </b><%= best_in_place_if current_user?(@user), conf, :tipsforapp, :type => :textarea %></p>
+              </div>
+            </div>
+          </div>
+          <% @conferencecounter =+ 1 %>
+        </div>
+      <% end %>
+    </section>

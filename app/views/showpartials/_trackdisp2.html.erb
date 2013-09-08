@@ -1,0 +1,27 @@
+<div class="tab-pane" id="<%= i %>">
+  <!-- Achievement accordion counter -->
+  <% k = 0 ;%> 
+  <% @college.each_key do |achievementname| %>
+    <% @achievementname = @college[achievementname] %>
+    <!-- Achievementname accordion -->
+    <div class="accordion span8 pull-left" id="accordian<%= i %>">      
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian<%= i %>" href="#collapser<%= i %><%= k %>">
+            <!-- Put in hash -->
+            <%= achievementname %>
+          </a>
+        </div>
+        <div id="collapser<%= i %><%= k %>"  class="accordion-body collapse">
+          <div class="accordion-inner" >
+            <!-- Specialty accordion counter -->
+            <% m = 0 %>
+            <%= render "showpartials/trackdisp3", :@achievementname => @achievementname, :user_courses => user_courses, :i => i, :k => k, :m => m, :@cuser_courses => @cuser_courses %>
+            <% m += 1 %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% k +=1 %>
+  <% end %>
+</div>

@@ -245,6 +245,9 @@ class Specialty < ActiveRecord::Base
     @specialtyHash[:stats][:takingt] = @takingt
     @specialtyHash[:stats][:wtaket] = @wtaket
     @specialtyHash[:stats][:left] = @specialtyclassesleft
+    @specialtyHash[:stats][:ctaken] = @specialtycoursestaken
+    @specialtyHash[:stats][:ctaking] = @specialtycoursestaking
+    @specialtyHash[:stats][:cwtake] = @specialtycourseswtake
     return @specialtyHash
   end
   def self.arraycreator(modelarray)

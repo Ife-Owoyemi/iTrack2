@@ -1,0 +1,18 @@
+<p id="user_status"><b>Status: </b>
+        <%= best_in_place_if current_user?(@user), @user, :status, :nil => 'Click here to add year', :type => :select, :collection => [ ["Undergrad","Undergrad"], ["Alumni","Alumni"], ["Prospective Student","Prospective Student"]] %>
+      </p> 
+      <p><b>Year: </b>
+        <%= best_in_place_if current_user?(@user), @user, :year, :nil => 'Click here to add year', :type => :select, :collection => [ ["Senior","Senior"], ["Junior","Junior"], ["Sophomore","Sophomore"], ["Freshman", "Freshman"] ] %>
+      </p>
+      <p><b>Post Grad Plans: </b>
+         <%= best_in_place_if current_user?(@user), @user, :postGradPlans, :nil => 'Click here to add your dreamJob', :type => :select, :collection => [ ["Undecided", "Undecided"], ["Business School", "Business School"], ["Graduate Studies", "Graduate Studies"], ["Law School", "Law School"], ["Medical School", "Medical School"], ["Industry", "Industry"], ["Vet School", "Vet School"], ["Pharm School", "Pharm School"] ] %>
+      </p>
+      <p><b>Dream Job: </b>
+         <%= best_in_place_if current_user?(@user), @user, :dreamJob, :nil => 'Click here to add your dreamJob', :type => :input %>
+      </p>
+      <p><b>College: </b>
+        <%= best_in_place_if current_user?(@user), @user, :college, :nil => 'Click here to add college', :type => :select, :collection => [ ["Baker","Baker"], ["Brown","Brown"], ["Duncan","Duncan"], ["Hanszen", "Hanszen"], ["Jones","Jones"], ["Lovett","Lovett"], ["Martel","Martel"], ["McMurtry", "McMurtry"], ["Will Rice","Will Rice"], ["Sid Richardson","Sid Richardson"], ["Wiess","Wiess"] ] %>
+      </p>
+      <p><b>Email: </b>
+        <%= best_in_place_if false, @user, :email, :nil => 'Click here to add email',:type => :input %>
+      </p>

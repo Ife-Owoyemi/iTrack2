@@ -191,9 +191,9 @@ class User < ActiveRecord::Base
                 collegehash[achievementnamek].each_key do |specialtyk|
                   specialtymarray = achievementname.specialties.where(:specialty => specialtyk)
                   specialtymarray.each do |specialty|
-                    
+                    #Change this to extraction of certain specialties from a master hash that is calculated elsewhere upon change of usercourses.
                     @studentachievementhash[achievementtype.achievementtype][collegek][achievementnamek][specialtyk] = Specialty.calculate(specialty, taken, taking, wtake)
-                    
+                    @studentachievementhash[achievementtype.achievementtype][collegek][achievementnamek][specialtyk][:model] = specialty 
                   end
                 end
               
@@ -217,7 +217,20 @@ class User < ActiveRecord::Base
     #file_string = transcriptFile.read.force_encoding("ISO-8859-1").encode!("utf-8", "utf-8", :invalid => :replace)
     
     #Begin running through all of the rows in the cell
-    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |cell|
+    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |row|
+      i = 0
+      beginnum = 0
+      endnum = 0
+      cell = Array.new
+      row[0].each_char do |b|
+        if b == ","
+          endnum = i
+          cell << row[beginnum..endnum - 1]
+          beginnum = endnum + 1
+        end
+        i += 1
+      end
+    chrome
       # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
       if cell[0][0..4] == "Term:"
         # so here we construct the year as a 4 digit number given they are listed as two digits on the transcript
@@ -232,10 +245,10 @@ class User < ActiveRecord::Base
           @semester = "Fall"
           @year = cell[0][11..12].to_i + 2000
         # Summer
-        elsif semesterpartial == "Summ"
           @semester = "Summer"
           @year = cell[0][13..14].to_i + 2000
         # Spring
+        elsif semesterpartial == "Summ"
         elsif semesterpartial == "Spri"
           @semester = "Spring"
           @year = cell[0][13..14].to_i + 2000
@@ -265,7 +278,7 @@ class User < ActiveRecord::Base
      
         # These were two key phrases that are found after course listings have ended and I used them to define the end of where lines are allowed to be created into courses
  
-      elsif cell[0][0..4] == "Term " or cell[1] == nil
+      elsif cell[0][0..4] == "Term " or cell[1] == nil 
         @countcourse = false
         # I found that AP Courses for my transcript were prefaced with "Fall" so I used it to define the begining of AP course listings
       elsif cell[0][0..3] == "Fall"
@@ -329,6 +342,7 @@ class User < ActiveRecord::Base
       end
       #algorithmkey
     end
+    puts @transcript
     createCoursesFromTranscript(@transcript)
   end
 

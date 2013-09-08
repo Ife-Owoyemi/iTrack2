@@ -1,0 +1,44 @@
+<h1>Internships/Research <% if @user == current_user %><div 
+        class="label popover-link" 
+        data-content=
+
+        '<%= form_for(:internship, :url => {:controller => 'internships', :action => 'create'}) do |f|%> 
+
+          <b> Provider Name : </b><%= f.text_field :providername, :class => 'stringField' %></br>
+          <b> Student Title : </b><%= f.text_area :stutitle, :class => 'toolArea' %></br>     
+          <b> Internship Begin date : </b><%= f.text_field :internbegin, :class => 'stringField' %></br>
+          <b> Internship End date : </b><%= f.text_field :internend, :class => 'stringField' %></br>
+          <b> Source : </b><%= f.text_area :source, :class => 'toolArea' %></br>
+          <b> Intern Prereqs : </b><%= f.text_field :internprereqs, :class => 'toolArea' %></br>     
+          <b> Tips for the Application  : </b><%= f.text_area :tipsforapp, :class => 'toolArea' %></br>
+          
+
+          <%= f.submit 'Add Internship' %>
+        <% end %>'
+
+        
+        data-original-title="Add Internship">+</div>
+        <% end %>
+      </h1>
+      
+      <% @interncounter = 0 %>
+      <% @internships.each do |ship| %>
+        <div class="accordion" id="internaccordion">
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-toggle="collapse" data-parent="#internaccordion" href="#interncollapse<%= @interncounter %>">
+                <b><%= best_in_place_if current_user?(@user), ship, :providername, :type => :input %>  :  <%= best_in_place_if current_user?(@user), ship, :internbegin, :type => :date, :display_with => :dateFormat %> - <%= best_in_place_if current_user?(@user), ship, :internend, :type => :date, :display_with => :dateFormat %></b> 
+              </a>
+            </div>
+            <div id="interncollapse<%= @interncounter %>" class="accordion-body collapse">
+              <div class="accordion-inner">
+                <p><b>Title: </b><%= best_in_place_if current_user?(@user), ship, :stutitle, :type => :input %></p>
+                <p><b>Application Found: </b><%= best_in_place_if current_user?(@user), ship, :source, :type => :input %></p>
+                <p><b>Prereqs: </b><%= best_in_place_if current_user?(@user), ship, :internprereqs, :type => :textarea %></p>
+                <p><b>Tips for Applying: </b><%= best_in_place_if current_user?(@user), ship, :tipsforapp, :type => :textarea %></p>
+              </div>
+            </div>
+          </div>
+          <% @interncounter =+ 1 %>
+        </div>
+      <% end %>v

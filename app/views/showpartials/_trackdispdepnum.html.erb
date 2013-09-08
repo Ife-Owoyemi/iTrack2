@@ -1,0 +1,115 @@
+<!-- 
+
+  Need to define
+    @coursearray
+    hash[:depnum][depnumcalc.depnumreqname] - number of completed courses
+    List of counted courses for depnum.
+-->
+
+<!-- Depnum Counter -->
+<% mo = 0 %>
+<% for depnumcalc in fg %>
+  <!-- Depnum Accordion -->
+  <div class="accordion span5 pull-left" id="accordian3<%= i %><%= k %><%= m %>"> 
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
+          <%= depnumcalc.depnumreqname %> 
+          <% if @specialty[:depnum][depnumcalc.depnumreqname][:complete]  %>
+            <font color="green">Complete</font><%= @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] %>
+          <% else %>
+            <%= @specialty[:depnum][depnumcalc.depnumreqname][:progress] %>
+          <% end %>
+        </a>
+
+      </div>
+      <div id="collapse4<%= i %><%= k %><%= m %><%= mo %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >
+          
+          <% depArray = depnumcalc.deps.all %>
+          <!-- Check as to whether to display course goal or hour goal -->
+            <% if depnumcalc.hgoal == nil or depnumcalc.hgoal == 0 %>
+              <p><%= depnumcalc.cgoal %> courses total, db: <%= depnumcalc.doublecount %></p>
+            <% else %>
+              <p><%= depnumcalc.hgoal %> hours total, db: <%= depnumcalc.doublecount %></p>
+            <% end %>
+          <!-- Display Courses that have counted for this requirement -->
+            <b>Courses Counted: </b>
+            <% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
+              <%= course %>
+            <% end %>
+          <!-- Loop through the different department requirements -->
+            <% for dep in depArray %>
+              <% gg = dep.bounds.all %>
+              <p>
+                <%= dep.department %> within ranges
+                <% coun = 0 %>
+                <% for num in gg %>
+                  <% coun += 1 %>
+                  <% if coun == gg.length and coun != 1 %>
+                    and
+                  <% end %>
+                  <%= num.min %>-<%= num.max %>
+                  <% if coun != gg.length %>
+                    ,
+                  <% end %>
+                <% end %>
+                .
+              </p>
+            <% end %>
+          <!-- Exceptions listing, will be pushed to accordion-->
+            <h6>Exceptions</h6>
+            <% for dep in depArray %>
+              <% exceps = dep.cexceptions.all %>
+              <% if exceps != [] %>
+                <% coun = 0 %>
+                <ul>
+                  <li>
+                    <% for excep in exceps %>
+                      <div style = "display:inline-block;" >
+                        
+                        <% coun += 1 %>
+                        <%= excep.department + " " + excep.num.to_s %>
+                        <% if coun != exceps.length %>
+                        ,
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </li>
+                </ul>
+              <% else %>
+               No exceptions listed
+              <% end %>
+            <% end %>
+
+          <!-- Listing options of courses outside the ranges that count -->
+            <h6>Other Options</h6>  
+            <% for dep in depArray %>
+              <% clists = dep.clists.all %>
+              <% if clists != [] %>
+                <% coun = 0 %>
+                <ul>
+                  <li>
+                    <% for clist in clists %>
+                      <div style = "display:inline-block;" >
+                        
+                        <% coun += 1 %>
+                        <%= clist.department + " " + clist.num.to_s %>
+                        <% if coun != clists.length %>
+                        ,
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </li>
+                </ul>   
+              <% else %>
+                No Other Options listed<br/>
+              <% end %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% mo += 1 %>
+<% end %>

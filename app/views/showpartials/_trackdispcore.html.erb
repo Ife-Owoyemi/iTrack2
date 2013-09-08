@@ -1,0 +1,64 @@
+<!-- 
+
+  Need to define
+    @coursearray
+    hash[:core][corereq.corereqname] - number of completed courses
+
+-->
+
+
+<!-- Corereq Counter -->
+<% mm = 0 %>
+<% for corereq in corereqarray %>
+  <!-- Individual Requirement accordion -->
+  <div class="accordion span5 pull-left" id="accordian1<%= i %><%= k %><%= m %>">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian1<%= i %><%= k %><%= m %>" href="#collapse3<%= i %><%= k %><%= m %><%= mm %>">
+          <%= corereq.corereqname %>
+
+          <!-- Add to the hash thats output -->
+          <% if @specialty[:core][corereq.corereqname][:complete] >= corereq.cgoal.to_i %>
+              <font color="green">Complete</font>
+          <% else %>
+              <%= @specialty[:core][corereq.corereqname][:complete] %>/<%= corereq.cgoal.to_i %>
+          <% end %>
+        </a>
+      </div>
+      <div id="collapse3<%= i %><%= k %><%= m %><%= mm %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >
+          <% courseArray = corereq.ccourses.all %>
+          <ul>
+            <li>
+              <% coun = 0 %>
+
+              <% for course in courseArray %>
+                <!-- Define coursearray = -->
+
+                <!-- Check if course exists to cross out if it is -->
+                <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
+                  <!-- link to call ajax for usercourse creation modal -->
+                  <%= render "usercourses/usercourseModalCreateLink", :course => course %>
+                  <% if coun != courseArray.length %>
+                  ,
+                  <% end %>
+                <% else %>
+                  <div style = "text-decoration: line-through;display:inline-block;" >
+                    <!-- link to call ajax for usercourse creation modal -->
+                    <%= render "usercourses/usercourseModalCreateLink", :course => course %>
+                    
+                    <% if coun != courseArray.length %>
+                    ,
+                    <% end %>
+                  </div>
+                <% end %>
+                <% coun += 1 %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% mm += 1 %>
+<% end %>

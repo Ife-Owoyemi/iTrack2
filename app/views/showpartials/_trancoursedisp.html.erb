@@ -1,0 +1,65 @@
+<% if current_user?(@user) %>
+    <h4 
+       class="label <%= @color %> popover-link" 
+       data-original-title="Course Overview"
+       data-content=                                         "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+       <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+       <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+       <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+       <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :type => :input, :nil => 'Click here to add number of essays',  :inner_class => 'numField' %><br/>
+
+       <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+       <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+       <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :input %><br/>
+
+
+       <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+
+       <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
+
+       <font color = ""><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
+
+    </h4>​
+<!-- Editable display for current user != profile user -->
+<% else %>
+  <!-- Checks if current user has taken profile user course -->
+  <% strike = "" %>
+  <% if @cuser_courses.include?(course.department + " " + course.num.to_s) %>
+    <% strike = "*" %>
+  <% end %>
+
+  <h4
+     class="label  <%= @color %> popover-link"
+     data-content=
+
+     "<b>Prof: </b><%= best_in_place_if current_user?(@user), course, :prof, :nil => 'Click here to add proffesor name', :type => :input, :inner_class => 'stringField', :course_id => course.id %> </br> 
+
+       <b> Prof Quality: </b> <%= best_in_place_if current_user?(@user), course, :profquality, :nil => 'Click here to add proffesor Quality', :type => :input, :inner_class => "stringField" %> <br />
+
+       <b>Individual Projects: </b> <%= best_in_place_if current_user?(@user), course, :nopprojects, :nil => 'Click here to add number of individual projects', :type => :input, :inner_class => "numField" %><br/>
+
+       <b>Group Projects: </b> <%= best_in_place_if current_user?(@user), course, :nogprojects, :nil => 'Click here to add number of group projects', :type => :input, :inner_class => "numField" %><br/>
+
+       <b>Essays: </b> <%= best_in_place_if current_user?(@user), course, :noessays, :nil => 'Click here to add number of essays', :type => :input, :inner_class => 'numField' %><br/>
+
+       <b>Midterms: </b> <%= best_in_place_if current_user?(@user), course, :nomidterms, :nil => 'Click here to add year', :type => :input, :inner_class => 'numField' %><br/>
+
+       <b>Final: </b> <%= best_in_place_if current_user?(@user), course, :nofinals, :type => :input, :inner_class => 'numField' %><br/>
+
+
+       <b>Focus: </b> <%= best_in_place_if current_user?(@user), course, :follows, :nil => 'Click here to add class book/lecture focus', :type => :select, :collection => [ ['0/100','0/100'], ['25/75','25/75'], ['50/50','50/50'], ['75/25','75/25'], ['100/0','100/0']  ] %><br/>
+
+
+       <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
+       <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>"
+
+     data-original-title="Course Overview"><font color=""><%= course.department%> <%= course.num.to_s %></font>
+  </h4>​
+<% end %>
