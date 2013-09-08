@@ -79,7 +79,7 @@
     <section>
       <h4>Tracks</h4>
       <!-- Code Being renovated to move to models then controllers -->
-      <%= render :partial => 'showpartials/trackdisp', :locals => {:@userachievementdisphash => @userachievementdisphash, :@cuser_courses => @cuser_courses} %>
+      <%= render :partial => 'showpartials/trackdisp', :locals => {:@userachievementdisphash => @userachievementdisphash, :taken => @taken, :taking => @taking, :wtake => @wtake, :@cuser_courses => @cuser_courses} %>
       </div>
       <% if current_user == @user %>
         <%= link_to 'Edit Tracks', users_edittrack_path(@user) %>                

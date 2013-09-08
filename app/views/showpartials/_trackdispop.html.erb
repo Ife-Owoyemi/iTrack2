@@ -8,55 +8,59 @@
 
 
 <!-- Op Accordion -->
-<div class="accordion span5 pull-left" id="accordian23<%= i %><%= k %><%= m %>">
-  <div class="accordion-group">
-    <div class="accordion-heading">
-      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian23<%= i %><%= k %><%= m %>" href="#collapse23<%= i %><%= k %><%= m %><%= mn %>">
-        <%= opreq.opreqname %>: 
-        <% if @specialty[:op][opreq.opreqname][:complete] %>
-          <font color="green">Complete</font>
-        <% else %>
-           <%= @specialty[:op][opreq.opreqname][:progress] %>
-        <% end %>
-      </a>
+<% mn = 0 %>
+<% for opreq in f %>
+  <div class="accordion span5 pull-left" id="accordian23<%= i %><%= k %><%= m %>">
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian23<%= i %><%= k %><%= m %>" href="#collapse23<%= i %><%= k %><%= m %><%= mn %>">
+          <%= opreq.opreqname %>: 
+          <% if @specialty[:op][opreq.opreqname][:complete] %>
+            <font color="green">Complete</font>
+          <% else %>
+             <%= @specialty[:op][opreq.opreqname][:progress] %>
+          <% end %>
+        </a>
 
-    </div>
-    <div id="collapse23<%= i %><%= k %><%= m %><%= mn %>"  class="accordion-body collapse">
-      <div class="accordion-inner" >  
-        <% optionsArray = opreq.options.all %>
-        <!-- Loop through the different options -->
-        <% for option in optionsArray %>
-          <ul>
-            <li>
-              <b><div><%= option.optionname %></div></b><!-- e.g. Pick 1, Both,... -->
-              <% courseArray = option.ocourses.all %>
-              <% coun = 0 %>
-              <ul>
-                <li>
-                  <!-- Loop through the courses -->
-                  <% for course in courseArray %>
-                    <!-- Check if course exists to cross out if it is -->
-                    <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
-                      <%= course.department + " " + course.num.to_s %>
-                      
-                      <% coun += 1 %>
-                      <% if coun != courseArray.length %>
-                        ,
-                      <% end %>
-                    <% else %>
-                      <div style = "text-decoration: line-through; display:inline-block;" ><%= course.department + " " + course.num.to_s %></div>
-                      <% coun += 1 %>
-                      <% if coun != courseArray.length %>
-                        ,
+      </div>
+      <div id="collapse23<%= i %><%= k %><%= m %><%= mn %>"  class="accordion-body collapse">
+        <div class="accordion-inner" >  
+          <% optionsArray = opreq.options.all %>
+          <!-- Loop through the different options -->
+          <% for option in optionsArray %>
+            <ul>
+              <li>
+                <b><div><%= option.optionname %></div></b><!-- e.g. Pick 1, Both,... -->
+                <% courseArray = option.ocourses.all %>
+                <% coun = 0 %>
+                <ul>
+                  <li>
+                    <!-- Loop through the courses -->
+                    <% for course in courseArray %>
+                      <!-- Check if course exists to cross out if it is -->
+                      <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
+                        <%= course.department + " " + course.num.to_s %>
+                        
+                        <% coun += 1 %>
+                        <% if coun != courseArray.length %>
+                          ,
+                        <% end %>
+                      <% else %>
+                        <div style = "text-decoration: line-through; display:inline-block;" ><%= course.department + " " + course.num.to_s %></div>
+                        <% coun += 1 %>
+                        <% if coun != courseArray.length %>
+                          ,
+                        <% end %>
                       <% end %>
                     <% end %>
-                  <% end %>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        <% end %>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <% mn += 1 %>
+<% end %>

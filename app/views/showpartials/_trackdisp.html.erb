@@ -20,7 +20,7 @@
     <!-- Looping through Colleges -->
     <% @achievementtype.each_key do |college| %><!-- e.g. School of Engineering, School of Social Sciences, ... -->
       <% @college = @achievementtype[college] %>
-      <%= render :partial => "showpartials/trackdisp2",   :locals => {:@college => @college, :user_courses => @user_courses, :@cuser_courses => @cuser_courses, :i => i} %>
+      <%= render :partial => "showpartials/trackdisp2",   :locals => {:@college => @college, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => @user_courses, :@cuser_courses => @cuser_courses, :i => i} %>
 
     <% end %>
     <!-- Increments to distinguish tab id from each other -->

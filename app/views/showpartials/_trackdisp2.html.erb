@@ -16,7 +16,7 @@
           <div class="accordion-inner" >
             <!-- Specialty accordion counter -->
             <% m = 0 %>
-            <%= render "showpartials/trackdisp3", :@achievementname => @achievementname, :user_courses => user_courses, :i => i, :k => k, :m => m, :@cuser_courses => @cuser_courses %>
+            <%= render "showpartials/trackdisp3", :@achievementname => @achievementname, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :i => i, :k => k, :m => m, :@cuser_courses => @cuser_courses %>
             <% m += 1 %>
           </div>
         </div>

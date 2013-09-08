@@ -173,6 +173,7 @@ class User < ActiveRecord::Base
     for achievementtype in achievementmodelsarray
       if !@studentachievementhash.has_key?(achievementtype.achievementtype)
           @studentachievementhash[achievementtype.achievementtype] = Hash.new
+
         end
       achievementhash[achievementtype.achievementtype].each_key do |collegek|
         if !@studentachievementhash[achievementtype.achievementtype].has_key?(collegek)

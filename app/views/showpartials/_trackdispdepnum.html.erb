@@ -35,7 +35,7 @@
             <% end %>
           <!-- Display Courses that have counted for this requirement -->
             <b>Courses Counted: </b>
-            <% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
+            <% @specialty[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
               <%= course %>
             <% end %>
           <!-- Loop through the different department requirements -->

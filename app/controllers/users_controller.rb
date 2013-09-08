@@ -51,7 +51,7 @@ class UsersController < ApplicationController
       @conferences = @user.conferences.all 
       @user = current_user
       @cuser_courses = User.usercourses(@user)
-      #@variable = User.sampleFunction1(@user)
+      @taken, @taking, @wtake, user_courses, coursearray = User.courseHashArrayGenerator(@user)
 
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
