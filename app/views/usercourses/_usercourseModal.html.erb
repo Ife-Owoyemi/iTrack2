@@ -1,10 +1,10 @@
-<style type="text/css">
+<style id="modalStyle" type="text/css">
 	
 	input {
 		width: 250px;
 	}
 	select {
-		width: 250px;
+		width: 100px;
 		height: 40px;
 	}
 
@@ -19,6 +19,16 @@
 
 </style>
 
+<!-- script removes modal and its syle and script from the html after the modal is hidden -->
+<script id="modalScript">
+  $("#<%= institution %>-<%= department %>-<%= num %>").on('hidden.bs.modal', function() {
+    $("#<%= institution %>-<%= department %>-<%= num %>").remove();
+    $("#modalStyle").remove();
+    $("#modalScript").remove();
+  });
+
+</script>
+
 <div id="<%= institution %>-<%= department %>-<%= num %>" class="modal show fade">
 	
 	<div class="modal-header">
@@ -27,62 +37,64 @@
 	</div>
 
 	<div class="modal-body">
+		 <% gradearray = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs"] %>
 		<%= form_for :usercourse, :url => {:controller => "usercourses", :action => "createFromModal"}, :remote => true do |f | %>
-			Year: <%= f.text_field :year %>
-			Semester: <%= f.select :semester, :collection => ["Fall", "Spring", "Summer"] %>
-			Grade: <%= f.text_field :grade %>
-			Credits: <%= f.text_field :credits %>
-			<%= f.hidden :department, :value => department %>
-			<%= f.hidden :num, :value => num %>
+			Year: <%= f.text_field :year, :class => 'numField' %></br>
+			Semester: <%= f.select :semester, :collection => ["Fall", "Spring", "Summer"] %></br>
+			Grade: <%= f.select :grade, :collection => gradearray %></br>
+			Credits: <%= f.text_field :credits, :class => 'numField' %>
+			<%= f.hidden_field :department, :value => department %>
+			<%= f.hidden_field :num, :value => num %></br>
+			<%= f.submit "Add Course to Transcript" %>
 		<% end %>
 
 
 
-		<%=# semantic_form_for @user do |f| %>
+		<%# semantic_form_for @user do |f| %>
 		  	<%# if @user.errors.any? %>
-		    	<%=# "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:" %>
+		    	<%# "#{pluralize(@user.errors.count, "error")} prohibited this project from being saved:" %>
 		      
 	        	<%# @user.errors.full_messages.each do |msg| %>
-	          	<%=# msg %>
+	          	<%# msg %>
 	        	<%# end %>
 	    	<%# end %>     
 		  
-		    <%=# f.inputs  do %>
+		    <%# f.inputs  do %>
 		     
-		        <%=# f.semantic_fields_for :years do |year| %>
+		        <%# f.semantic_fields_for :years do |year| %>
 		        
-		          <%=# year.inputs :number do %>
+		          <%# year.inputs :number do %>
 		            <!-- Year --> 
-		            <%=# year.input :year,:label => false, :wrapper_html => {  :style => '', :class => "input-small" }, :input_html => {:value => "2013", :class => "input-small"} %>
+		            <%# year.input :year,:label => false, :wrapper_html => {  :style => '', :class => "input-small" }, :input_html => {:value => "2013", :class => "input-small"} %>
 		            
 		            <%#semester %>
-		             <%=# year.semantic_fields_for :semesters do |semester| %>
+		             <%# year.semantic_fields_for :semesters do |semester| %>
 		                
-		                  <%=# semester.inputs :division do %>
+		                  <%# semester.inputs :division do %>
 		                   
-		                    <%=# semester.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:value => "Fall",:class => "input-small"} %>
+		                    <%# semester.input :semester, :as => :select, :collection => ["Fall", "Spring", "Summer"], :label => false, :wrapper_html => {  :style => '', :class => "" }, :input_html => {:value => "Fall",:class => "input-small"} %>
 		                   
 		                    
-		                    <%=# semester.semantic_fields_for :usercourses do |course| %>
+		                    <%# semester.semantic_fields_for :usercourses do |course| %>
 		                      
-		                        <%=# course.inputs :institution, :department, :num, :credits, :status, :prof, :profquality, :hpweek, :follows, :nopprojects, :nogprojects, :noessays, :nomidterms, :nofinals, :suggest do %>
-		                          <%=# course.input :department, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:value => department,:class => "input-small"} %>
-		                          <%=# course.input :num, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:style => '',:value => num, :class => "input-small"} %>
-		                          <%=# course.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float input-mini pull-left" }, :input_html => {:style => '',:value => "3", :class => "special input-mini"} %>                          
-		                          <%=# course.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"} %>	                                                  
+		                        <%# course.inputs :institution, :department, :num, :credits, :status, :prof, :profquality, :hpweek, :follows, :nopprojects, :nogprojects, :noessays, :nomidterms, :nofinals, :suggest do %>
+		                          <%# course.input :department, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:value => department,:class => "input-small"} %>
+		                          <%# course.input :num, :label => false, :wrapper_html => { :class => "float input-small pull-left" }, :input_html => {:style => '',:value => num, :class => "input-small"} %>
+		                          <%# course.input :credits, :as => :number, :min => 0, :max => 7, :step => 1, :label => false, :wrapper_html => {:class => "float input-mini pull-left" }, :input_html => {:style => '',:value => "3", :class => "special input-mini"} %>                          
+		                          <%# course.input :status, :label => false, :as => :select, :collection => ["Taken", "Taking", "Will Take"],  :wrapper_html => {:class => "float pull-left" }, :input_html => {:style => '', :placeholder => "Taken", :class => "input-small"} %>	                                                  
 		                          <%# @gradearray = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F", "P", "Fp", "S", "Fs"] %>
-		                          <%=# course.input :grade, :as => :select, :collection => @gradearray, :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:value => "Taken", :style => '', :class => "input-small"} %>
-		                          <%=# course.input :institution, :label => false, :as => :hidden, :wrapper_html => {:class => "float form_header_style pull-left" },  :input_html => {:placeholder => @inst,:class => "input-small"} %>
-		                          <%=# course.input :prof, :as => :hidden, :wrapper_html => {:class => "" }, :input_html => {:value => "Click to enter Professor", :style => "", :class => ""} %>
-		                          <%=# course.input :profquality, :as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5, :class => "special"} %>
-		                          <%=# course.input :hpweek, :as => :hidden, :min => 0, :max => 40, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5,:class => "special"}    %>   
-		                          <%=# course.input :follows,:as => :hidden, :wrapper_html => {:class => "" }, :input_html => {:value => "50/50", :class => ""} %>
-		                          <%=# course.input :nopprojects,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"} %>
-		                          <%=# course.input :nogprojects,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"} %>
-		                          <%=# course.input :noessays,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}    %>       
-		                          <%=# course.input :nomidterms, :as => :hidden, :min => 0, :max => 16, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}  %>         
-		                          <%=# course.input :nofinals,:as => :hidden, :min => 0, :max => 1, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}   %>        
-		                          <%=# course.input :suggest, :as => :hidden,  :wrapper_html => {:class => "pull-left" }, :input_html => { :value => "Add tips, or location of useful outside resources to suceed in this class", :class => ""} %>
+		                          <%# course.input :grade, :as => :select, :collection => @gradearray, :label => false, :wrapper_html => {  :style => 'width: 250px;', :class => "float input-small pull-left" }, :input_html => {:value => "Taken", :style => '', :class => "input-small"} %>
+		                          <%# course.input :institution, :label => false, :as => :hidden, :wrapper_html => {:class => "float form_header_style pull-left" },  :input_html => {:placeholder => @inst,:class => "input-small"} %>
+		                          <%# course.input :prof, :as => :hidden, :wrapper_html => {:class => "" }, :input_html => {:value => "Click to enter Professor", :style => "", :class => ""} %>
+		                          <%# course.input :profquality, :as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5, :class => "special"} %>
+		                          <%# course.input :hpweek, :as => :hidden, :min => 0, :max => 40, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 5,:class => "special"}    %>   
+		                          <%# course.input :follows,:as => :hidden, :wrapper_html => {:class => "" }, :input_html => {:value => "50/50", :class => ""} %>
+		                          <%# course.input :nopprojects,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"} %>
+		                          <%# course.input :nogprojects,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"} %>
+		                          <%# course.input :noessays,:as => :hidden, :min => 0, :max => 10, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}    %>       
+		                          <%# course.input :nomidterms, :as => :hidden, :min => 0, :max => 16, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}  %>         
+		                          <%# course.input :nofinals,:as => :hidden, :min => 0, :max => 1, :step => 1, :wrapper_html => {:class => "" }, :input_html => {:value => 0, :class => "special"}   %>        
+		                          <%# course.input :suggest, :as => :hidden,  :wrapper_html => {:class => "pull-left" }, :input_html => { :value => "Add tips, or location of useful outside resources to suceed in this class", :class => ""} %>
 		                        <%# end %>
 		                    <%# end %>
 		                  <%# end %>
@@ -90,8 +102,8 @@
 		          <%# end %>
 		        <%# end %>
 		    <%# end %>
-		    <%=# f.actions do %> 
-		      <%=# f.action :submit, :as => :button %>
+		    <%# f.actions do %> 
+		      <%# f.action :submit, :as => :button %>
 		    <%# end %>
 		  
 		<%# end %>

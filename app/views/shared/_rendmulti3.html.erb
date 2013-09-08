@@ -24,7 +24,9 @@
             <ul><li>
             <% for course in h %>
               <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
-                <%= course.department + " " + course.num.to_s %>
+                <%# course.department + " " + course.num.to_s %>
+                <!-- link to call ajax for usercourse creation modal -->
+                <%= render "usercourses/usercourseModalCreateLink", :course => course %>
                 <% count += 1 %>
                 <% coun += 1 %>
                 <% if coun != h.length %>

@@ -5,8 +5,8 @@ class Usercourse < ActiveRecord::Base
   belongs_to :transfer  
 
   # this function creates a course from the modal on the transcript page
-  def createSemesterCourseFromTracks(semester,department,num,credits,grade)
-  	course = semester.Usercourses.build!(:department => department, :num => num, :credits => credits, :status => "Taken", :institution => "Rice", :grade => grade, :prof => 'Click to enter Professor', :profquality => 5, :hpweek => 5, :follows => '50/50', :nomidterms => 0, :noessays => 0, :nopprojects => 0, :nogprojects => 0, :suggest => 'Add tips, or location of useful outside resources to suceed in this class', :nofinals => 0)
+  def self.createSemesterCourseFromTracks(semester,department,num,credits,grade)
+  	course = semester.usercourses.create!(:department => department, :num => num, :credits => credits, :status => "Taken", :institution => "Rice", :grade => grade, :prof => 'Click to enter Professor', :profquality => 5, :hpweek => 5, :follows => '50/50', :nomidterms => 0, :noessays => 0, :nopprojects => 0, :nogprojects => 0, :suggest => 'Add tips, or location of useful outside resources to suceed in this class', :nofinals => 0)
   	return course
   end
 

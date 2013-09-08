@@ -31,34 +31,43 @@ class UsercoursesController < ApplicationController
 
 	def createFromModal
 		@user = current_user
-
+		@institution = Institution.find(:first, :conditions => ["name=?", 'Rice University']).id
 		pyear = params[:usercourse][:year].to_i
+		psemester = params[:usercourse][:semester]
+		@department = params[:usercourse][:department]
+		@num = params[:usercourse][:num]
+		grade = params[:usercourse][:grade]
+		credits = params[:usercourse][:credits].to_i
+
 		if ( Year.userYearExists?(current_user.id,pyear) == true )
 			year = Year.findYear(current_user.id,pyear)
 		else
 			year = current_user.create!(:year => pyear)
 		end
 
-
-		semester = params[:usercourse][:semester]
-
-
-		department = params[:usercourse][:department]
-		num = params[:usercourse][:num]
-		grade = params[:usercourse][:grade]
-		credits = params[:usercourse][:credits].to_i
-
-		@usercourse = createSemesterCourseFromTracks(semester,department,num,credits,grade)
-		if (@usercourse.save)
-			flash[:success] = "New Course Added!"
-			respond_to do |format| 
-				format.js 
-			end
+		if ( Semester.userSemesterExists?(year.id, psemester) )
+			semester = Semester.findSemester(year.id,psemester)
 		else
-			@errors = @usercourse.errors.full_messages
-			flash[:alert] = @errors
+			semester = year.semesters.create!(:semester => psemester)
+		end
+
+		if (Usercourse.semesterCourseExists?(semester.id,@department,@num) )
 			respond_to do |format|
-				format.js {render :js => "alert('Check the form for errors and then submit form.')"}
+				format.js {render :js => "alert('Class already exists in your transcript')"}
+			end
+		else	
+			@usercourse = Usercourse.createSemesterCourseFromTracks(semester,@department,@num,credits,grade)
+			if (@usercourse.save)
+				flash[:success] = "New Course Added!"
+				respond_to do |format| 
+					format.js 
+				end
+			else
+				@errors = @usercourse.errors.full_messages
+				flash[:alert] = @errors
+				respond_to do |format|
+					format.js {render :js => "alert('Check the form for errors and then submit form.')"}
+				end
 			end
 		end
 	end

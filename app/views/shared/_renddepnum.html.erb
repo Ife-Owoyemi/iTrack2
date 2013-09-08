@@ -147,7 +147,9 @@
               <% end %>  
               <b>Courses counted: </b> 
               <% @specialtyHash[:depnum][depnumcalc.depnumreqname][:usedcourses].each do |course| %>
-                <%= course %>
+                <%# course %>
+                <!-- link to call ajax for usercourse creation modal -->
+                <%= render "usercourses/usercourseModalCreateLink", :course => course %>
               <% end %>
             <% end %>
             <%#used to be an algorithm %>
