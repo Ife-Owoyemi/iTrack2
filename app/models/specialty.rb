@@ -129,6 +129,7 @@ class Specialty < ActiveRecord::Base
     tempdepnumlimit = 0 # => @depnumgoal
     depNumReqArray = specialty.depnumreqs.all
     for depNumReq in depNumReqArray # depnumcalc => depNumReq 
+      countedcourse = Array.new
       @specialtyHash[:depnum][depNumReq.depnumreqname]
       depsArray = depNumReq.deps.all
       if depNumReq.doublecount == "N"
@@ -141,9 +142,9 @@ class Specialty < ActiveRecord::Base
             clistsCourseList = arraycreator(clistsModelArray) # => clistarray
             boundsArray = dep.bounds.all # => gg
 
-            @dep_c_m_1 = Depnumreq.coursecounternodoublecount(taken, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList, @used_courses )
-            @dep_c_m_2 = Depnumreq.coursecounternodoublecount(taking, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList, @used_courses )
-            @dep_c_m_3 = Depnumreq.coursecounternodoublecount(wtake, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList, @used_courses)
+            @dep_c_m_1, countedcourse = Depnumreq.coursecounternodoublecount(taken, countedcourse, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList, @used_courses )
+            @dep_c_m_2, countedcourse = Depnumreq.coursecounternodoublecount(taking, countedcourse, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList, @used_courses )
+            @dep_c_m_3, countedcourse = Depnumreq.coursecounternodoublecount(wtake, countedcourse, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList, @used_courses)
 
           end
           @dep_c_m_1,@dep_c_m_2 ,@dep_c_m_3 = Depnumreq.correcting3partofwhole(@dep_c_m_1, @dep_c_m_2, @dep_c_m_3, depNumReq.cgoal.to_i)
@@ -156,9 +157,9 @@ class Specialty < ActiveRecord::Base
             clistsModelArray = dep.clists.all # => clists
             clistsCourseList = arraycreator(clistsModelArray)
             boundsArray = dep.bounds.all # => gg
-            @dep_c_m_1 = Depnumreq.hourcounternodoublecount(taken, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList, @used_courses )
-            @dep_c_m_2 = Depnumreq.hourcounternodoublecount(taking, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList, @used_courses )
-            @dep_c_m_3 = Depnumreq.hourcounternodoublecount(wtake, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList, @used_courses)
+            @dep_c_m_1, countedcourse = Depnumreq.hourcounternodoublecount(taken, countedcourse, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList, @used_courses )
+            @dep_c_m_2, countedcourse = Depnumreq.hourcounternodoublecount(taking, countedcourse, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList, @used_courses )
+            @dep_c_m_3, countedcourse = Depnumreq.hourcounternodoublecount(wtake, countedcourse, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList, @used_courses)
 
           end
           #correcting3partofwhole
@@ -174,9 +175,9 @@ class Specialty < ActiveRecord::Base
             clistsCourseList = Specialty.arraycreator(clistsModelArray) # => clistarray
             boundsArray = dep.bounds.all # => gg
 
-            @dep_c_m_1 = Depnumreq.coursecounteryesdoublecount(taken, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList)
-            @dep_c_m_2 = Depnumreq.coursecounteryesdoublecount(taking, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList)
-            @dep_c_m_3 = Depnumreq.coursecounteryesdoublecount(wtake, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList)
+            @dep_c_m_1, countedcourse = Depnumreq.coursecounteryesdoublecount(taken, countedcourse, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistsCourseList)
+            @dep_c_m_2, countedcourse = Depnumreq.coursecounteryesdoublecount(taking, countedcourse, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistsCourseList)
+            @dep_c_m_3, countedcourse = Depnumreq.coursecounteryesdoublecount(wtake, countedcourse, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistsCourseList)
 
           end
           @dep_c_m_1,@dep_c_m_2 ,@dep_c_m_3 = Depnumreq.correcting3partofwhole(@dep_c_m_1, @dep_c_m_2, @dep_c_m_3, depNumReq.cgoal.to_i)
@@ -189,9 +190,9 @@ class Specialty < ActiveRecord::Base
             clistsModelArray = dep.clists.all # => clists
             clistsCourseList = Specialty.arraycreator(clistsModelArray)
             boundsArray = dep.bounds.all # => gg
-            @dep_c_m_1 = Depnumreq.hourcounteryesdoublecount(taken, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistCoursesList, @used_courses )
-            @dep_c_m_2 = Depnumreq.hourcounteryesdoublecount(taking, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistCoursesList, @used_courses )
-            @dep_c_m_3 = Depnumreq.hourcounteryesdoublecount(wtake, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistCoursesList, @used_courses)
+            @dep_c_m_1, countedcourse = Depnumreq.hourcounteryesdoublecount(taken, countedcourse, boundsArray, @dep_c_m_1, dep, exceptionsCourseList, clistCoursesList, @used_courses )
+            @dep_c_m_2, countedcourse = Depnumreq.hourcounteryesdoublecount(taking, countedcourse, boundsArray, @dep_c_m_2, dep, exceptionsCourseList, clistCoursesList, @used_courses )
+            @dep_c_m_3, countedcourse = Depnumreq.hourcounteryesdoublecount(wtake, countedcourse, boundsArray, @dep_c_m_3, dep, exceptionsCourseList, clistCoursesList, @used_courses)
 
           end
           #correcting3partofwhole
@@ -205,6 +206,7 @@ class Specialty < ActiveRecord::Base
       else
         @specialtyHash[:depnum][depNumReq.depnumreqname][:complete] = false
       end 
+      @specialtyHash[:depnum][depNumReq.depnumreqname][:usedcourses] = countedcourse
     end # depNumReq end
 
     

@@ -3,14 +3,15 @@ class Depnumreq < ActiveRecord::Base
   belongs_to :specialty
   has_many :deps, dependent: :destroy
   accepts_nested_attributes_for :deps, :allow_destroy => true
-  	def self.hourcounternodoublecount(targetcoursehash, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
+  	def self.hourcounternodoublecount(targetcoursehash, countedcourse, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
 countedcourseexceptionarray, usedcoursearray )
 		if targetcoursehash.has_key?(departmentmodel.department)
 			for num in numarray
 				targetcoursehash[departmentmodel.department].each_key do |number|
-					if !notcountedcourseexceptionarray.include?(departmentmodel.department + num.to_s)
+					if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 						if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 							if !usedcoursearray.include?(departmentmodel.department + " " + number.to_s)
+								countedcourse << departmentmodel + " " + number
 								holder += targetcoursehash[departmentmodel.department][number]
 							end
 						end
@@ -18,16 +19,17 @@ countedcourseexceptionarray, usedcoursearray )
 				end
 			end
 		end
-		return holder
+		return holder, countedcourse
 	end
-	def self.coursecounternodoublecount(targetcoursehash, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
+	def self.coursecounternodoublecount(targetcoursehash, countedcourse, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
 	countedcourseexceptionarray, usedcoursearray )
 		if targetcoursehash.has_key?(departmentmodel.department)
 			for num in numarray
 				targetcoursehash[departmentmodel.department].each_key do |number|
-					if !notcountedcourseexceptionarray.include?(departmentmodel.department + num.to_s)
+					if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 						if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 							if !usedcoursearray.include?(departmentmodel.department + " " + number.to_s)
+							countedcourse << departmentmodel + " " + number
 							holder += 1
 							end
 						end
@@ -35,39 +37,41 @@ countedcourseexceptionarray, usedcoursearray )
 				end
 			end
 		end
-		return holder
+		return holder, countedcourse
 	end
 
-	def self.hourcounteryesdoublecount(targetcoursehash, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
+	def self.hourcounteryesdoublecount(targetcoursehash, countedcourse, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
 	countedcourseexceptionarray)
 		if targetcoursehash.has_key?(departmentmodel.department)
 			for num in numarray
 				targetcoursehash[departmentmodel.department].each_key do |number|
-					if !notcountedcourseexceptionarray.include?(departmentmodel.department + num.to_s)
+					if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 						if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 						holder += targetcoursehash[departmentmodel.department][number]
+						countedcourse << departmentmodel + " " + number
 						end
 					end
 				end
 			end
 		end
-		return holder
+		return holder, countedcourse
 	end
 
-	def self.coursecounteryesdoublecount(targetcoursehash, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
+	def self.coursecounteryesdoublecount(targetcoursehash,countedcourse, numarray, holder, departmentmodel, notcountedcourseexceptionarray,
 	countedcourseexceptionarray)
 		if targetcoursehash.has_key?(departmentmodel.department)
 			for num in numarray
 				targetcoursehash[departmentmodel.department].each_key do |number|
-					if !notcountedcourseexceptionarray.include?(departmentmodel.department + num.to_s)
+					if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 						if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 						holder += 1
+						countedcourse << departmentmodel + " " + number
 						end
 					end
 				end
 			end
 		end
-		return holder
+		return holder, countedcourse
 	end
 	def self.correcting3partofwhole(input1, input2, input3, limit)
 		inputsum = input1 + input2 + input3
