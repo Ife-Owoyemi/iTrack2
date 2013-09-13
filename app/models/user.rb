@@ -157,6 +157,7 @@ class User < ActiveRecord::Base
 
   def self.usercourses(user)
     cuser_courses = Array.new
+    
     user.years.all.each do |year| 
       year.semesters.all.each do |semester| 
         semester.usercourses.all.each do |course| 

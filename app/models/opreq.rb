@@ -5,11 +5,13 @@ class Opreq < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :allow_destroy => true
 	def self.optionclasschecker(targetcoursehash, classmodel, usedcoursearray, optioncount, targetcoursecount)
-		if targetcoursehash.has_key?(classmodel.department)
-			if targetcoursehash[classmodel.department].has_key?(classmodel.num.to_s)
-				usedcoursearray << classmodel.department + " " + classmodel.num.to_s
-				optioncount += 1
-				targetcoursecount += 1
+		if targetcoursehash != nil
+			if targetcoursehash.has_key?(classmodel.department)
+				if targetcoursehash[classmodel.department].has_key?(classmodel.num.to_s)
+					usedcoursearray << classmodel.department + " " + classmodel.num.to_s
+					optioncount += 1
+					targetcoursecount += 1
+				end
 			end
 		end
 		return [usedcoursearray, optioncount, targetcoursecount]
@@ -33,7 +35,7 @@ class Opreq < ActiveRecord::Base
 						output3 = optionmodel.cgoal.to_i - input1 - input2
 					end
 				else
-					mostcompleteoptioncourseinputsum = @op_c_m
+					mostcompleteoptioncourseinputsum = optioncount
 					output1 = input1 
 					output2 = input2
 					output3 = input3

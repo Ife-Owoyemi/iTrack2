@@ -52,27 +52,30 @@ class Specialty < ActiveRecord::Base
     @op_c_3 = 0 # => sumWillTakeCourseCompleteOptRequirement = 0 # => @op_c_3
     opReqArray = specialty.opreqs.all
     for opreq in opReqArray
-      @op_c_biggest = 0 # => opCompletionTempHolder = 0 # => @op_c_biggest
+      
       unknownVariable = 0 # => complete
       optionArray = opreq.options.all
       @specialtyHash[:op][opreq.opreqname] = Hash.new
       @optioncount = 0
+      @op_add = 0 # => tempOpLimit = 0 # @op_add
+      @op_c_big = 0 # => tempAllOpReqCompletion = 0 # => @op_c_big
+      @op_c_big_1 = 0 # => tempSumTakenCourseCompleteOptRequirement2 = 0 # => @op_c_big_1
+      @op_c_big_2 = 0 # => tempSumTakingCourseCompleteOptRequirement2 = 0 # => @op_c_big_2
+      @op_c_big_3 = 0 # => tempSumWillTakeCourseCompleteOptRequirement2 = 0 # => @op_c_big_3
+      @op_c_biggest = 0 # => opCompletionTempHolder = 0 # => @op_c_biggest
       for option in optionArray
         @specialtyHash[:op][opreq.opreqname][@optioncount] = Hash.new
         @specialtyHash[:op][opreq.opreqname][@optioncount][:name] = option.optionname
         
-        
+
         sumOptionCourses = 0 # => op_c_all
-        @op_add = 0 # => tempOpLimit = 0 # @op_add
+        
         @op_c_m = 0 # => tempSumAllCourseCompleteOptRequirement = 0 # => @op_c_m
         @op_c_m_1 = 0 # => tempSumTakenCourseCompleteOptRequirement = 0 # => @op_c_m_1
         @op_c_m_2 = 0 # => tempSumTakingCourseCompleteOptRequirement = 0 # => @op_c_m_2
         @op_c_m_3 = 0 # => tempSumWillTakeCourseCompleteOptRequirement = 0 # => @op_c_m_3
-        @op_c_big = 0 # => tempAllOpReqCompletion = 0 # => @op_c_big
-        @op_c_big_1 = 0 # => tempSumTakenCourseCompleteOptRequirement2 = 0 # => @op_c_big_1
-        @op_c_big_2 = 0 # => tempSumTakingCourseCompleteOptRequirement2 = 0 # => @op_c_big_2
-        @op_c_big_3 = 0 # => tempSumWillTakeCourseCompleteOptRequirement2 = 0 # => @op_c_big_3
-
+        
+        
         courseArray = option.ocourses.all
         @specialtyHash[:op][opreq.opreqname][@optioncount][:courseslisted] = Array.new
         for course in courseArray
@@ -86,7 +89,11 @@ class Specialty < ActiveRecord::Base
       end
       if @op_c_big != nil
         @op_c += @op_c_big
+      else
+        @op_c_big = 0
+
       end
+
       @totalc += @op_add
       @op_c_1 += @op_c_big_1
       @op_c_2 += @op_c_big_2

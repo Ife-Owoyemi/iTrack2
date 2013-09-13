@@ -19,6 +19,8 @@ class UsersController < ApplicationController
     
     if signed_in? == false
       redirect_to signin_path
+
+      # This is for users that are not the current user, e.g. browesing other profiles causually
     elsif (params[:id] != nil)
       @user = User.find(params[:id])
 
@@ -27,10 +29,12 @@ class UsersController < ApplicationController
       @internships = @user.internships.all
       @conferences = @user.conferences.all
       @cuser_courses = User.usercourses(@user) 
+      print @cuser_courses
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all
       @transfers = @user.transfers.all
+      @taken, @taking, @wtake, @user_courses, @coursearray = User.courseHashArrayGenerator(@user)
 
 
       
@@ -39,7 +43,7 @@ class UsersController < ApplicationController
     elsif current_user == nil
         redirect_to signin_path
 
-      
+      # Takes the current user, e.g.  looking at your own profile
     elsif (params[:id] == nil && signed_in? == true) 
       @user = current_user
       @taken, @taking, @wtake, @user_courses, @coursearray = User.courseHashArrayGenerator(@user)
@@ -51,8 +55,7 @@ class UsersController < ApplicationController
       @conferences = @user.conferences.all 
       @user = current_user
       @cuser_courses = User.usercourses(@user)
-      @taken, @taking, @wtake, user_courses, coursearray = User.courseHashArrayGenerator(@user)
-
+      print @cuser_courses
       @microposts = @user.microposts.paginate(page: params[:page])
       @years = @user.years.all
       @aps = @user.aps.all

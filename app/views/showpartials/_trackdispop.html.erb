@@ -38,17 +38,17 @@
                     <!-- Loop through the courses -->
                     <% for course in courseArray %>
                       <!-- Check if course exists to cross out if it is -->
-                      <% if !@coursearray.include?(course.department + " " + course.num.to_s) %>
+                      <% if !coursearray.include?(course.department + " " + course.num.to_s) %>
                         <%= course.department + " " + course.num.to_s %>
                         
                         <% coun += 1 %>
-                        <% if coun != courseArray.length %>
+                        <% if coun != coursearray.length %>
                           ,
                         <% end %>
                       <% else %>
                         <div style = "text-decoration: line-through; display:inline-block;" ><%= course.department + " " + course.num.to_s %></div>
                         <% coun += 1 %>
-                        <% if coun != courseArray.length %>
+                        <% if coun != coursearray.length %>
                           ,
                         <% end %>
                       <% end %>
