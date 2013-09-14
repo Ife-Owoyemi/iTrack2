@@ -74,8 +74,20 @@ class UsercoursesController < ApplicationController
 	end
 
 	def deleteUsercourseFromHome
-		
-		
+		@num = params[:num]
+		@dep = params[:dep]
+		@semester_id = params[:semester_id]
+		if (Usercourse.semesterCourseExists?(@semester_id,@dep,@num))
+			@course = Usercourse.findSemesterCourseByDepAndNum(@semester_id,@dep,@num)
+			@course.destroy
+			flash[:success] = "Course Deleted"
+		end
+		redirect_to root_path
+		#respond_to do |format|
+		#	format.html {redirect_to root_path}
+			#format.js 
+		#end
+
 	end
 
 	def update

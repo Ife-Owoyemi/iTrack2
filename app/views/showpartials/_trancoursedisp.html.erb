@@ -24,7 +24,7 @@
 
        <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>
 
-       <a href='#'>Delete Course</a>" >
+       <a href='/deleteUsercourseFromHome?semester_id=<%= course.semester_id %>&num=<%= course.num %>&dep=<%= course.department %>'>Delete Course</a>" >
 
        <font color = ""><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
