@@ -54,9 +54,9 @@ class UndergradController < ApplicationController
         end 
       end
       @b = @majorsba.colleges.all
+    else
+      redirect_to signin_path
     end
-  else
-    redirect_to signin_path
   end
 end
 
