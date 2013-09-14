@@ -21,6 +21,16 @@ class Usercourse < ActiveRecord::Base
  	return bol
   end
 
+  def self.semesterCourseExistsByDepNum?(department,num)
+    bol = Usercourse.exists?(:department => department, :num => num)
+  return bol
+  end  
+
+  def self.findByNumAndDep(num,department)
+    courses = Usercourse.find(:all, :conditions => ["num=? and department=?",num,department])
+    return courses
+  end
+
 
   def self.apExists?
 

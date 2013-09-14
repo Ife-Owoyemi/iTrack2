@@ -20,7 +20,7 @@
 </style>
 
 <h4> Search: </h4>
-<%= form_for :qCourse, :url => {:controller => "undergrad", :action => "courseSearch"} do |f| %>
+<%= form_for :qCourse, :url => {:controller => "undergrad", :action => "courseSearch"}, :remote => true do |f| %>
 	Num: <%= f.text_field :num, :class => "numField" %>
 	Department: <%= f.select :dep, :collection => @deps %>
 	<%= f.submit "Search for Course" %>

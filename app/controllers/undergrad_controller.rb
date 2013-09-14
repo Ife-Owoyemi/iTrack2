@@ -109,6 +109,32 @@ class UndergradController < ApplicationController
   end
 
   def courseSearch
+    @num = params[:qCourse][:num]
+    @dep = params[:qCourse][:dep]
+    if (Usercourse.semesterCourseExistsByDepNum?(@dep,@num) == true)
+      @foundCourses = true # variable to let view know what to show
+      @usercourses = Usercourse.findByNumAndDep(@num,@dep) # find the course
+
+      # collect stats for a course
+      @averageHoursPerWeek = 0
+      @count = @usercourses.count
+      @usercourses.each do |course|
+        if (course.hpweek != nil)
+          @averageHoursPerWeek = @averageHoursPerWeek + course.hpweek
+        else
+          @averageHoursPerWeek = @averageHoursPerWeek + 3
+        end
+      end
+      @averageHoursPerWeek = @averageHoursPerWeek/@count
+
+
+
+    else
+      @foundCourses = false
+    end
+    respond_to do |format|
+      format.js
+    end
 
   end
 
