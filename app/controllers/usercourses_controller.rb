@@ -4,6 +4,7 @@ class UsercoursesController < ApplicationController
 		@user = current_user
 		@usercouse = Usercourse.new(params[:usercourse])
 		if (@usercouse.save)
+			User.initSerialHashesForUser(current_user)
 			flash[:success] = "New Course Added!"
 			respond_to do |format|
 				format.html {redirect_to current_user}

@@ -8,6 +8,9 @@
   <h1>BA-S</h1><p>Bachelor of Arts Degrees(Secondary Degrees only)</p>
   <hr width="100%">
  <%# render :partial => "shared/coursesort", :locals => {:aps => @aps, :transfers => @transfers, :years => @years, :taken => taken, :taking => taking, :wtake => wtake, :user_courses => user_courses, :coursearray => coursearray} %>
+
+  <%= render 'undergrad/search' %>
+  
   <ul class="nav nav-tabs">
     <% i = 0 %>
     <%# b = @majorsbas.colleges.all %>

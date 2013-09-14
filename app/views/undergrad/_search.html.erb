@@ -1,0 +1,30 @@
+<style type="text/css">
+	
+	input {
+		width: 250px;
+	}
+	select {
+		width: 100px;
+		height: 40px;
+	}
+
+ 	.numField{
+		width: 50px;
+	}
+
+	.stringField{
+		width: 150px;
+	}
+
+
+</style>
+
+<h4> Search: </h4>
+<%= form_for :qCourse, :url => {:controller => "undergrad", :action => "courseSearch"} do |f| %>
+	Num: <%= f.text_field :num, :class => "numField" %>
+	Department: <%= f.select :dep, :collection => @deps %>
+	<%= f.submit "Search for Course" %>
+<% end %>
+
+<h4> Search Results: </h4>
+<div id="courseSearchResults"> </div>

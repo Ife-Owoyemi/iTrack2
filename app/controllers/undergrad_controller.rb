@@ -8,6 +8,8 @@ class UndergradController < ApplicationController
     @user_courses = @user.usercoursesHash
     @coursearray = @user.coursearray
 
+    @deps = @user_courses.keys
+
     @years = current_user.years.all
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
@@ -34,6 +36,8 @@ class UndergradController < ApplicationController
     @user_courses = @user.usercoursesHash
     @coursearray = @user.coursearray
 
+    @deps = @user_courses.keys
+
     @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
@@ -58,6 +62,8 @@ class UndergradController < ApplicationController
     @wTake = @user.wtakeHash
     @user_courses = @user.usercoursesHash
     @coursearray = @user.coursearray
+
+    @deps = @user_courses.keys
 
     @years = current_user.years.all
     @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])
@@ -84,6 +90,8 @@ class UndergradController < ApplicationController
     @user_courses = @user.usercoursesHash
     @coursearray = @user.coursearray
 
+    @deps = @user_courses.keys
+
     @years = current_user.years.all
     @aps = current_user.aps.all
     @transfers = current_user.transfers.all
@@ -100,6 +108,10 @@ class UndergradController < ApplicationController
     @b = @majorsbs.colleges.all
   end
 
+  def courseSearch
+
+  end
+
 =begin
   
   def switchTabMajorsBa
@@ -109,7 +121,7 @@ class UndergradController < ApplicationController
       format.js { render :locals => {:tabNum => @tabNum} }
     end
   end
-  
+
 =end
 
 end

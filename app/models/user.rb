@@ -218,20 +218,20 @@ class User < ActiveRecord::Base
     #file_string = transcriptFile.read.force_encoding("ISO-8859-1").encode!("utf-8", "utf-8", :invalid => :replace)
     
     #Begin running through all of the rows in the cell
-    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |row|
-      i = 0
-      beginnum = 0
-      endnum = 0
-      cell = Array.new
-      row[0].each_char do |b|
-        if b == ","
-          endnum = i
-          cell << row[beginnum..endnum - 1]
-          beginnum = endnum + 1
-        end
-        i += 1
-      end
-    chrome
+    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |cell|
+      #i = 0
+      #beginnum = 0
+      #endnum = 0
+      #cell = Array.new
+      #row[0].each_char do |b|
+        #if b == ","
+          #endnum = i
+          #cell << row[beginnum..endnum - 1]
+          #beginnum = endnum + 1
+        #end
+        #i += 1
+      #end
+    
       # First I noticed that there was this string sequence of "Term:" before rice courses were listed.
 
           # debugging help -Ife
@@ -619,7 +619,7 @@ class User < ActiveRecord::Base
     years = self.years.all
 
     aps.each do |ap|
-      courses = ap.usercourse.all
+      courses = ap.usercourses.all
       courses.each do |c|
         self.coursearray << c.department + " " + c.num.to_s
         if !self.usercoursesHash.has_key?(c.department)
