@@ -73,6 +73,11 @@ class UsercoursesController < ApplicationController
 		end
 	end
 
+	def deleteUsercourseFromHome
+		
+		
+	end
+
 	def update
 		@usercourse = Usercourse.find(params[:id])
 		if (@usercourse.update_attributes!(params[:usercourse]))
