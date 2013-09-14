@@ -58,7 +58,6 @@ class UndergradController < ApplicationController
       redirect_to signin_path
     end
   end
-end
 
   def majorsbas
     @user = current_user
