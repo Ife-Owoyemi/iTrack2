@@ -99,7 +99,7 @@ class Specialty < ActiveRecord::Base
       @op_c_2 += @op_c_big_2
       @op_c_3 += @op_c_big_3
       @specialtyHash[:op][opreq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s
-      if @op_c == @totalc
+      if @op_c_big == @op_add
         @specialtyHash[:op][opreq.opreqname][:complete] = true
       else
         @specialtyHash[:op][opreq.opreqname][:complete] = false
