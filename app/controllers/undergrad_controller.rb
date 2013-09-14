@@ -27,33 +27,38 @@ class UndergradController < ApplicationController
   end
 
   def majorsba
-    #@years = current_user.years.all
-    #@tabNum = 0
-    @user = current_user
-    @taken = @user.takenHash
-    @taking = @user.takingHash
-    @wTake = @user.wtakeHash
-    @user_courses = @user.usercoursesHash
-    @coursearray = @user.coursearray
+    if (current_user != nil)
+      #@years = current_user.years.all
+      #@tabNum = 0
+      @user = current_user
+      @taken = @user.takenHash
+      @taking = @user.takingHash
+      @wTake = @user.wtakeHash
+      @user_courses = @user.usercoursesHash
+      @coursearray = @user.coursearray
 
-    @deps = @user_courses.keys
+      @deps = @user_courses.keys
 
-    @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
-    @aps = current_user.aps.all
-    @transfers = current_user.transfers.all
-    #@institution = Institution.where(:name => "Rice University")    
-    @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])#, :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
+      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
+      @aps = current_user.aps.all
+      @transfers = current_user.transfers.all
+      #@institution = Institution.where(:name => "Rice University")    
+      @institution = Institution.find(:all, :conditions => ["name=?", 'Rice University'])#, :include => [ {:achievementtypes => {:colleges =>  {:achievementnames => {:specialties => [:corereqs => :ccourses, :opreqs => {:options => :ocourses }, :groupopreqs => {:groups => {:options => :ocourses} }   ] }   } } } ])
 
-    @institution.each do |type| 
-      a = type.achievementtypes.all
-      a.each do |t|
-        if t.achievementtype == "BA" 
-          @majorsba = t
-        end
-      end 
+      @institution.each do |type| 
+        a = type.achievementtypes.all
+        a.each do |t|
+          if t.achievementtype == "BA" 
+            @majorsba = t
+          end
+        end 
+      end
+      @b = @majorsba.colleges.all
     end
-    @b = @majorsba.colleges.all
+  else
+    redirect_to signin_path
   end
+end
 
   def majorsbas
     @user = current_user

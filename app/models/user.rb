@@ -452,6 +452,9 @@ class User < ActiveRecord::Base
       end
     end
 
+    User.initSerialHashForUser(self) # update user hashes and arrays (serialized info)
+
+
   end # end of this method
 
 
