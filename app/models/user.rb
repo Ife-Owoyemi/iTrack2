@@ -253,11 +253,11 @@ class User < ActiveRecord::Base
         if semesterpartial == "Fall"
           @semester = "Fall"
           @year = cell[0][11..12].to_i + 2000
-        # Summer
-          @semester = "Summer"
-          @year = cell[0][13..14].to_i + 2000
         # Spring
         elsif semesterpartial == "Summ"
+        # Summer
+          @semester = "Summer"
+          @year = cell[0][13..14].to_i + 2000          
         elsif semesterpartial == "Spri"
           @semester = "Spring"
           @year = cell[0][13..14].to_i + 2000
