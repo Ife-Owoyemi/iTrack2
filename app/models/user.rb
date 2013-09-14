@@ -220,7 +220,7 @@ class User < ActiveRecord::Base
     #file_string = transcriptFile.read.force_encoding("ISO-8859-1").encode!("utf-8", "utf-8", :invalid => :replace)
     
     #Begin running through all of the rows in the cell
-    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1") do |cell|
+    CSV.foreach(transcriptFile.path, col_sep: "$", encoding: "ISO8859-1", :quote_char => "\'") do |cell|
       #i = 0
       #beginnum = 0
       #endnum = 0
