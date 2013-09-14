@@ -438,7 +438,7 @@ class User < ActiveRecord::Base
           transcriptHash[year][semester].each_key do |courseInfo|
             courseInfoArray = courseInfo.split(' ') 
             dep = courseInfoArray[0]
-            num = courseInfoArray[1].to_i
+            num = courseInfoArray[1]#.to_i
             credits = transcriptHash[year][semester][courseInfo][:credits]
             grade = transcriptHash[year][semester][courseInfo][:grade]
             # create the course if it doesn't already exist
