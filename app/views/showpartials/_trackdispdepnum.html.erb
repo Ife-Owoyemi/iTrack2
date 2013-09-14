@@ -16,7 +16,7 @@
         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordian3<%= i %><%= k %><%= m %>" href="#collapse4<%= i %><%= k %><%= m %><%= mo %>">
           <%= depnumcalc.depnumreqname %> 
           <% if @specialty[:depnum][depnumcalc.depnumreqname][:complete]  %>
-            <font color="green">Complete</font><%= @specialtyHash[:depnum][depnumcalc.depnumreqname][:progress] %>
+            <font color="green">Complete</font><%= @specialty[:depnum][depnumcalc.depnumreqname][:progress] %>
           <% else %>
             <%= @specialty[:depnum][depnumcalc.depnumreqname][:progress] %>
           <% end %>

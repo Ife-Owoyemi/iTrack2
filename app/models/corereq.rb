@@ -5,10 +5,12 @@ class Corereq < ActiveRecord::Base
   accepts_nested_attributes_for :ccourses, :allow_destroy => true
 
 	def self.coreclasschecker(targetcoursehash, classmodel, usedcoursearray, holder)
-		if targetcoursehash.has_key?(classmodel.department)
-			if targetcoursehash[classmodel.department].has_key?(classmodel.num.to_s)
-				usedcoursearray << classmodel.department + " " + classmodel.num.to_s
-				holder += 1
+		if targetcoursehash != nil
+			if targetcoursehash.has_key?(classmodel.department)
+				if targetcoursehash[classmodel.department].has_key?(classmodel.num.to_s)
+					usedcoursearray << classmodel.department + " " + classmodel.num.to_s
+					holder += 1
+				end
 			end
 		end
 		return holder, usedcoursearray

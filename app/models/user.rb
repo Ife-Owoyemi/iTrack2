@@ -10,6 +10,7 @@
 #
 
 class User < ActiveRecord::Base
+  include ActiveModel::Serialization
   attr_accessible :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :years_attributes, :aps_attributes, :transfers_attributes, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans, :hideemail, :hideprofile
   
   # serialize arrays and hash attributes used when loading 
@@ -157,6 +158,7 @@ class User < ActiveRecord::Base
 
   def self.usercourses(user)
     cuser_courses = Array.new
+
     user.years.all.each do |year| 
       year.semesters.all.each do |semester| 
         semester.usercourses.all.each do |course| 
