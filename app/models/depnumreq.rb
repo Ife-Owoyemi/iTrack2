@@ -12,7 +12,7 @@ countedcourseexceptionarray, usedcoursearray )
 						if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 							if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 								if !usedcoursearray.include?(departmentmodel.department + " " + number.to_s)
-									countedcourse << departmentmodel + " " + number
+									countedcourse << departmentmodel.department + " " + number
 									holder += targetcoursehash[departmentmodel.department][number]
 								end
 							end
@@ -32,7 +32,7 @@ countedcourseexceptionarray, usedcoursearray )
 						if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 							if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 								if !usedcoursearray.include?(departmentmodel.department + " " + number.to_s)
-								countedcourse << departmentmodel + " " + number
+								countedcourse << departmentmodel.department + " " + number
 								holder += 1
 								end
 							end
@@ -53,7 +53,7 @@ countedcourseexceptionarray, usedcoursearray )
 						if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 							if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 							holder += targetcoursehash[departmentmodel.department][number]
-							countedcourse << departmentmodel + " " + number
+							countedcourse << departmentmodel.department + " " + number
 							end
 						end
 					end
@@ -72,7 +72,7 @@ countedcourseexceptionarray, usedcoursearray )
 						if !notcountedcourseexceptionarray.include?(departmentmodel.department + number)
 							if (number.to_i >= num.min and number.to_i <= num.max) or !countedcourseexceptionarray.include?(departmentmodel.department + number.to_s)
 							holder += 1
-							countedcourse << departmentmodel + " " + number
+							countedcourse << departmentmodel.department + " " + number
 							end
 						end
 					end
