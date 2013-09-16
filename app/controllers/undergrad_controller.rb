@@ -48,7 +48,7 @@ class UndergradController < ApplicationController
       
       # Function for creating the userhash to display on this page   
       @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses = User.undergradfoldervar(@user, @achievementtype)
-
+    end
       
   end
 
