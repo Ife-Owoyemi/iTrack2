@@ -15,4 +15,18 @@ class Institution < ActiveRecord::Base
     end
     return achievement
   end
+  def self.modelscrap(universityname, achievementtype)
+    @institution = Institution.find(:all, :conditions => ["name=?", universityname])
+
+    # Finds the appropriate model for this page
+    @institution.each do |type| 
+      a = type.achievementtypes.all
+      a.each do |t|
+        if t.achievementtype == achievementtype 
+          @model = t
+        end
+      end 
+    end
+    return @model
+  end
 end

@@ -1,0 +1,19 @@
+<ul class="nav nav-tabs">
+    <% i = 0 %>
+    <% @achievementtypehash.each_key do |college|  %> 
+      <li>
+        <a href="#<%= i %>" data-toggle="tab">
+          <%= college %>
+        </a>
+      </li>
+      <% i += 1 %>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% i = 0 %>
+    <% @achievementtypehash.each_key do |college|  %>
+      <% @college = @achievementtypehash[college] %>
+      <%= render "showpartials/trackdisp2", :college => @college, :taken => @taken, :taking => @taking, :wtake => @wtake, :i => i, :user_courses => @user_courses, :@cuser_courses => @cuser_courses %>
+      <% i += 1 %>
+    <% end %>
+  </div>

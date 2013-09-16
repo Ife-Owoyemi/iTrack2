@@ -54,7 +54,14 @@ class User < ActiveRecord::Base
   #validates :password, presence: true, length: { minimum: 6 }
   #validates :password_confirmation, presence: true
   after_validation {self.errors.messages.delete(:password_digest) }
-  
+  def self.undergradfoldervar(usermodel, minors)
+    @cuser_courses = User.usercourses(usermodel)
+    @taken, @taking, @wtake, @user_courses, @coursearray = User.courseHashArrayGenerator(usermodel)
+    @achievementtypehash = User.fullachievementhashgenerator(@taken, @taking, @wtake,minors)
+    
+    
+    return @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses
+  end
   def self.courseHashArrayGenerator(model)
     taken = Hash.new
     taking = Hash.new
@@ -169,14 +176,37 @@ class User < ActiveRecord::Base
     return cuser_courses
   end
 
-
+  def self.fullachievementhashgenerator(taken, taking, wtake, achievementtype)
+      @achievementtypehash = Hash.new
+      collegem = achievementtype.colleges.all
+      collegem.each do |college|
+        if !@achievementtypehash.has_key?(college.college)
+            @achievementtypehash[college.college] = Hash.new
+        end
+        achievementnamemarray = college.achievementnames.all
+        achievementnamemarray.each do |achievementname|
+          if !@achievementtypehash[college.college].has_key?(achievementname.achievementname)
+            @achievementtypehash[college.college][achievementname.achievementname] = Hash.new
+          end
+          specialtymarray = achievementname.specialties.all
+          specialtymarray.each do |specialty|
+            
+              
+            #Change this to extraction of certain specialties from a master hash that is calculated elsewhere upon change of usercourses.
+            @achievementtypehash[college.college][achievementname.achievementname][specialty.specialty] = Specialty.calculate(specialty, taken, taking, wtake)
+            @achievementtypehash[college.college][achievementname.achievementname][specialty.specialty][:model] = specialty 
+          end
+        end      
+      end
+      return @achievementtypehash
+  end
   def self.studentachievementhashgenerator(achievementmodelsarray, achievementhash, taken, taking, wtake)
     @studentachievementhash = Hash.new
     for achievementtype in achievementmodelsarray
       if !@studentachievementhash.has_key?(achievementtype.achievementtype)
           @studentachievementhash[achievementtype.achievementtype] = Hash.new
 
-        end
+      end
       achievementhash[achievementtype.achievementtype].each_key do |collegek|
         if !@studentachievementhash[achievementtype.achievementtype].has_key?(collegek)
           @studentachievementhash[achievementtype.achievementtype][collegek] = Hash.new

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       # This is for users that are not the current user, e.g. browesing other profiles causually
     elsif (params[:id] != nil)
       @user = User.find(params[:id])
-
+     
       @institution = Institution.where(:name => "Rice University")  
       @awards = @user.awards.all
       @internships = @user.internships.all

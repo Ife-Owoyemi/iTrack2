@@ -5,7 +5,7 @@
 
 <% grades = {"A+" => "4.3333", "A" => "4", "A-" => "3.6666", "B+" => "3.3333", "B" => "3", "B-" => "2.6666", "C+" => "2.3333", "C" => "2", "C-" => "1.6666","D+" => "1.3333", "D" => "1", "D-" => ".6666", "F" => "0"} %>
 <% gpascore = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-","D+", "D", "D-", "F"] %>
-
+I like brownies
 
 <!-- style by Ife -->
 <style type="text/css">
@@ -88,7 +88,7 @@
     </section>
     <section>
       <h4>Transcript</h4>
-
+      <!-- Transcript input-->
       <%= form_for :transcript, :url => {:controller => "users", :action => "uploadTranscript"}, multipart: true do |f| %>
         <%= f.file_field :file %>
         <%= f.submit "Import Transcript" %>
