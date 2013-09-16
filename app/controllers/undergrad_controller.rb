@@ -3,10 +3,7 @@ class UndergradController < ApplicationController
   def minors
     # Defines current user as a shorter variable
     @user = current_user
-    @deps = @user_courses.keys
-      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
-      @aps = current_user.aps.all
-      @transfers = current_user.transfers.all
+    
     # Temporary
     ###################################################################################################################################
     # Retrieves all the user course hashes for calculating completion for this page
@@ -22,17 +19,17 @@ class UndergradController < ApplicationController
     
     # Function for creating the userhash to display on this page   
     @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses = User.undergradfoldervar(@user, @achievementtype)
-
+    @deps = @user_courses.keys
+      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
+      @aps = current_user.aps.all
+      @transfers = current_user.transfers.all
   end
 
   def majorsba
     if (current_user != nil)
       # Defines current user as a shorter variable
       @user = current_user
-      @deps = @user_courses.keys
-      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
-      @aps = current_user.aps.all
-      @transfers = current_user.transfers.all
+      
       # Temporary
       ###################################################################################################################################
       # Retrieves all the user course hashes for calculating completion for this page
@@ -48,6 +45,10 @@ class UndergradController < ApplicationController
       
       # Function for creating the userhash to display on this page   
       @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses = User.undergradfoldervar(@user, @achievementtype)
+      @deps = @user_courses.keys
+      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
+      @aps = current_user.aps.all
+      @transfers = current_user.transfers.all
     end
       
   end
@@ -55,10 +56,7 @@ class UndergradController < ApplicationController
   def majorsbas
     # Defines current user as a shorter variable
     @user = current_user
-    @deps = @user_courses.keys
-      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
-      @aps = current_user.aps.all
-      @transfers = current_user.transfers.all
+
     # Temporary
     ###################################################################################################################################
     # Retrieves all the user course hashes for calculating completion for this page
@@ -74,15 +72,16 @@ class UndergradController < ApplicationController
     
     # Function for creating the userhash to display on this page   
     @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses = User.undergradfoldervar(@user, @achievementtype)
+    @deps = @user_courses.keys
+      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
+      @aps = current_user.aps.all
+      @transfers = current_user.transfers.all
   end
 
   def majorsbs
     # Defines current user as a shorter variable
     @user = current_user
-    @deps = @user_courses.keys
-      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
-      @aps = current_user.aps.all
-      @transfers = current_user.transfers.all
+    
     # Temporary
     ###################################################################################################################################
     # Retrieves all the user course hashes for calculating completion for this page
@@ -98,6 +97,10 @@ class UndergradController < ApplicationController
     
     # Function for creating the userhash to display on this page   
     @achievementtypehash, @taken, @taking, @user_courses, @coursearray, @cuser_courses = User.undergradfoldervar(@user, @achievementtype)
+    @deps = @user_courses.keys
+      @years = Year.find(:all, :conditions => ["user_id=?", current_user.id])#, :include => [ {:semesters => :usercourses}, :user ])
+      @aps = current_user.aps.all
+      @transfers = current_user.transfers.all
   end
 
   def courseSearch
