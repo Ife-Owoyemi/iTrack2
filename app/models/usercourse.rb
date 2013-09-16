@@ -16,9 +16,26 @@ class Usercourse < ActiveRecord::Base
   	return course
   end
 
+  # Check if usercourse exist by semester id, dep, and num
   def self.semesterCourseExists?(semester_id,department,num)
   	bol = Usercourse.exists?(:semester_id => semester_id,:department => department, :num => num)
- 	return bol
+ 	  return bol
+  end
+
+  # find a usercourse by its semester_id department and number
+  def self.findSemesterCourseByDepAndNum(semester_id,department,num)
+    course = Usercourse.find(:first, :conditions => ["semester_id=? and department=? and num=?",semester_id,department,num])
+    return course
+  end  
+
+  def self.semesterCourseExistsByDepNum?(department,num)
+    bol = Usercourse.exists?(:department => department, :num => num)
+  return bol
+  end  
+
+  def self.findByNumAndDep(num,department)
+    courses = Usercourse.find(:all, :conditions => ["num=? and department=?",num,department])
+    return courses
   end
 
 

@@ -1,0 +1,5 @@
+<% if @foundCourses == true %>
+	$("#courseSearchResults").html("<%= escape_javascript(render 'undergrad/courseStats', :count => @count, :averageHoursPerWeek => @averageHoursPerWeek).html_safe %>");
+<% else %>
+	$("#courseSearchResults").html("<b>None of our current users have this course so we have no stats for it yet.</b>");
+<% end %> 

@@ -22,7 +22,9 @@
 
        <b>HPW: </b> <%= best_in_place_if current_user?(@user), course, :hpweek, :nil => 'Click here to describe workload in hours per week', :type => :input, :inner_class => 'numField' %><br/>
 
-       <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>" >
+       <b>Suggestions: </b> <%= best_in_place_if current_user?(@user), course, :suggest, :nil => 'Click here to add suggestions for future students', :type => :textarea, :inner_class => "stringField" %><br/>
+
+       <a href='/deleteUsercourseFromHome?semester_id=<%= course.semester_id %>&num=<%= course.num %>&dep=<%= course.department %>'>Delete Course</a>" >
 
        <font color = ""><%= course.department %> <%= course.num.to_s %> <%= course.grade %></font>
 
