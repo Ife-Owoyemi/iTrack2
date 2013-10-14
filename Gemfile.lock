@@ -90,6 +90,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
+    hashie (2.0.5)
     hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
@@ -110,6 +111,9 @@ GEM
       mini_portile (~> 0.5.0)
     nokogiri (1.6.0-x86-mingw32)
       mini_portile (~> 0.5.0)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
     pg (0.16.0)
     pg (0.16.0-x86-mingw32)
     polyglot (0.3.3)
@@ -198,6 +202,7 @@ DEPENDENCIES
   jquery-rails (= 2.0.2)
   nested_form
   newrelic_rpm
+  omniauth
   pg
   rails (= 3.2.13)
   rake (= 10.1.0)

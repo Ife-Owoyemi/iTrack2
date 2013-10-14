@@ -211,9 +211,15 @@ class UsersController < ApplicationController
   end
 
   def uploadTranscript
-    current_user.transcriptReader(params[:transcript][:file])
-    flash[:notice] = "Transcript updated!"
-    redirect_to root_path
+    if (params[:transcript] == nil)
+      respond_to do |format|
+        format.js {render :action => "alert('Please add the CSV file with your transcript first.')"}
+      end
+    else
+      current_user.transcriptReader(params[:transcript][:file])
+      flash[:notice] = "Transcript updated!"
+      redirect_to root_path
+    end
   end
 
 
