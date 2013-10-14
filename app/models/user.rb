@@ -317,7 +317,7 @@ class User < ActiveRecord::Base
      
         # These were two key phrases that are found after course listings have ended and I used them to define the end of where lines are allowed to be created into courses
  
-      elsif cell[0][0..4] == "Term " || cell[0][0..4] == ",,,,A" #or cell[1] == nil
+      elsif cell[0][0..4] == "Term " || cell[0][0..4] == ",,,,A" or cell[0][0..1] == "Un"
         @countcourse = false
         # I found that AP Courses for my transcript were prefaced with "Fall" so I used it to define the begining of AP course listings
       elsif cell[0][0..3] == "Fall"

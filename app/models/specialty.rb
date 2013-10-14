@@ -11,8 +11,8 @@ class Specialty < ActiveRecord::Base
   accepts_nested_attributes_for :depnumreqs, :allow_destroy => true
 
   #Produces 
-  #Courses taken or plan to be taken within a specialty - For calculating major gpa, and displaying completion when courses are listed
-  #A hash copy of the model structure for looping through and displaying
+  # Courses taken or plan to be taken within a specialty - For calculating major gpa, and displaying completion when courses are listed
+  # A hash copy of the model structure for looping through and displaying
   # Other things that would be useful: calculating the number of courses left, 
   def self.calculate(specialty, taken, taking, wtake)
     @specialtyHash = Hash.new
@@ -24,12 +24,26 @@ class Specialty < ActiveRecord::Base
     @takent = 0 
     @takingt = 0
     @wtaket = 0 
-    @core_c_1 = 0
-    @core_c_2 = 0
-    @core_c_3 = 0
+    
     @used_courses = Array.new
 
     corereqmArray = specialty.corereqs.all
+    #Begin Loops through 5 Types of requirements
+      # Core Requirements- Specific required courses
+      # Multi Option Requirements- Bound by groups of course options
+      # Group Option Requirements- Bound by groups of course options
+      # Depnum Requirements- Bound by department and course ranges
+    ################################################################################################################################
+    ################################################################################################################################
+
+
+    # Variables for Core Requirement Completion
+    ################################################################################################################################
+    @core_c_1 = 0
+    @core_c_2 = 0
+    @core_c_3 = 0
+    # Loop through Core Requirements
+    ################################################################################################################################
     for corereq in corereqmArray
       @totalc += corereq.cgoal.to_i
       courseArray = corereq.ccourses.all
@@ -46,11 +60,16 @@ class Specialty < ActiveRecord::Base
       @specialtyHash[:core][corereq.corereqname][:complete] = @core_c_1 + @core_c_2 + @core_c_3
 
     end
+
+    # Variables for Multi Option Requirement Completion
+    ################################################################################################################################
     @op_c = 0
     @op_c_1 = 0 # => sumTakenCourseCompleteOptRequirement = 0 # => @op_c_1
     @op_c_2 = 0 # => sumTakingCourseCompleteOptRequirement = 0 # => @op_c_2
     @op_c_3 = 0 # => sumWillTakeCourseCompleteOptRequirement = 0 # => @op_c_3
     opReqArray = specialty.opreqs.all
+    # Loop through Multi Option Requirements
+    ################################################################################################################################
     for opreq in opReqArray
       
       unknownVariable = 0 # => complete
@@ -63,50 +82,61 @@ class Specialty < ActiveRecord::Base
       @op_c_big_2 = 0 # => tempSumTakingCourseCompleteOptRequirement2 = 0 # => @op_c_big_2
       @op_c_big_3 = 0 # => tempSumWillTakeCourseCompleteOptRequirement2 = 0 # => @op_c_big_3
       @op_c_biggest = 0 # => opCompletionTempHolder = 0 # => @op_c_biggest
+      # Looping through Options
+      #######################################################################################
       for option in optionArray
+        # Write to Hash
+        #####################################################################################
         @specialtyHash[:op][opreq.opreqname][@optioncount] = Hash.new
         @specialtyHash[:op][opreq.opreqname][@optioncount][:name] = option.optionname
-        
-
+        @specialtyHash[:op][opreq.opreqname][@optioncount][:courseslisted] = Array.new
+        # Variables for Options 
+        #####################################################################################
         sumOptionCourses = 0 # => op_c_all
-        
         @op_c_m = 0 # => tempSumAllCourseCompleteOptRequirement = 0 # => @op_c_m
         @op_c_m_1 = 0 # => tempSumTakenCourseCompleteOptRequirement = 0 # => @op_c_m_1
         @op_c_m_2 = 0 # => tempSumTakingCourseCompleteOptRequirement = 0 # => @op_c_m_2
         @op_c_m_3 = 0 # => tempSumWillTakeCourseCompleteOptRequirement = 0 # => @op_c_m_3
-        
-        
         courseArray = option.ocourses.all
-        @specialtyHash[:op][opreq.opreqname][@optioncount][:courseslisted] = Array.new
+        # Looping through Courses within an Option
+        ####################################################################       
         for course in courseArray
+          # Write to Hash
+          #############################################################
           @specialtyHash[:op][opreq.opreqname][@optioncount][:courseslisted] << course.department + " " + course.num.to_s
+
           arrayOfUsedCourses, @op_c_m, @op_c_m_1 = Opreq.optionclasschecker(taken, course, @used_courses, @op_c_m, @op_c_m_1)
           arrayOfUsedCourses, @op_c_m, @op_c_m_2 = Opreq.optionclasschecker(taking, course, @used_courses, @op_c_m, @op_c_m_2)
           arrayOfUsedCourses, @op_c_m, @op_c_m_3 = Opreq.optionclasschecker(wtake, course, @used_courses, @op_c_m, @op_c_m_3)
         end
+        # Function for Finding most complete option and its properties 
         @op_add,@op_c_biggest, @op_c_big, @op_c_big_1, @op_c_big_2, @op_c_big_3 = Opreq.optiondataevaluator(option, @op_add, @op_c_big, @op_c_biggest, @op_c_m,  @op_c_m_1,@op_c_m_2, @op_c_m_3, @op_c_big_1,@op_c_big_2, @op_c_big_3)
         @optioncount += 1
       end
+
+      # Writing to Hash
+      ########################################################################################
       if @op_c_big != nil
         @op_c += @op_c_big
       else
         @op_c_big = 0
-
       end
-
-      @totalc += @op_add
-      @op_c_1 += @op_c_big_1
-      @op_c_2 += @op_c_big_2
-      @op_c_3 += @op_c_big_3
       @specialtyHash[:op][opreq.opreqname][:progress] = @op_c_big.to_s + "/" + @op_add.to_s
       if @op_c_big == @op_add
         @specialtyHash[:op][opreq.opreqname][:complete] = true
       else
         @specialtyHash[:op][opreq.opreqname][:complete] = false
-      end  
+      end
+      # Incrementing Final Calculation Varialbes
+      #######################################################################################
+      @totalc += @op_add
+      @op_c_1 += @op_c_big_1
+      @op_c_2 += @op_c_big_2
+      @op_c_3 += @op_c_big_3  
     end
-    #New Algorithm
+    #New Algorithm Currently working
     groupOpReqArray = specialty.groupopreqs.all
+    ################################################################################################################################
     for groupOpReq in groupOpReqArray
       groupArray = groupOpReq.groups.all
       for group in groupArray
@@ -126,7 +156,8 @@ class Specialty < ActiveRecord::Base
 
     
 
-    # define varialbe for depnumreq calculations
+    # Define varialbes for depnumreq calculations
+    ################################################################################################################################
     @dep_c_m_1 = 0
     @dep_c_m_2 = 0
     @dep_c_m_3 = 0
@@ -135,12 +166,25 @@ class Specialty < ActiveRecord::Base
     @dep_c_3 = 0
     tempdepnumlimit = 0 # => @depnumgoal
     depNumReqArray = specialty.depnumreqs.all
+    # Loop through DepNum Requirements
+    ################################################################################################################################
     for depNumReq in depNumReqArray # depnumcalc => depNumReq 
-      countedcourse = Array.new
+      
+      # Write to Hash
+      #########################################################################################
       @specialtyHash[:depnum][depNumReq.depnumreqname]
+      # Variables
+      #########################################################################################
+      countedcourse = Array.new
       depsArray = depNumReq.deps.all
+      # Double count check
+      ###########################################################################
       if depNumReq.doublecount == "N"
+        # Check for hgoal or cgoal
+        ################################################
         if depNumReq.hgoal == nil or depNumReq.hgoal == 0
+          # Loop through departments
+          ##############################################
           for dep in depsArray
             excepsModelArray = dep.cexceptions.all # => exceps
             exceptionsCourseList = arraycreator(excepsModelArray) # => excepsarray
@@ -206,6 +250,8 @@ class Specialty < ActiveRecord::Base
           @totalc += depNumReq.cgoal
         end
       end
+      # Write to hash
+      ######################################################################
       @specialtyHash[:depnum][depNumReq.depnumreqname] = Hash.new
       @specialtyHash[:depnum][depNumReq.depnumreqname][:progress] = (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3).to_s + "/" + depNumReq.cgoal.to_s
       if depNumReq.cgoal == (@dep_c_m_1 + @dep_c_m_2 + @dep_c_m_3) 
@@ -220,6 +266,7 @@ class Specialty < ActiveRecord::Base
 
     
     # Final Sum
+    ################################################################################################################################
     @specialtyclassesleft = 0
     # Prevents bugs from incomplete models and saves calculating time
     if @totalc != 0 and @totalc != nil
@@ -248,7 +295,8 @@ class Specialty < ActiveRecord::Base
       @takingt = 0
       @wtaket = 0
     end
-    # Saving the percent Completion
+    # Write to Hash
+    ########################################################
     @specialtyHash[:stats] = Hash.new
     @specialtyHash[:stats][:takent] = @takent
     @specialtyHash[:stats][:takingt] = @takingt
