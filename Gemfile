@@ -23,7 +23,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'roo'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'omniauth'
 
 
 group :development do
