@@ -30,6 +30,7 @@ class InstitutionsController < ApplicationController
 	def update
 		@institution = Institution.find(params[:id])
 		@institution.update_attributes(params[:institution])
+		expire_fragment('track_college_tabs') # cache update 
 		flash[:notice] = "Successfully updated Institution."
 		redirect_to institutions_path
 	end

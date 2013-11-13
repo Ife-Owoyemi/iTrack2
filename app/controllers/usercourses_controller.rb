@@ -5,6 +5,7 @@ class UsercoursesController < ApplicationController
 		@usercouse = Usercourse.new(params[:usercourse])
 		if (@usercouse.save)
 			User.initSerialHashesForUser(current_user)
+			expire_fragment('achievementtypehash_for_hash') # cache update 
 			flash[:success] = "New Course Added!"
 			respond_to do |format|
 				format.html {redirect_to current_user}
@@ -59,6 +60,7 @@ class UsercoursesController < ApplicationController
 		else	
 			@usercourse = Usercourse.createSemesterCourseFromTracks(semester,@department,@num,credits,grade)
 			if (@usercourse.save)
+				expire_fragment('achievementtypehash_for_hash') # cache update 
 				flash[:success] = "New Course Added!"
 				respond_to do |format| 
 					format.js 
@@ -80,6 +82,7 @@ class UsercoursesController < ApplicationController
 		if (Usercourse.semesterCourseExists?(@semester_id,@dep,@num))
 			@course = Usercourse.findSemesterCourseByDepAndNum(@semester_id,@dep,@num)
 			@course.destroy
+			expire_fragment('achievementtypehash_for_hash') # cache update 
 			flash[:success] = "Course Deleted"
 		end
 		redirect_to root_path
@@ -93,6 +96,7 @@ class UsercoursesController < ApplicationController
 	def update
 		@usercourse = Usercourse.find(params[:id])
 		if (@usercourse.update_attributes!(params[:usercourse]))
+			expire_fragment('achievementtypehash_for_hash') # cache update 
 			flash[:success] = "Course Update was a success"
 			respond_to do |format|
 				format.html { redirect_to root_path }
