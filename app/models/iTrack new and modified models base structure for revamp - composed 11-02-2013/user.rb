@@ -12,9 +12,13 @@
 class User < ActiveRecord::Base
 
   attr_accessible :institution_id, :email, :name, :year, :status, :password, :password_confirmation, :college, :dreamJob, :userachievementtypes_attributes, :notesToFresh, :notesToMym, :matricuYear, :postGradPlans, :hideemail, :hideprofile
-  has_many :transcriptitems
-  has_many :courses, through: :transcriptitems
   belongs_to :institution
 
+  has_many :transcriptitems
+  has_many :internships
+  has_many :awards
+  has_many :conferences
+
+  has_many :courses, through: :transcriptitems
  
 end
