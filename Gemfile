@@ -21,6 +21,7 @@ gem 'best_in_place'
 #gem 'jquery_datepicker'
 gem 'bootstrap-datepicker-rails'
 gem 'roo'
+gem 'json', '1.8.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -33,10 +34,7 @@ end
 
 group :production do
 	gem 'thin'
-  gem 'pg'
 end
-
-gem 'bcrypt-ruby', '3.0.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
